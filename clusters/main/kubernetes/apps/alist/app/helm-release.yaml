@@ -4,7 +4,7 @@ metadata:
     name: alist
     namespace: alist
 spec:
-    interval: 15m
+    interval: 5m
     chart:
         spec:
             chart: alist
@@ -59,8 +59,9 @@ spec:
                 type: nfs
                 path: /mnt
                 server: ${NAS_DOMAIN}
-            data:
+            config:
                 enabled: true
+		type: pvc
                 mountPath: /opt/alist/data
                 readOnly: false
                 storageClass: ""
