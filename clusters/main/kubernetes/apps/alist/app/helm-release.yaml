@@ -1,0 +1,120 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: alist
+    namespace: alist
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: alist
+            version: 10.2.2
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: alist
+    values:
+        TZ: US/Central
+        addons:
+            codeserver:
+                enabled: false
+            netshoot:
+                enabled: false
+            vpn:
+                type: disabled
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: files.${DOMAIN_0}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                ingressClassName: ""
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            nas:
+                enabled: true
+                type: nfs
+                path: /mnt
+                server: ${NAS_DOMAIN}
+            data:
+                enabled: true
+                mountPath: /opt/alist/data
+                readOnly: false
+                storageClass: ""
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
+        release_name: alist
+        resources: {}
+        securityContext:
+            container:
+                UMASK: "0022"
+                readOnlyRootFilesystem: false
+                runAsGroup: 0
+                runAsNonRoot: false
+                runAsUser: 0
+            pod:
+                fsGroupChangePolicy: OnRootMismatch
+        service:
+            aria2:
+                enabled: true
+                ports:
+                    aria2:
+                        enabled: true
+                        port: 6800
+                        protocol: http
+                        targetPort: 6800
+                type: ClusterIP
+            main:
+                enabled: true
+                ports:
+                    main:
+                        port: 10167
+                        protocol: http
+                        targetPort: 5244
+                type: ClusterIP
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            probes:
+                                liveness:
+                                    path: /
+                                    type: http
+                                readiness:
+                                    path: /
+                                    type: http
+                                startup:
+                                    path: /
+                                    type: http
+                replicas: 1
+                type: Deployment
