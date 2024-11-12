@@ -63,8 +63,6 @@ spec:
                 enabled: true
                 type: pvc
                 mountPath: /opt/alist/data
-                readOnly: false
-                storageClass: ""
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
