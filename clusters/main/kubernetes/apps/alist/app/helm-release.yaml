@@ -59,36 +59,17 @@ spec:
                 readOnly: false
                 storageClass: ""
                 volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
                         enabled: true
-                        securityContext:
-                            runAsUser: 568
-                            fsGroup: 568
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
                         enabled: true
-                        securityContext:
-                            runAsUser: 568
-                            fsGroup: 568
                       type: restic
         release_name: alist
-        resources: {}
         service:
             aria2:
-                enabled: true
-                ports:
-                    aria2:
-                        enabled: true
-                        port: 6800
-                        protocol: http
-                        targetPort: 6800
                 type: ClusterIP
             main:
                 enabled: true
-                ports:
-                    main:
-                        port: 10167
-                        protocol: http
-                        targetPort: 5244
                 type: ClusterIP
