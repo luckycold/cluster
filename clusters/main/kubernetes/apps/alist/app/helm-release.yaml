@@ -59,10 +59,10 @@ spec:
                 type: nfs
                 path: /mnt
                 server: ${NAS_DOMAIN}
-            config:
+            data:
                 enabled: true
-                type: pvc
                 mountPath: /opt/alist/data
+                storageClass: ""
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
