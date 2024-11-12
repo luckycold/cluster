@@ -67,9 +67,3 @@ spec:
                         enabled: true
                       type: restic
         release_name: alist
-        service:
-            aria2:
-                type: ClusterIP
-            main:
-                enabled: true
-                type: ClusterIP
