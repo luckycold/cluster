@@ -61,7 +61,7 @@ spec:
                 server: ${NAS_DOMAIN}
             config:
                 enabled: true
-		type: pvc
+                type: pvc
                 mountPath: /opt/alist/data
                 readOnly: false
                 storageClass: ""
