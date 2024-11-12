@@ -57,6 +57,7 @@ spec:
             nas:
                 enabled: true
                 type: nfs
+                mountPath: /mnt/TrueNAS
                 path: /mnt
                 server: ${NAS_DOMAIN}
             data:
