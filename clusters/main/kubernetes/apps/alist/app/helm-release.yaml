@@ -75,15 +75,6 @@ spec:
                       type: restic
         release_name: alist
         resources: {}
-        securityContext:
-            container:
-                UMASK: "0022"
-                readOnlyRootFilesystem: false
-                runAsGroup: 0
-                runAsNonRoot: false
-                runAsUser: 0
-            pod:
-                fsGroupChangePolicy: OnRootMismatch
         service:
             aria2:
                 enabled: true
@@ -102,20 +93,3 @@ spec:
                         protocol: http
                         targetPort: 5244
                 type: ClusterIP
-        workload:
-            main:
-                podSpec:
-                    containers:
-                        main:
-                            probes:
-                                liveness:
-                                    path: /
-                                    type: http
-                                readiness:
-                                    path: /
-                                    type: http
-                                startup:
-                                    path: /
-                                    type: http
-                replicas: 1
-                type: Deployment
