@@ -34,18 +34,12 @@ spec:
                       paths:
                         - path: /
                           pathType: Prefix
-                ingressClassName: ""
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             nas:
                 enabled: true
@@ -54,10 +48,6 @@ spec:
                 path: /mnt
                 server: ${NAS_DOMAIN}
             data:
-                enabled: true
-                mountPath: /opt/alist/data
-                readOnly: false
-                storageClass: ""
                 volsync:
                     - name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
