@@ -82,9 +82,7 @@ spec:
                     containers:
                         main:
                             env:
-                                ACCESS_KEY:
-                                    name: ACCESS_KEY
-                                    value: ${RSSHUB_ACCESS_KEY}
+                                ACCESS_KEY: ${RSSHUB_ACCESS_KEY}
                                 BITBUCKET_PASSWORD: ""
                                 BITBUCKET_USERNAME: ""
                                 CACHE_TYPE: redis
@@ -105,9 +103,7 @@ spec:
                                         name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                                 TELEGRAM_TOKEN: ""
                                 TITLE_LENGTH_LIMIT: 150
-                                TWITTER_COOKIE:
-                                    name: TWITTER_COOKIE
-                                    value: ${RSSHUB_TWITTER_COOKIE}
+                                TWITTER_COOKIE: ${RSSHUB_TWITTER_COOKIE}
                                 YOUTUBE_KEY: ""
                 replicas: 1
                 type: Deployment
