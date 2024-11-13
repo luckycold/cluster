@@ -28,7 +28,7 @@ spec:
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
-                    revision: 1
+                    revision: "1"
                 cluster:
                     instances: 1
                     singleNode: true
