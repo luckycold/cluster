@@ -40,6 +40,10 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
         persistence:
             nas:
                 enabled: true

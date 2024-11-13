@@ -4,3 +4,4 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - alist/ks.yaml
   - rsshub/ks.yaml
+  - lldap/ks.yaml
