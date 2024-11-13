@@ -35,6 +35,7 @@ spec:
                 mode: recovery
                 password: ${LLDAP_CNPG_PASSWORD}
                 recovery:
+                    method: object_store
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
