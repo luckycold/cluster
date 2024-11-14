@@ -202,4 +202,4 @@ spec:
             same_site: lax
         theme: auto
         totp:
-            issuer: LuckyLand
+            issuer: Lucky
