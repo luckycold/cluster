@@ -79,8 +79,12 @@ spec:
                       credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
                         enabled: true
+                        annotations:
+                            volsync.backube/privileged-movers: "true"
                       src:
                         enabled: true
+                        annotations:
+                            volsync.backube/privileged-movers: "true"
                       type: restic
         qbitportforward:
             QBT_PASSWORD: ${GENERIC_PASSWORD}
