@@ -19,7 +19,7 @@ spec:
     chart:
         spec:
             chart: qbittorrent
-            version: 20.0.11
+            version: 22.1.6
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -29,14 +29,13 @@ spec:
         TZ: US/Central
         addons:
             vpn:
-                configFile: ""
                 env:
                     VPN_PORT_FORWARDING: "on"
                     VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
                     VPN_TYPE: ${MAIN_VPN_TYPE}
                     OPENVPN_USER: ${MAIN_OPENVPN_USER}
                     OPENVPN_PASSWORD: ${MAIN_OPENVPN_PASSWORD}
-                    SERVER_HOSTNAMES: ${MAIN_VPN_HOSTNAMES}
+                    SERVER_CITIES: ${MAIN_VPN_CITIES}
                 killSwitch: true
                 type: gluetun
         credentials:
