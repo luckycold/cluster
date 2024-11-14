@@ -39,16 +39,16 @@ spec:
       tcp:
         loadBalancerIP: ${TRAEFIK_IP}
     middlewares:
-            forwardAuth:
-                - address: http://authelia.authelia.svc.cluster.local:9091/api/verify?rd=https://auth.${DOMAIN_0}/
-                  authRequestHeaders: []
-                  authResponseHeaders:
-                    - Remote-User
-                    - Remote-Groups
-                    - Remote-Name
-                    - Remote-Email
-                  authResponseHeadersRegex: ""
-                  name: auth
-                  tls:
-                    insecureSkipVerify: false
-                  trustForwardHeader: true
+      forwardAuth:
+          - address: http://authelia.authelia.svc.cluster.local:9091/api/verify?rd=https://auth.${DOMAIN_0}/
+            authRequestHeaders: []
+            authResponseHeaders:
+              - Remote-User
+              - Remote-Groups
+              - Remote-Name
+              - Remote-Email
+            authResponseHeadersRegex: ""
+            name: auth
+            tls:
+              insecureSkipVerify: false
+            trustForwardHeader: true

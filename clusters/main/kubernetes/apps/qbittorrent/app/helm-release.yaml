@@ -71,7 +71,7 @@ spec:
                         enabled: true
                         middlewares:
                             - name: auth
-                              namespace: ""
+                              namespace: "traefik"
         persistence:
             config:
                 volsync:
