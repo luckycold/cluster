@@ -32,7 +32,7 @@ spec:
                 cluster:
                     instances: 1
                     singleNode: true
-                mode: recovery
+                mode: standalone
                 password: ${LLDAP_CNPG_PASSWORD}
                 recovery:
                     method: object_store
