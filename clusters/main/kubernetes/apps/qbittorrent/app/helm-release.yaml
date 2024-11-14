@@ -31,15 +31,12 @@ spec:
             vpn:
                 configFile: ""
                 env:
-                    VPN_ENDPOINT_IP: ${MAIN_VPN_ENDPOINT}
                     VPN_ENDPOINT_PORT: ${MAIN_VPN_ENDPOINT_PORT}
                     VPN_PORT_FORWARDING: "on"
-                    VPN_PORT_FORWARDING_PROVIDER: ${MAIN_VPN_PORT_FORWARDING_PROVIDER}
                     VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
                     VPN_TYPE: ${MAIN_VPN_TYPE}
-                    WIREGUARD_ADDRESSES: ${MAIN_WIREGUARD_ADDRESSES}
                     WIREGUARD_PRIVATE_KEY: ${MAIN_WIREGUARD_PRIVATE_KEY}
-                    WIREGUARD_PUBLIC_KEY: ${MAIN_WIREGUARD_PUBLIC_KEY}
+                    SERVER_HOSTNAMES: ${MAIN_WIREGUARD_HOSTNAMES}
                 killSwitch: true
                 type: gluetun
         credentials:
