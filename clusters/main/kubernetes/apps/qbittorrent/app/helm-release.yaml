@@ -5,16 +5,16 @@ metadata:
     namespace: qbittorrent
 spec:
     postRenderers:
-        - kustomize:
-            patches:
+    - kustomize:
+        patches:
             - target:
                 version: v1
                 kind: Deployment
                 name: qbittorrent
-                patch: |
-                    - op: add
-                    path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
-                    value: 1
+              patch: |
+                - op: add
+                path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
+                value: 1
     interval: 5m
     chart:
         spec:
