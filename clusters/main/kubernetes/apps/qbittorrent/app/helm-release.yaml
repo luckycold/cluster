@@ -95,5 +95,5 @@ spec:
         qbitportforward:
             QBT_PASSWORD: ${GENERIC_PASSWORD}
             QBT_USERNAME: ${GENERIC_USER}
-            enabled: false
+            enabled: true
         release_name: qbittorrent
