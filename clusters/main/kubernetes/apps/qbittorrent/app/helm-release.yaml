@@ -71,6 +71,7 @@ spec:
                         enabled: true
                         middlewares:
                             - name: auth
+                              namespace: ""
         persistence:
             config:
                 volsync:
