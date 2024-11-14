@@ -33,7 +33,6 @@ spec:
                     - host: files.${DOMAIN_0}
                       paths:
                         - path: /
-                          pathType: Prefix
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod

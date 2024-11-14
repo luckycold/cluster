@@ -102,4 +102,3 @@ spec:
                                 LLDAP_SMTP_OPTIONS__SERVER: ${SMTP_SERVER}
                                 LLDAP_SMTP_OPTIONS__USER: ${ADMIN_EMAIL}
                                 smtp: true
-                replicas: 1
