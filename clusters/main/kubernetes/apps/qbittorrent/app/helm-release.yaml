@@ -40,8 +40,6 @@ spec:
                     WIREGUARD_ADDRESSES: ${MAIN_WIREGUARD_ADDRESSES}
                     WIREGUARD_PRIVATE_KEY: ${MAIN_WIREGUARD_PRIVATE_KEY}
                     WIREGUARD_PUBLIC_KEY: ${MAIN_WIREGUARD_PUBLIC_KEY}
-                excludedNetworks_IPv4:
-                    - ${MAIN_EXCLUDED_NETWORK}
                 killSwitch: true
                 type: gluetun
         credentials:
