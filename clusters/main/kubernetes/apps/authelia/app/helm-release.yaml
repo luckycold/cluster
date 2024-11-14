@@ -174,11 +174,6 @@ spec:
                 sender: ${ADMIN_EMAIL}
                 startup_check_address: test@authelia.com
                 subject: '[Authelia] {title}'
-                timeout: 5s
-                tls:
-                    minimum_version: TLS1.2
-                    server_name: ""
-                    skip_verify: true
                 username: ${ADMIN_EMAIL}
         password_policy:
             zxcvbn:
