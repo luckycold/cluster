@@ -38,6 +38,9 @@ spec:
                     SERVER_CITIES: ${MAIN_VPN_CITIES}
                 killSwitch: true
                 type: gluetun
+                excludedNetworks_IPv4:
+                    - "192.168.0.0/23"
+                excludedNetworks_IPv6: []
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
