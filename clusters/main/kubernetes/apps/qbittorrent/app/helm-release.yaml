@@ -79,7 +79,6 @@ spec:
           - host: t.${DOMAIN_0}
             paths:
               - path: /
-                pathType: Prefix
     persistence:
       config:
         volsync:
