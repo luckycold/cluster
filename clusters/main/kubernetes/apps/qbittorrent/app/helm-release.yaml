@@ -70,3 +70,10 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+    persistence:
+      nas:
+        enabled: true
+        type: nfs
+        mountPath: /mnt/Media
+        path: /data
+        server: ${NAS_DOMAIN}
