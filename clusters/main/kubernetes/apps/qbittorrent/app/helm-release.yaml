@@ -38,16 +38,16 @@ spec:
   uninstall:
     keepHistory: false
   values:
-  credentials:
-    ${VOLSYNC_BACKUP_MAIN_NAME}:
-      accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
-      bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
-      encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
-      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-      path: ""
-      secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
-      type: s3
-      url: ${VOLSYNC_BACKUP_MAIN_URL}
+    credentials:
+        ${VOLSYNC_BACKUP_MAIN_NAME}:
+            accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+            bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+            encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+            name: ${VOLSYNC_BACKUP_MAIN_NAME}
+            path: ""
+            secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+            type: s3
+            url: ${VOLSYNC_BACKUP_MAIN_URL}
     qbitportforward:
       enabled: false
       QBT_USERNAME: "${GENERIC_USER}"
