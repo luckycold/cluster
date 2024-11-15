@@ -74,6 +74,6 @@ spec:
       nas:
         enabled: true
         type: nfs
-        mountPath: /mnt/Media
-        path: /data
+        mountPath: /data
+        path: /mnt/Media
         server: ${NAS_DOMAIN}
