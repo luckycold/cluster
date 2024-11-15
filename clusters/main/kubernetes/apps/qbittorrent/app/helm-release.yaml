@@ -82,22 +82,28 @@ spec:
             paths:
               - path: /
     persistence:
-      config:
-        volsync:
-          - name: ${VOLSYNC_BACKUP_MAIN_NAME}
-            credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-            dest:
-              enabled: true
-              annotations:
-                volsync.backube/privileged-movers: "true"
-            src:
-              enabled: true
-              annotations:
-                volsync.backube/privileged-movers: "true"
-            type: restic
+    #   config:
+    #     volsync:
+    #       - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+    #         credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+    #         dest:
+    #           enabled: true
+    #           annotations:
+    #             volsync.backube/privileged-movers: "true"
+    #         src:
+    #           enabled: true
+    #           annotations:
+    #             volsync.backube/privileged-movers: "true"
+    #         type: restic
       nas:
         enabled: true
         type: nfs
         mountPath: /data
         path: /mnt/Media
+        server: ${NAS_DOMAIN}
+      nas-themes:
+        enabled: true
+        type: nfs
+        mountPath: /config/themes
+        path: /mnt/Apps/config/qbittorrent/themes
         server: ${NAS_DOMAIN}
