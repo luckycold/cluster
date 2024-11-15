@@ -52,22 +52,15 @@ spec:
                 prometheusRule:
                     enabled: false
         persistence:
-            config:
+            nas:
                 enabled: true
-                targetSelector:
-                    exportarr:
-                        exportarr:
-                            mountPath: /config
-                            readOnly: true
-                    main:
-                        main:
-                            mountPath: /config
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: true
-                      type: restic
+                type: nfs
+                mountPath: /data
+                path: /mnt/Media
+                server: ${NAS_DOMAIN}
+            backups:
+                enabled: true
+                type: nfs
+                mountPath: /config/Backups
+                path: /mnt/Apps/backups/readarr
         release_name: readarr
