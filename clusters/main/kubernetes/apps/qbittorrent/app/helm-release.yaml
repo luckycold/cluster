@@ -65,7 +65,7 @@ spec:
           OPENVPN_USER: "${MAIN_OPENVPN_USER}"
           OPENVPN_PASSWORD: "${MAIN_OPENVPN_PASSWORD}"
           SERVER_CITIES: ${MAIN_VPN_CITIES}
-          VPN_PORT_FORWARDING: "off"
+          VPN_PORT_FORWARDING: "on"
     ingress:
       main:
         enabled: true
