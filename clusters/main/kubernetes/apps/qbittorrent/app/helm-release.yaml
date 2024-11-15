@@ -1,90 +1,72 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: qbittorrent
-    namespace: qbittorrent
+  name: qbittorrent
+  namespace: qbittorrent
 spec:
-    postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              version: v1
-              kind: Deployment
-              name: qbittorrent
-            patch: |
-              - op: add
-                path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
-                value: 1
-    interval: 5m
-    chart:
-        spec:
-            chart: qbittorrent
-            version: 22.1.6
-            sourceRef:
-                kind: HelmRepository
-                name: truecharts
-                namespace: flux-system
-    releaseName: qbittorrent
-    values:
-        TZ: US/Central
-        # addons:
-        #     vpn:
-        #         env:
-        #             VPN_PORT_FORWARDING: "off"
-        #             VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
-        #             VPN_TYPE: ${MAIN_VPN_TYPE}
-        #             OPENVPN_USER: ${MAIN_OPENVPN_USER}
-        #             OPENVPN_PASSWORD: ${MAIN_OPENVPN_PASSWORD}
-        #             SERVER_CITIES: ${MAIN_VPN_CITIES}
-        #         killSwitch: true
-        #         type: gluetun
-        #         excludedNetworks_IPv4:
-        #             - "192.168.0.0/23"
-        #         excludedNetworks_IPv6: []
-        credentials:
-            ${VOLSYNC_BACKUP_MAIN_NAME}:
-                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
-                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
-                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
-                name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                path: ""
-                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
-                type: s3
-                url: ${VOLSYNC_BACKUP_MAIN_URL}
-        ingress:
-            main:
-                enabled: true
-                hosts:
-                    - host: t.${DOMAIN_0}
-                      paths:
-                        - path: /
-                integrations:
-                    certManager:
-                        certificateIssuer: domain-0-le-prod
-                        enabled: true
-                    homepage:
-                        enabled: false
-                    traefik:
-                        enabled: true
-                        middlewares:
-                            - name: auth
-                              namespace: "traefik"
-        # persistence:
-        #     config:
-        #         volsync:
-        #             - name: ${VOLSYNC_BACKUP_MAIN_NAME}
-        #               credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-        #               dest:
-        #                 enabled: true
-        #                 annotations:
-        #                     volsync.backube/privileged-movers: "true"
-        #               src:
-        #                 enabled: true
-        #                 annotations:
-        #                     volsync.backube/privileged-movers: "true"
-        #               type: restic
-        qbitportforward:
-            QBT_PASSWORD: ${GENERIC_PASSWORD}
-            QBT_USERNAME: ${GENERIC_USER}
-            enabled: false
-        release_name: qbittorrent
+  interval: 15m
+  chart:
+    spec:
+      chart: qbittorrent
+      version: 22.1.6
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  postRenderers:
+  - kustomize:
+      patches:
+        - target:
+            version: v1
+            kind: Deployment
+            name: qbittorrent
+          patch: |
+            - op: add
+              path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
+              value: 1
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    qbitportforward:
+      enabled: true
+      QBT_USERNAME: "${GENERIC_USER}"
+      QBT_PASSWORD: "${GENERIC_PASSWORD}"
+    addons:
+      vpn:
+        type: gluetun
+        killSwitch: true
+        excludedNetworks_IPv4:
+          - "192.168.0.0/23"
+        excludedNetworks_IPv6: []
+        env:
+          VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
+          VPN_TYPE: ${MAIN_VPN_TYPE}
+          OPENVPN_USER: "${MAIN_OPENVPN_USER}"
+          OPENVPN_PASSWORD: "${MAIN_OPENVPN_PASSWORD}"
+          SERVER_CITIES: ${MAIN_VPN_CITIES}
+          VPN_PORT_FORWARDING: "off"
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        hosts:
+          - host: t.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
