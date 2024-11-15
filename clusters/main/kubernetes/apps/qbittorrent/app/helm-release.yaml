@@ -108,3 +108,4 @@ spec:
         type: nfs
         mountPath: /config/old
         path: /mnt/Apps/config/qbittorrent/qBittorrent
+        server: ${NAS_DOMAIN}
