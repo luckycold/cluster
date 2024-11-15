@@ -82,15 +82,15 @@ spec:
             paths:
               - path: /
     persistence:
-      # config:
-      #   volsync:
-      #     - name: ${VOLSYNC_BACKUP_MAIN_NAME}
-      #       credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-      #       dest:
-      #         enabled: true
-      #       src:
-      #         enabled: true
-      #       type: restic
+      config:
+        volsync:
+          - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+            credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+            dest:
+              enabled: true
+            src:
+              enabled: true
+            type: restic
       nas:
         enabled: true
         type: nfs
@@ -102,10 +102,4 @@ spec:
         type: nfs
         mountPath: /config/themes
         path: /mnt/Apps/config/qbittorrent/themes
-        server: ${NAS_DOMAIN}
-      old:
-        enabled: true
-        type: nfs
-        mountPath: /config/old
-        path: /mnt/Apps/config/qbittorrent/qBittorrent
         server: ${NAS_DOMAIN}
