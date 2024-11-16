@@ -35,7 +35,6 @@ spec:
                     - host: jf.${DOMAIN_0}
                       paths:
                         - path: /
-                          pathType: Prefix
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
@@ -83,7 +82,7 @@ spec:
                         targetPort: 7359
             main:
                 enabled: true
-                loadBalancerIP: 192.168.0.96
+                loadBalancerIP: ${JELLYFIN_IP}
                 ports:
                     main:
                         port: 8096
