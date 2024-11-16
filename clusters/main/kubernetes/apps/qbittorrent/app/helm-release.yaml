@@ -58,6 +58,8 @@ spec:
         killSwitch: true
         excludedNetworks_IPv4:
           - "192.168.0.0/23"
+          - "172.16.0.0/16"
+          - "172.16.0.0/16"
         excludedNetworks_IPv6: []
         env:
           VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
@@ -93,13 +95,13 @@ spec:
             src:
               enabled: true
             type: restic
-      nas:
+      media:
         enabled: true
         type: nfs
         mountPath: /data
         path: /mnt/Media
         server: ${NAS_DOMAIN}
-      nas-themes:
+      themes:
         enabled: true
         type: nfs
         mountPath: /config/themes

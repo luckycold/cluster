@@ -10,3 +10,8 @@ resources:
   - qbitmanage/ks.yaml
   - qbittorrent/ks.yaml
   - readarr/ks.yaml
+  - freshrss/ks.yaml
+  - lidarr/ks.yaml
+  - prowlarr/ks.yaml
+  - radarr/ks.yaml
+  - sonarr/ks.yaml
