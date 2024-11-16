@@ -36,7 +36,7 @@ spec:
                 readOnly: false
                 server: ${NAS_DOMAIN}
                 type: nfs
-            data:
+            media:
                 autoPermissions:
                     enabled: false
                 enabled: true

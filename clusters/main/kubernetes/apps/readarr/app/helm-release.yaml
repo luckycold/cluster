@@ -52,7 +52,7 @@ spec:
                 prometheusRule:
                     enabled: false
         persistence:
-            nas:
+            media:
                 enabled: true
                 type: nfs
                 mountPath: /data

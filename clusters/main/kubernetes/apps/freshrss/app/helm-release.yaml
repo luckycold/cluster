@@ -61,12 +61,6 @@ spec:
                         annotations:
                             volsync.backube/privileged-movers: "true"
                       type: restic
-            backups:
-                enabled: true
-                type: nfs
-                mountPath: /backups
-                path: /mnt/Apps/backups/freshrss
-                server: ${NAS_DOMAIN}
             extensions:
                 enabled: true
                 type: nfs

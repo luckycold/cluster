@@ -52,6 +52,12 @@ spec:
                 prometheusRule:
                     enabled: false
         persistence:
+            media:
+                enabled: true
+                type: nfs
+                mountPath: /data
+                path: /mnt/Media
+                server: ${NAS_DOMAIN}
             backups:
                 enabled: true
                 type: nfs
