@@ -72,9 +72,6 @@ spec:
             requireHTTPS: false
             serverIP: ${PLEX_IP}
         release_name: plex
-        resources:
-            limits:
-                nvidia.com/gpu: 1
         service:
             main:
                 enabled: true
