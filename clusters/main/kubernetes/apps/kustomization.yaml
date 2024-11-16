@@ -20,3 +20,6 @@ resources:
   - proxmox/ks.yaml
   - rss-bridge/ks.yaml
   - truenas/ks.yaml
+  - jellyfin/ks.yaml
+  - overseerr/ks.yaml
+  - plex/ks.yaml
