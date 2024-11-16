@@ -170,7 +170,7 @@ spec:
                 disable_require_tls: false
                 enabled: true
                 host: ${SMTP_SERVER}
-                identifier: Lucky Admin
+                identifier: "Lucky Admin"
                 plain_password: ${SMTP_PASSWORD}
                 port: 587
                 sender: ${ADMIN_EMAIL}
