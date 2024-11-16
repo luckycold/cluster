@@ -48,7 +48,7 @@ spec:
               - Remote-Name
               - Remote-Email
             authResponseHeadersRegex: ""
-            name: auth
+            name: authelia
             tls:
               insecureSkipVerify: false
             trustForwardHeader: true

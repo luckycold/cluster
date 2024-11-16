@@ -78,6 +78,8 @@ spec:
             enabled: true
             entrypoints:
               - websecure
+            middlewares:
+              - name: authelia
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod

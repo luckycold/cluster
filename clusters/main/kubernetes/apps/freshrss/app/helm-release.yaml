@@ -46,7 +46,7 @@ spec:
                         entrypoints:
                             - websecure
                         middlewares:
-                            - name: auth
+                            - name: authelia
         persistence:
             config:
                 volsync:
