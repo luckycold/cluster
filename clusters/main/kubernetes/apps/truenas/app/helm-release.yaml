@@ -41,7 +41,7 @@ spec:
         service:
             main:
                 enabled: true
-                externalIP: 192.168.1.157
+                externalIP: ${NAS_DOMAIN}
                 ports:
                     main:
                         enabled: true
