@@ -57,4 +57,5 @@ spec:
                 type: nfs
                 mountPath: /config/Backups
                 path: /mnt/Apps/backups/sonarr
+                server: ${NAS_DOMAIN}
         release_name: sonarr

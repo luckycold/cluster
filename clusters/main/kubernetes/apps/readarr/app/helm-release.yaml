@@ -63,4 +63,5 @@ spec:
                 type: nfs
                 mountPath: /config/Backups
                 path: /mnt/Apps/backups/readarr
+                server: ${NAS_DOMAIN}
         release_name: readarr

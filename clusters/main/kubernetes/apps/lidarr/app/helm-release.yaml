@@ -56,4 +56,5 @@ spec:
                 type: nfs
                 mountPath: /config/Backups
                 path: /mnt/Apps/backups/lidarr
+                server: ${NAS_DOMAIN}
         release_name: lidarr

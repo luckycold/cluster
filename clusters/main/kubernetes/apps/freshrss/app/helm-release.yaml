@@ -62,6 +62,7 @@ spec:
                 type: nfs
                 mountPath: /backups
                 path: /mnt/Apps/backups/freshrss
+                server: ${NAS_DOMAIN}
             extensions:
                 enabled: true
                 type: nfs

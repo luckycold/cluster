@@ -46,7 +46,6 @@ spec:
                             - websecure
                         middlewares:
                             - name: auth
-                              namespace: ""
         metrics:
             main:
                 enabled: false
@@ -58,4 +57,5 @@ spec:
                 type: nfs
                 mountPath: /config/Backups
                 path: /mnt/Apps/backups/radarr
+                server: ${NAS_DOMAIN}
         release_name: radarr
