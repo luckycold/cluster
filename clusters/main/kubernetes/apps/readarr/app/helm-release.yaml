@@ -44,8 +44,8 @@ spec:
                         enabled: true
                         entrypoints:
                             - websecure
-                        middlewares:
-                            - name: auth
+                        # middlewares:
+                        #     - name: auth
         metrics:
             main:
                 enabled: false
