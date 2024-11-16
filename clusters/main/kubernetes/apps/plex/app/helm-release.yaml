@@ -70,7 +70,7 @@ spec:
             additionalAdvertiseURL: https://plex.${DOMAIN_0}
             disableGDM: true
             requireHTTPS: false
-            serverIP: 192.168.0.100
+            serverIP: ${PLEX_IP}
         release_name: plex
         resources:
             limits:
@@ -78,5 +78,5 @@ spec:
         service:
             main:
                 enabled: true
-                loadBalancerIP: 192.168.0.100
+                loadBalancerIP: ${PLEX_IP}
                 type: LoadBalancer
