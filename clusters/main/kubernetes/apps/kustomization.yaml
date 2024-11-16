@@ -15,3 +15,8 @@ resources:
   - prowlarr/ks.yaml
   - radarr/ks.yaml
   - sonarr/ks.yaml
+  - flaresolverr/ks.yaml
+  - ntfy/ks.yaml
+  - proxmox/ks.yaml
+  - rss-bridge/ks.yaml
+  - truenas/ks.yaml
