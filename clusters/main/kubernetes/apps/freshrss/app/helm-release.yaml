@@ -68,4 +68,5 @@ spec:
                 type: nfs
                 path: /mnt/Apps/config/freshrss/extensions
                 mountPath: /app/www/extensions
+                server: ${NAS_DOMAIN}
         release_name: freshrss
