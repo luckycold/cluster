@@ -87,7 +87,7 @@ spec:
               - name: authelia
           certManager:
             enabled: true
-            certificateIssuer: domain-0-le-prod
+            certificateIssuer: domain-0-le-staging
         hosts:
           - host: t.${DOMAIN_0}
             paths:
