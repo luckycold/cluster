@@ -30,6 +30,6 @@ spec:
                                 PLEX_TOKEN: ${PLEX_TOKEN}
                                 SSL_BYPASS: "True"
                                 SYNC_FROM_PLEX_TO_JELLYFIN: "True"
-                                USER_MAPPING: ${JELLY_PLEX_USER_MAPPINGS}
+                                USER_MAPPING: '{"lucky": "luckycold"}'
                 replicas: 1
                 type: Deployment
