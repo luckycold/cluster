@@ -62,9 +62,9 @@ spec:
                             volsync.backube/privileged-movers: "true"
                       type: restic
             extensions:
-                enabled: true
+                enabled: false
                 type: nfs
                 path: /mnt/Apps/config/freshrss/extensions
-                mountPath: /app/www/extensions/extensions
+                mountPath: /app/www/extensions
                 server: ${NAS_DOMAIN}
         release_name: freshrss
