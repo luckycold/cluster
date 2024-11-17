@@ -55,7 +55,7 @@ spec:
                         enabled: false
                       name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
-                        enabled: false
+                        enabled: true
                       type: restic
             extensions:
                 enabled: true
