@@ -98,7 +98,7 @@ spec:
           - name: ${VOLSYNC_BACKUP_MAIN_NAME}
             credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
             dest:
-              enabled: true
+              enabled: false
             src:
               enabled: true
             type: restic
