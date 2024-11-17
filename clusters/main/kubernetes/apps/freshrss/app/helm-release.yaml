@@ -58,7 +58,7 @@ spec:
                         enabled: true
                       type: restic
             extensions:
-                enabled: false
+                enabled: true
                 type: nfs
                 path: /mnt/Apps/config/freshrss/extensions
                 mountPath: /app/www/extensions
