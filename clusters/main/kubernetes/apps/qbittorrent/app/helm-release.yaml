@@ -115,10 +115,10 @@ spec:
         path: /mnt/Apps/config/qbittorrent/themes
         server: ${NAS_DOMAIN}
       backup:
-        enabled: false
+        enabled: true
         type: nfs
         mountPath: /backup
-        path: /mnt/Apps/config/qbittorrent/config
+        path: /mnt/Apps/config/qbittorrent/qBittorrent
         server: ${NAS_DOMAIN}
     workload:
       qbitportforward:
