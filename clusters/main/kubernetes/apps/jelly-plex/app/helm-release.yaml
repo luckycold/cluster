@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: jelly-plex
+    namespace: jelly-plex
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: custom-app
+            version: 13.0.8
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: jelly-plex
+    values:
+        TZ: US/Central
+        release_name: jelly-plex
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                DRYRUN: "False"
+                                JELLYFIN_BASEURL: http://jellyfin.jellyfin.svc.cluster.local:8096
+                                JELLYFIN_TOKEN: ${JELLYFIN_TOKEN}
+                                PLEX_BASEURL: http://plex.plex.svc.cluster.local:32400
+                                PLEX_TOKEN: ${PLEX_TOKEN}
+                                SSL_BYPASS: "True"
+                                SYNC_FROM_PLEX_TO_JELLYFIN: "True"
+                                USER_MAPPING: ${JELLY_PLEX_USER_MAPPINGS}
+                replicas: 1
+                type: Deployment

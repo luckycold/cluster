@@ -88,5 +88,3 @@ spec:
                         port: 8096
                         targetPort: 8096
                 type: LoadBalancer
-        podOptions:
-            hostNetwork: true

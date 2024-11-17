@@ -114,3 +114,5 @@ spec:
         mountPath: /config/themes
         path: /mnt/Apps/config/qbittorrent/themes
         server: ${NAS_DOMAIN}
+    workload:
+      qbitportforward: false

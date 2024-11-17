@@ -23,3 +23,7 @@ resources:
   - jellyfin/ks.yaml
   - overseerr/ks.yaml
   - plex/ks.yaml
+  - jelly-plex/ks.yaml
+  - maintainerr/ks.yaml
+  - plex-auto-languages/ks.yaml
+  - tautulli/ks.yaml

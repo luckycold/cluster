@@ -1,19 +1,19 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: freshrss
-    namespace: freshrss
+    name: maintainerr
+    namespace: maintainerr
 spec:
     interval: 15m
     chart:
         spec:
-            chart: freshrss
-            version: 19.1.2
+            chart: maintainerr
+            version: 3.0.9
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: freshrss
+    releaseName: maintainerr
     values:
         TZ: US/Central
         credentials:
@@ -30,7 +30,7 @@ spec:
             main:
                 enabled: true
                 hosts:
-                    - host: rss.${DOMAIN_0}
+                    - host: maintainerr.${DOMAIN_0}
                       paths:
                         - path: /
                 ingressClassName: ""
@@ -46,25 +46,15 @@ spec:
                         entrypoints:
                             - websecure
                         middlewares:
-                            - name: authelia
+                            - name: auth
         persistence:
-            config:
+            data:
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
                         enabled: true
-                        annotations:
-                            volsync.backube/privileged-movers: "true"
                       name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
                         enabled: true
-                        annotations:
-                            volsync.backube/privileged-movers: "true"
                       type: restic
-            extensions:
-                enabled: true
-                type: nfs
-                path: /mnt/Apps/config/freshrss/extensions
-                mountPath: /app/www/extensions/extensions
-                server: ${NAS_DOMAIN}
-        release_name: freshrss
+        release_name: maintainerr
