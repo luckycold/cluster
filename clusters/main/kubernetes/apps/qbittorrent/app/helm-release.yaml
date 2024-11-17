@@ -49,7 +49,7 @@ spec:
             type: s3
             url: ${VOLSYNC_BACKUP_MAIN_URL}
     qbitportforward:
-      enabled: false
+      enabled: true
       QBT_USERNAME: "${GENERIC_USER}"
       QBT_PASSWORD: "${GENERIC_PASSWORD}"
     addons:
@@ -122,4 +122,4 @@ spec:
         server: ${NAS_DOMAIN}
     workload:
       qbitportforward:
-        enabled: false
+        enabled: true
