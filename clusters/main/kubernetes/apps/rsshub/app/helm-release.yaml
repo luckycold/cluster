@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: rsshub
-            version: 13.1.39
+            version: 13.1.42
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
