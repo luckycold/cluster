@@ -119,6 +119,7 @@ spec:
         type: nfs
         mountPath: /backup
         path: /mnt/Apps/config/qbittorrent/config
+        server: ${NAS_DOMAIN}
     workload:
       qbitportforward:
         enabled: false
