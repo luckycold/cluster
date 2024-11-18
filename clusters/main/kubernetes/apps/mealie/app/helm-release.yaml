@@ -60,9 +60,37 @@ spec:
             password: ${SMTP_PASSWORD}
             host: ${SMTP_SERVER}
             from_email: ${ADMIN_EMAIL}
+        ldap:
+            auth_enabled: true
+            server_url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
+            tls_insecure: true
+            enable_starttls: false
+            base_dn: ${AUTHELIA_LDAP_BASE_DN}
+            query_bind: ${AUTHELIA_LDAP_USER}
+            query_password: ""
+            user_filter: ""
+            admin_filter: "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))"
+            id_attribute: uid
+            name_attribute: name
+            mail_attribute: mail
+        oidc:
+            auth_enabled: true
+            signup_enabled: false
+            configuration_url: ${EXTERNAL_OIDC_CONFIGURATION_URL}
+            client_id: ${MEALIE_OIDC_CLIENT_ID}
+            client_secret: ${MEALIE_OIDC_CLIENT_SECRET}
+            provider_name: "Proton"
+            auto_redirect: true
         cnpg:
             main:
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
                     revision: "1"
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                OPENAI_API_KEY: ${OPENAI_API_KEY}
