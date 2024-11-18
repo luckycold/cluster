@@ -6,7 +6,6 @@ resources:
   - rsshub/ks.yaml
   - lldap/ks.yaml
   - authelia/ks.yaml
-  - generic-device-plugin/ks.yaml
   - qbitmanage/ks.yaml
   - qbittorrent/ks.yaml
   - readarr/ks.yaml
