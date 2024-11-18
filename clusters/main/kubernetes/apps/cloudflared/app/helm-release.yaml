@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: cloudflared
-            version: 17.8.0
+            version: 12.7.1
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -16,29 +16,10 @@ spec:
     releaseName: cloudflared
     values:
         release_name: cloudflared
-        ingress:
-            main:
-                enabled: true
-                hosts:
-                    - host: cloudflared.${DOMAIN_0}
-                      paths:
-                        - path: /
-                integrations:
-                    certManager:
-                        certificateIssuer: domain-0-le-prod
-                        enabled: true
-                    homepage:
-                        enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: true
-                        entrypoints:
-                            - websecure
         workload:
             main:
                 podSpec:
                     containers:
                         main:
                             env:
-                                cloudflared_DEFAULT_EMAIL: ${GENERIC_EMAIL}
-                                cloudflared_DEFAULT_PASSWORD: ${GENERIC_PASSWORD}
+                                TUNNEL_TOKEN: ${CLOUDFLARED_TUNNEL_TOKEN}
