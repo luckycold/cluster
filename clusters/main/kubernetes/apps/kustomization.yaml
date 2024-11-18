@@ -28,3 +28,4 @@ resources:
   - tautulli/ks.yaml
   - mealie/ks.yaml
   - pgadmin/ks.yaml
+  - cloudflared/ks.yaml
