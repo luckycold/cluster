@@ -59,3 +59,9 @@ spec:
             password: ${SMTP_PASSWORD}
             host: ${SMTP_SERVER}
             from_email: ${ADMIN_EMAIL}
+        cnpg:
+            main:
+                backups:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    enabled: true
+                    revision: "1"
