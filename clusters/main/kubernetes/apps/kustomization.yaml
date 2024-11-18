@@ -26,3 +26,4 @@ resources:
   - maintainerr/ks.yaml
   - plex-auto-languages/ks.yaml
   - tautulli/ks.yaml
+  - mealie/ks.yaml
