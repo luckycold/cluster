@@ -27,3 +27,4 @@ resources:
   - plex-auto-languages/ks.yaml
   - tautulli/ks.yaml
   - mealie/ks.yaml
+  - pgadmin/ks.yaml
