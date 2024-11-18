@@ -16,6 +16,24 @@ spec:
     releaseName: pgadmin
     values:
         release_name: pgadmin
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: pgadmin.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
         workload:
             main:
                 podSpec:
