@@ -54,3 +54,8 @@ spec:
                         enabled: true
                       type: restic
         release_name: mealie
+        smtp:
+            user: ${ADMIN_EMAIL}
+            password: ${SMTP_PASSWORD}
+            host: ${SMTP_SERVER}
+            from_email: ${ADMIN_EMAIL}
