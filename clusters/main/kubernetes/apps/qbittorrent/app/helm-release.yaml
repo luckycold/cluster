@@ -123,3 +123,5 @@ spec:
     workload:
       qbitportforward:
         enabled: true
+        env:
+            GTN_ADDR: '{{ printf "http://%v-vpn:8000" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
