@@ -64,3 +64,11 @@ spec:
                 path: /mnt/Apps/backups/lidarr
                 server: ${NAS_DOMAIN}
         release_name: lidarr
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                     # External | Basic | Forms
+                    LIDARR__AUTH__METHOD: "External"

@@ -15,7 +15,7 @@ spec:
                 namespace: flux-system
     releaseName: prowlarr
     values:
-        TZ: US/Central 
+        TZ: US/Central
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
@@ -59,3 +59,11 @@ spec:
                 path: /mnt/Apps/backups/prowlarr
                 server: ${NAS_DOMAIN}
         release_name: prowlarr
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                     # External | Basic | Forms
+                    PROWLARR__AUTH__METHOD: "External"

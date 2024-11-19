@@ -65,3 +65,11 @@ spec:
                 path: /mnt/Apps/backups/sonarr
                 server: ${NAS_DOMAIN}
         release_name: sonarr
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                     # External | Basic | Forms
+                    SONARR__AUTH__METHOD: "External"

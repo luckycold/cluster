@@ -65,3 +65,11 @@ spec:
                 path: /mnt/Apps/backups/readarr
                 server: ${NAS_DOMAIN}
         release_name: readarr
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                     # External | Basic | Forms
+                    READARR__AUTH__METHOD: "External"
