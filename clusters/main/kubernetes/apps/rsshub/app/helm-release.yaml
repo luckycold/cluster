@@ -57,5 +57,6 @@ spec:
                                 TITLE_LENGTH_LIMIT: 150
                                 TWITTER_COOKIE: ${RSSHUB_TWITTER_COOKIE}
                                 YOUTUBE_KEY: ""
+                                PATREON_SESSION_ID: ${RSSHUB_PATREON_COOKIE}
                 replicas: 1
                 type: Deployment
