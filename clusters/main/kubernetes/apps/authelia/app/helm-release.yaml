@@ -80,7 +80,7 @@ spec:
                     - '*.${DOMAIN_0}'
                   domain_regex: []
                   networks:
-                    - 192.168.0.0/16
+                    - 192.168.0.0/22
                   policy: bypass
                   resources: []
                   subject: []
