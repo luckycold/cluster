@@ -29,3 +29,6 @@ resources:
   - mealie/ks.yaml
   - pgadmin/ks.yaml
   - cloudflared/ks.yaml
+  - audiobookshelf/ks.yaml
+  - notifiarr/ks.yaml
+  - unpackerr/ks.yaml

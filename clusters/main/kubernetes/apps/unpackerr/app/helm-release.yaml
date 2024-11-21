@@ -1,0 +1,108 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: unpackerr
+    namespace: unpackerr
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: unpackerr
+            version: 7.3.1
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: unpackerr
+    values:
+        TZ: US/Central
+        addons:
+            codeserver:
+                enabled: false
+            netshoot:
+                enabled: false
+            vpn:
+                type: disabled
+        cnpg:
+            main:
+                backups:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    enabled: true
+                    revision: "1"
+                cluster:
+                    instances: 1
+                    singleNode: true
+                mode: standalone
+                password: ${unpackerr_CNPG_PASSWORD}
+                recovery:
+                    method: object_store
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: unpackerr.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            downloads:
+                enabled: true
+                mountPath: /downloads
+                path: /mnt/Media/downloads/torrents
+                readOnly: false
+                server: ${NAS_DOMAIN}
+                type: nfs
+        release_name: unpackerr
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                # General config
+                                UN_QUIET: false
+                                UN_DEBUG: false
+                                UN_ERROR_STDERR: false
+                                UN_LOG_QUEUES: 1m
+                                UN_LOG_FILES: 10
+                                UN_LOG_FILE_MB: 10
+                                UN_INTERVAL: 2m
+                                UN_START_DELAY: 1m
+                                UN_RETRY_DELAY: 5m
+                                UN_MAX_RETRIES: 3
+                                UN_PARALLEL: 1
+                                UN_FILE_MODE: 0644
+                                UN_DIR_MODE: 0755
+                                UN_ACTIVITY: false
+                                # Sonarr Config
+                                UN_SONARR_0_URL: http://sonarr.sonarr.svc.cluster.local:8989
+                                UN_SONARR_0_API_KEY: ${SONARR_API_KEY}
+                                # Radarr Config
+                                UN_RADARR_0_URL: http://radarr.radarr.svc.cluster.local:7878
+                                UN_RADARR_0_API_KEY: ${RADARR_API_KEY}
+                                # Lidarr Config
+                                UN_LIDARR_0_URL: http://lidarr.lidarr.svc.cluster.local:8686
+                                UN_LIDARR_0_API_KEY: ${LIDARR_API_KEY}
+                                # Readarr Config
+                                UN_READARR_0_URL: http://readarr.readarr.svc.cluster.local:8787
+                                UN_READARR_0_API_KEY: ${READARR_API_KEY}
