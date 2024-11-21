@@ -62,4 +62,4 @@ spec:
                         entrypoints:
                             - websecure
         notifiarr:
-            apikey: ${GENERIC_PASSWORD}
+            apikey: ${NOTIFIARR_API_KEY}
