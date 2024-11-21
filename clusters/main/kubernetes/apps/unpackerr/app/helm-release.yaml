@@ -23,20 +23,6 @@ spec:
                 enabled: false
             vpn:
                 type: disabled
-        cnpg:
-            main:
-                backups:
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                    enabled: true
-                    revision: "1"
-                cluster:
-                    instances: 1
-                    singleNode: true
-                mode: standalone
-                password: ${unpackerr_CNPG_PASSWORD}
-                recovery:
-                    method: object_store
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
@@ -47,23 +33,6 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
-        ingress:
-            main:
-                enabled: true
-                hosts:
-                    - host: unpackerr.${DOMAIN_0}
-                      paths:
-                        - path: /
-                integrations:
-                    certManager:
-                        certificateIssuer: domain-0-le-prod
-                        enabled: true
-                    homepage:
-                        enabled: false
-                    traefik:
-                        enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             downloads:
                 enabled: true
