@@ -44,5 +44,22 @@ spec:
                 server: ${NAS_DOMAIN}
                 type: nfs
         release_name: notifiarr
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: notifiarr.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
         notifiarr:
             apikey: ${GENERIC_PASSWORD}
