@@ -59,6 +59,4 @@ spec:
                 mountPath: /books
                 server: ${NAS_DOMAIN}
                 type: nfs
-            manga:
-                enabled: false
         release_name: kavita
