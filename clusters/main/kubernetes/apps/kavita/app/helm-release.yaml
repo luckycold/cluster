@@ -56,7 +56,7 @@ spec:
             books:
                 enabled: true
                 path: /mnt/Media/library/books/eBooks
-                hostPath: /books
+                mountPath: /books
                 server: ${NAS_DOMAIN}
                 type: nfs
             manga:
