@@ -17,6 +17,11 @@ spec:
     values:
         TZ: US/Central
         release_name: jelly-plex
+        service:
+            main:
+                ports:
+                    main:
+                        port: 10400
         workload:
             main:
                 podSpec:

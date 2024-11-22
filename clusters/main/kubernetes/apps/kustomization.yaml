@@ -32,3 +32,4 @@ resources:
   - audiobookshelf/ks.yaml
   - notifiarr/ks.yaml
   - unpackerr/ks.yaml
+  - kavita/ks.yaml
