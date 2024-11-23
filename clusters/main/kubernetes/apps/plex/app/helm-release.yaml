@@ -54,12 +54,6 @@ spec:
                       src:
                         enabled: true
                       type: restic
-            transcode:
-                enabled: true
-                medium: Memory
-                mountPath: /transcode
-                targetSelectAll: true
-                type: emptyDir
             media:
                 enabled: true
                 type: nfs
