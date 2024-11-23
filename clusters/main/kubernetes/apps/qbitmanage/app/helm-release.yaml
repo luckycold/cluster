@@ -64,7 +64,7 @@ spec:
                                 QBT_SCHEDULE: 30
                                 QBT_SHARE_LIMITS: true
                                 QBT_SKIP_CLEANUP: false
-                                QBT_SKIP_QB_VERSION_CHECK: false
+                                QBT_SKIP_QB_VERSION_CHECK: true
                                 QBT_TAG_NOHARDLINKS: true
                                 QBT_TAG_TRACKER_ERROR: true
                                 QBT_TAG_UPDATE: true
