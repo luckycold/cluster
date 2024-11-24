@@ -62,10 +62,10 @@ spec:
         env:
           VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
           VPN_TYPE: ${MAIN_VPN_TYPE}
-          # OPENVPN_USER: "${MAIN_OPENVPN_USER}"
-          # OPENVPN_PASSWORD: "${MAIN_OPENVPN_PASSWORD}"
+          OPENVPN_USER: "${MAIN_OPENVPN_USER}"
+          OPENVPN_PASSWORD: "${MAIN_OPENVPN_PASSWORD}"
           # WIREGUARD_PUBLIC_KEY: ${MAIN_WIREGUARD_PUBLIC_KEY}
-          WIREGUARD_PRIVATE_KEY: ${MAIN_WIREGUARD_PRIVATE_KEY}
+          # WIREGUARD_PRIVATE_KEY: ${MAIN_WIREGUARD_PRIVATE_KEY}
           # WIREGUARD_ENDPOINT_IP: ${MAIN_VPN_ENDPOINT}
           # WIREGUARD_ENDPOINT_PORT: ${MAIN_VPN_ENDPOINT_PORT}
           # WIREGUARD_ADDRESSES: ${MAIN_WIREGUARD_ADDRESSES}
@@ -87,16 +87,12 @@ spec:
             middlewares:
               - name: authelia
           certManager:
-            enabled: false
+            enabled: true
             certificateIssuer: domain-0-le-prod
         hosts:
           - host: t.${DOMAIN_0}
             paths:
               - path: /
-        tls:
-          - hosts:
-              - qbittorrent.${DOMAIN_0}
-            clusterIssuer: domain-0-wildcard
     persistence:
       config:
         volsync:
