@@ -84,3 +84,8 @@ spec:
 
                     # Cron expression for scheduled rescanning
                     # SCHEDULED_RESCAN_CRON: "0 3 * * *"
+        redis:
+            password: ${ROMM_REDIS_PASSWORD}
+        mariadb:
+            password: ${ROMM_MARIADB_PASSWORD}
+            rootPassword: ${ROMM_MARIADB_ROOT_PASSWORD}
