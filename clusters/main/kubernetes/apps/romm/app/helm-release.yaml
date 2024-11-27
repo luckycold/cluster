@@ -41,6 +41,7 @@ spec:
                         enabled: false
                     traefik:
                         enabled: true
+                        allowCors: true
                         entrypoints:
                             - websecure
         persistence:
