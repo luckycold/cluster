@@ -1,0 +1,181 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: minecraft
+    namespace: minecraft
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: minecraft
+            version: 11.2.4
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: minecraft
+    values:
+        TZ: US/Central
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: dynmap.${DOMAIN_0}
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            data:
+                targetSelector:
+                    main:
+                        main:
+                            type: nfs
+                            server: ${NAS_DOMAIN}
+                            path: /mnt/Apps/config/minecraft
+                            mountPath: /data
+            backups:
+                targetSelector:
+                    main:
+                        mcbackup:
+                            path: /mnt/backups/minecraft
+                            mountPath: /backups
+                            server: ${NAS_DOMAIN}
+                            type: nfs
+        release_name: minecraft
+        service:
+            main:
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
+            dynmap:
+                enabled: true
+                ports:
+                    dynmap:
+                        enabled: true
+                        port: 25575
+        resources:
+            limits:
+                memory: 14Gi
+            requests:
+                memory: 6Gi
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  imageSelector: image
+                  env:
+                    EULA: "TRUE"
+                    OVERRIDE_SERVER_PROPERTIES: true
+                    VERSION: "LATEST"
+                    TYPE: "PAPER"
+                    DIFFICULTY: normal
+                    MAX_PLAYERS: 20
+                    MAX_WORLD_SIZE: 10000
+                    ALLOW_NETHER: true
+                    ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+                    ENABLE_COMMAND_BLOCK: true
+                    FORCE_GAMEMODE: false
+                    GENERATE_STRUCTURES: true
+                    HARDCORE: false
+                    MAX_BUILD_HEIGHT: 256
+                    MAX_TICK_TIME: 60000
+                    SPAWN_ANIMALS: true
+                    SPAWN_MONSTERS: true
+                    SPAWN_NPCS: true
+                    VIEW_DISTANCE: 16
+                    MODE: survival
+                    MOTD: "Carson will join one day :)"
+                    PVP: true
+                    LEVEL_TYPE: DEFAULT
+                    LEVEL: world
+                    ONLINE_MODE: true
+                    MEMORY: 8G
+                    RCON_PASSWORD: "${GENERIC_PASSWORD}"
+                    ALLOW_FLIGHT: TRUE
+                    RESOURCE_PACK: https://www.curseforge.com/minecraft/texture-packs/stay-true/download/5493450
+                    SPIGET_RESOURCES:
+                        # Slugs from urls like so: https://www.spigotmc.org/resources/luckperms.28140/
+                        # Vault
+                        - 34315
+                    MODRINTH_PROJECTS:
+                        - luckperms
+                        - viaversion
+                        - viarewind
+                        - worldedit
+                        - dynmap
+                        - coreprotect
+                        - multiverse-core
+                        - multiverse-inventories
+                        - invsee++
+                        - waypoints
+                    PLUGINS:
+                        - https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+                        - https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+                    # PACKWIZ_URL: ""
+                    # CUSTOM_SERVER: ""
+                    # QUILT_LOADER_VERSION: ""
+                    # QUILT_LAUNCHER: ""
+                    # QUILT_LAUNCHER_URL: ""
+                    # PUFFERFISH_BUILD: "lastSuccessfulBuild"
+                    # FORGEVERSION: ""
+                    # FORGE_INSTALLER: ""
+                    # FORGE_INSTALLER_URL: ""
+                    # FABRIC_LOADER_VERSION: ""
+                    # FABRIC_INSTALLER: ""
+                    # FABRIC_INSTALLER_URL: ""
+                    # SPIGOT_DOWNLOAD_URL: ""
+                    # BUILD_FROM_SOURCE: false
+                    # BUKKIT_DOWNLOAD_URL: ""
+                    # PAPERBUILD: ""
+                    # PAPER_DOWNLOAD_URL: ""
+                    # AIRPLANE_BUILD: "lastSuccessfulBuild"
+                    # MAGMA_CHANNEL: "stable"
+                    # MOHIST_BUILD: ""
+                    # CANYON_BUILD: ""
+                    # SPONGEBRANCH: "STABLE"
+                    # SPONGEVERSION: ""
+                    # LIMBO_BUILD: "LATEST"
+                    # LIMBO_SCHEMA_FILENAME: "default.schem"
+                    # CRUCIBLE_RELEASE: "latest"
+                    # FTB_MODPACK_ID: ""
+                    # FTB_MODPACK_VERSION_ID: ""
+                    # CF_SERVER_MOD: ""
+                    # CF_BASE_DIR: ""
+                    # USE_MODPACK_START_SCRIPT: true
+                    # FTB_LEGACYJAVAFIXER: false
+                    # WHITELIST: ""
+                    OPS: "lukeycold"
+                    EXISTING_OPS_FILE: "SYNCHRONIZE"
+                    # ICON: ""
+                    # SEED: ""
+                    # GENERATOR_SETTINGS: ""
+                    # WORLD: ""
+                    # FORCE_REDOWNLOAD: false
+                    # USE_FLARE_FLAGS: false
+                    # USE_AIKAR_FLAGS: true
+                    # USE_SIMD_FLAGS: false
+                    # JVM_OPTS: ""
+                    # JVM_XX_OPTS: ""
+                    # CF_API_KEY
+                    # CF_PAGE_URL
+                    # CF_SLUG
+                    # CF_EXCLUDE_INCLUDE_FILE
+                    # CF_EXCLUDE_MODS
+                    # CF_FORCE_INCLUDE_MODS
+                    # CF_FORCE_SYNCHRONIZE
+                    # CF_OVERRIDES_SKIP_EXISTING
+                    # CF_PARALLEL_DOWNLOADS
+                    # CF_SET_LEVEL_FROM
+                mcbackup:
+                  enabled: true
+                  imageSelector: mcBackupImage
+                  env:
+                    BACKUP_INTERVAL: "1w"
+                    PRUNE_BACKUPS_DAYS: "-1"
+                    PAUSE_IF_NO_PLAYERS: "true"
+                    PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
