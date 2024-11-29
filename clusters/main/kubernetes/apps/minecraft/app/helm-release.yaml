@@ -101,7 +101,7 @@ spec:
                     SPIGET_RESOURCES:
                         # Slugs from urls like so: https://www.spigotmc.org/resources/luckperms.28140/
                         # Vault
-                        - 34315
+                        - "34315"
                     MODRINTH_PROJECTS:
                         - luckperms
                         - viaversion
