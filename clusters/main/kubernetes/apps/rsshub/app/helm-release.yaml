@@ -55,7 +55,7 @@ spec:
                                 DISALLOW_ROBOT: true
                                 GITHUB_ACCESS_TOKEN: ""
                                 TITLE_LENGTH_LIMIT: 150
-                                TWITTER_COOKIE: ${RSSHUB_TWITTER_COOKIE}
+                                TWITTER_AUTH_TOKEN: ${RSSHUB_TWITTER_COOKIE}
                                 YOUTUBE_KEY: ""
                                 PATREON_SESSION_ID: ${RSSHUB_PATREON_COOKIE}
                 replicas: 1
