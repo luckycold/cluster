@@ -98,24 +98,22 @@ spec:
                     RCON_PASSWORD: "${GENERIC_PASSWORD}"
                     ALLOW_FLIGHT: TRUE
                     RESOURCE_PACK: https://www.curseforge.com/minecraft/texture-packs/stay-true/download/5493450
-                    SPIGET_RESOURCES:
-                        # Slugs from urls like so: https://www.spigotmc.org/resources/luckperms.28140/
-                        # Vault
-                        - "34315"
-                    MODRINTH_PROJECTS:
-                        - luckperms
-                        - viaversion
-                        - viarewind
-                        - worldedit
-                        - dynmap
-                        - coreprotect
-                        - multiverse-core
-                        - multiverse-inventories
-                        - invsee++
-                        - waypoints
-                    PLUGINS:
-                        - https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
-                        - https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+                    SPIGET_RESOURCES: >-
+                        34315
+                    MODRINTH_PROJECTS: >-
+                        luckperms,
+                        viaversion,
+                        viarewind,
+                        worldedit,
+                        dynmap,
+                        coreprotect,
+                        multiverse-core,
+                        multiverse-inventories,
+                        invsee++,
+                        waypoints
+                    PLUGINS: >-
+                        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
+                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
                     # PACKWIZ_URL: ""
                     # CUSTOM_SERVER: ""
                     # QUILT_LOADER_VERSION: ""
