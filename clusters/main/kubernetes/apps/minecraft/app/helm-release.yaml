@@ -103,7 +103,6 @@ spec:
                     MODRINTH_PROJECTS: >-
                         luckperms,
                         viaversion,
-                        viarewind,
                         worldedit,
                         dynmap,
                         multiverse-core,
