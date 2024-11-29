@@ -57,7 +57,6 @@ spec:
                                 TITLE_LENGTH_LIMIT: 150
                                 TWITTER_USERNAME: ${RSSHUB_TWITTER_USERNAME}
                                 TWITTER_PASSWORD: ${RSSHUB_TWITTER_PASSWORD}
-                                TWITTER_AUTH_TOKEN: ${RSSHUB_TWITTER_AUTH_TOKEN}
                                 YOUTUBE_KEY: ""
                                 PATREON_SESSION_ID: ${RSSHUB_PATREON_COOKIE}
                 replicas: 1
