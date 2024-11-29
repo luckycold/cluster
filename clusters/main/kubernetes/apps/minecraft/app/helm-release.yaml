@@ -100,9 +100,11 @@ spec:
                     RESOURCE_PACK: https://www.curseforge.com/minecraft/texture-packs/stay-true/download/5493450
                     SPIGET_RESOURCES: >-
                         34315
+                    MODRINTH_ALLOWED_VERSION_TYPE: beta
                     MODRINTH_PROJECTS: >-
                         luckperms,
                         viaversion,
+                        viarewind,
                         worldedit,
                         dynmap,
                         multiverse-core,
