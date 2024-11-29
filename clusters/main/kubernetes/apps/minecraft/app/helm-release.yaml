@@ -56,7 +56,7 @@ spec:
                 ports:
                     dynmap:
                         enabled: true
-                        port: 25575
+                        port: 8123
         resources:
             limits:
                 memory: 14Gi
