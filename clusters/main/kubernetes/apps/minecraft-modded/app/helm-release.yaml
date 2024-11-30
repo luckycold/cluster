@@ -36,7 +36,7 @@ spec:
         release_name: minecraft-modded
         service:
             main:
-                loadBalancerIP: ${MINECRAFT_IP}
+                loadBalancerIP: ${MINECRAFT_MODDED_IP}
                 type: LoadBalancer
         resources:
             limits:
