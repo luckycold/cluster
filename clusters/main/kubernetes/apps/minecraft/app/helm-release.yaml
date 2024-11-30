@@ -42,7 +42,7 @@ spec:
                 targetSelector:
                     main:
                         mcbackup:
-                            path: /mnt/backups/minecraft
+                            path: /mnt/Apps/backups/minecraft
                             mountPath: /backups
                             server: ${NAS_DOMAIN}
                             type: nfs
@@ -59,7 +59,7 @@ spec:
                         port: 8123
         resources:
             limits:
-                memory: 14Gi
+                memory: 9Gi
             requests:
                 memory: 4Gi
         workload:
