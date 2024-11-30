@@ -101,11 +101,11 @@ spec:
                     SPIGET_RESOURCES: >-
                         34315
                     MODRINTH_ALLOWED_VERSION_TYPE: beta
-                    MODRINTH_DOWNLOAD_DEPENDENCIES: optional
+                    MODRINTH_DOWNLOAD_DEPENDENCIES: required
                     MODRINTH_PROJECTS: >-
                         luckperms,
                         viaversion,
-                        viarewind,
+                        viabackwards,
                         worldedit,
                         multiverse-core,
                         multiverse-inventories,
