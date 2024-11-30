@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: minecraft
+    name: minecraft-modded
     namespace: minecraft
 spec:
     interval: 15m
@@ -13,22 +13,9 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: minecraft
+    releaseName: minecraft-modded
     values:
         TZ: US/Central
-        ingress:
-            main:
-                enabled: true
-                hosts:
-                    - host: dynmap.${DOMAIN_0}
-                integrations:
-                    certManager:
-                        certificateIssuer: domain-0-le-prod
-                        enabled: true
-                    traefik:
-                        enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             data:
                 targetSelector:
@@ -36,27 +23,21 @@ spec:
                         main:
                             type: nfs
                             server: ${NAS_DOMAIN}
-                            path: /mnt/Apps/config/minecraft
+                            path: /mnt/Apps/config/minecraft-modded
                             mountPath: /data
             backups:
                 targetSelector:
                     main:
                         mcbackup:
-                            path: /mnt/backups/minecraft
+                            path: /mnt/Apps/backups/minecraft-modded
                             mountPath: /backups
                             server: ${NAS_DOMAIN}
                             type: nfs
-        release_name: minecraft
+        release_name: minecraft-modded
         service:
             main:
                 loadBalancerIP: ${MINECRAFT_IP}
                 type: LoadBalancer
-            dynmap:
-                enabled: true
-                ports:
-                    dynmap:
-                        enabled: true
-                        port: 8123
         resources:
             limits:
                 memory: 14Gi
@@ -72,7 +53,7 @@ spec:
                     EULA: "TRUE"
                     OVERRIDE_SERVER_PROPERTIES: true
                     VERSION: "LATEST"
-                    TYPE: "PAPER"
+                    TYPE: "AUTO_CURSEFORGE"
                     DIFFICULTY: normal
                     MAX_PLAYERS: 20
                     MAX_WORLD_SIZE: 10000
@@ -89,33 +70,16 @@ spec:
                     SPAWN_NPCS: true
                     VIEW_DISTANCE: 16
                     MODE: survival
-                    MOTD: "Carson will join one day :)"
+                    MOTD: "Carson will not join one day :)"
                     PVP: true
                     LEVEL_TYPE: DEFAULT
                     LEVEL: world
                     ONLINE_MODE: true
-                    MAX_MEMORY: 8G
+                    MAX_MEMORY: 12G
                     INIT_MEMORY: 4G
                     RCON_PASSWORD: "${GENERIC_PASSWORD}"
                     ALLOW_FLIGHT: TRUE
                     RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
-                    CF_API_KEY: ${CURSEFORGE_API_KEY}
-                    SPIGET_RESOURCES: >-
-                        34315
-                    MODRINTH_ALLOWED_VERSION_TYPE: beta
-                    MODRINTH_DOWNLOAD_DEPENDENCIES: required
-                    MODRINTH_PROJECTS: >-
-                        luckperms,
-                        viaversion,
-                        viabackwards,
-                        worldedit,
-                        multiverse-core,
-                        multiverse-inventories,
-                        invsee++,
-                        waypoints
-                    PLUGINS: >-
-                        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
-                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
                     # PACKWIZ_URL: ""
                     # CUSTOM_SERVER: ""
                     # QUILT_LOADER_VERSION: ""
@@ -163,7 +127,8 @@ spec:
                     # JVM_XX_OPTS: ""
                     # CF_API_KEY
                     # CF_PAGE_URL
-                    # CF_SLUG
+                    CF_API_KEY: ${CURSEFORGE_API_KEY}
+                    CF_SLUG: the-pioneers
                     # CF_EXCLUDE_INCLUDE_FILE
                     # CF_EXCLUDE_MODS
                     # CF_FORCE_INCLUDE_MODS
