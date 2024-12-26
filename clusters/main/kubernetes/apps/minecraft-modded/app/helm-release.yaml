@@ -16,15 +16,18 @@ spec:
     releaseName: minecraft-modded
     values:
         TZ: US/Central
+        addons:
+            codeserver:
+                enabled: true
+                ingress:
+                    enabled: true
+                    integrations:
+                        certManager:
+                            enabled: true
+                            certificateIssuer: domain-0-le-prod
+                        hosts:
+                            - host: mc-m.cs.${DOMAIN_0}
         persistence:
-            data:
-                targetSelector:
-                    main:
-                        main:
-                            type: nfs
-                            server: ${NAS_DOMAIN}
-                            path: /mnt/Apps/config/minecraft-modded
-                            mountPath: /data
             backups:
                 targetSelector:
                     main:
@@ -36,8 +39,20 @@ spec:
         release_name: minecraft-modded
         service:
             main:
-                loadBalancerIP: ${MINECRAFT_MODDED_IP}
+                loadBalancerIP: ${MINECRAFT_IP}
                 type: LoadBalancer
+                ports:
+                    main:
+                        port: 25566
+                    query:
+                        port: 25566
+            rcon:
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
+                ports:
+                    rcon:
+                        port: 25576
+
         resources:
             limits:
                 memory: 14Gi

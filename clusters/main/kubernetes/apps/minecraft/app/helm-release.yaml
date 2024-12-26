@@ -29,21 +29,23 @@ spec:
                         enabled: true
                         entrypoints:
                             - websecure
+        addons:
+            codeserver:
+                enabled: true
+                ingress:
+                    enabled: true
+                    integrations:
+                        certManager:
+                            enabled: true
+                            certificateIssuer: domain-0-le-prod
+                    hosts:
+                        - host: mc.cs.${DOMAIN_0}
         persistence:
-            data:
-                targetSelector:
-                    main:
-                        main:
-                            type: nfs
-                            server: ${NAS_DOMAIN}
-                            path: /mnt/Apps/config/minecraft
-                            mountPath: /data
             backups:
                 targetSelector:
                     main:
                         mcbackup:
                             path: /mnt/Apps/backups/minecraft
-                            mountPath: /backups
                             server: ${NAS_DOMAIN}
                             type: nfs
         release_name: minecraft
