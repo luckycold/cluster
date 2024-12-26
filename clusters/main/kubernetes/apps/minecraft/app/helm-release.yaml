@@ -53,6 +53,9 @@ spec:
             main:
                 loadBalancerIP: ${MINECRAFT_IP}
                 type: LoadBalancer
+            rcon:
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
             dynmap:
                 enabled: true
                 ports:
@@ -152,7 +155,7 @@ spec:
                     # FTB_LEGACYJAVAFIXER: false
                     # WHITELIST: ""
                     OPS: "lukeycold"
-                    EXISTING_OPS_FILE: "SYNCHRONIZE"
+                    # EXISTING_OPS_FILE: "SYNCHRONIZE"
                     # ICON: ""
                     # SEED: ""
                     # GENERATOR_SETTINGS: ""

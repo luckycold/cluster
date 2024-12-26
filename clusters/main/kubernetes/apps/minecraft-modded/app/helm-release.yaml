@@ -39,20 +39,11 @@ spec:
         release_name: minecraft-modded
         service:
             main:
-                loadBalancerIP: ${MINECRAFT_IP}
+                loadBalancerIP: ${MINECRAFT_MODDED_IP}
                 type: LoadBalancer
-                ports:
-                    main:
-                        port: 25566
-                    query:
-                        port: 25566
             rcon:
-                loadBalancerIP: ${MINECRAFT_IP}
+                loadBalancerIP: ${MINECRAFT_MODDED_IP}
                 type: LoadBalancer
-                ports:
-                    rcon:
-                        port: 25576
-
         resources:
             limits:
                 memory: 14Gi
@@ -129,7 +120,7 @@ spec:
                     # FTB_LEGACYJAVAFIXER: false
                     # WHITELIST: ""
                     OPS: "lukeycold"
-                    EXISTING_OPS_FILE: "SYNCHRONIZE"
+                    # EXISTING_OPS_FILE: "SYNCHRONIZE"
                     # ICON: ""
                     # SEED: ""
                     # GENERATOR_SETTINGS: ""
