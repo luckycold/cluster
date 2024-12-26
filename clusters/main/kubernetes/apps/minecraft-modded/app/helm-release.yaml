@@ -77,7 +77,7 @@ spec:
                   env:
                     EULA: "TRUE"
                     OVERRIDE_SERVER_PROPERTIES: true
-                    VERSION: "LATEST"
+                    VERSION: "1.21"
                     TYPE: "AUTO_CURSEFORGE"
                     DIFFICULTY: normal
                     MAX_PLAYERS: 20
