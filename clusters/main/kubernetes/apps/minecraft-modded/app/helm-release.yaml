@@ -25,7 +25,7 @@ spec:
                 path: ""
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
-                url: ${VOLSYNC_BACKUP_MAIN_URL
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
         addons:
             codeserver:
                 enabled: true
