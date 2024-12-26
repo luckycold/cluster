@@ -35,8 +35,8 @@ spec:
                         certManager:
                             enabled: true
                             certificateIssuer: domain-0-le-prod
-                        hosts:
-                            - host: mc-m.cs.${DOMAIN_0}
+                    hosts:
+                        - host: mc.cs.${DOMAIN_0}
         persistence:
             config:
                 volsync:
