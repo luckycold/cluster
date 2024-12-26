@@ -77,7 +77,7 @@ spec:
                   env:
                     EULA: "TRUE"
                     OVERRIDE_SERVER_PROPERTIES: true
-                    VERSION: "1.21"
+                    VERSION: "LATEST"
                     TYPE: "AUTO_CURSEFORGE"
                     DIFFICULTY: normal
                     MAX_PLAYERS: 20
@@ -153,7 +153,7 @@ spec:
                     # CF_API_KEY
                     # CF_PAGE_URL
                     CF_API_KEY: ${CURSEFORGE_API_KEY}
-                    CF_SLUG: all-the-mods-10
+                    CF_SLUG: all-the-mods-9
                     # CF_EXCLUDE_INCLUDE_FILE
                     # CF_EXCLUDE_MODS
                     # CF_FORCE_INCLUDE_MODS
