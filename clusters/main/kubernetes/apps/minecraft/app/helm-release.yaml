@@ -51,7 +51,7 @@ spec:
                     hosts:
                         - host: mc.cs.${DOMAIN_0}
         persistence:
-            config:
+            data:
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
