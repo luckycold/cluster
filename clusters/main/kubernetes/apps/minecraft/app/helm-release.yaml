@@ -60,13 +60,6 @@ spec:
                       src:
                         enabled: true
                       type: restic
-            backups:
-                targetSelector:
-                    main:
-                        mcbackup:
-                            path: /mnt/Apps/backups/minecraft
-                            server: ${NAS_DOMAIN}
-                            type: nfs
         release_name: minecraft
         service:
             main:
@@ -196,10 +189,4 @@ spec:
                     # CF_PARALLEL_DOWNLOADS
                     # CF_SET_LEVEL_FROM
                 mcbackup:
-                  enabled: true
-                  imageSelector: mcBackupImage
-                  env:
-                    BACKUP_INTERVAL: "1w"
-                    PRUNE_BACKUPS_DAYS: "-1"
-                    PAUSE_IF_NO_PLAYERS: "true"
-                    PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
+                  enabled: false
