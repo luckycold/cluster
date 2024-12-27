@@ -36,7 +36,7 @@ spec:
                             enabled: true
                             certificateIssuer: domain-0-le-prod
                     hosts:
-                        - host: mc.cs.${DOMAIN_0}
+                        - host: mc-m.cs.${DOMAIN_0}
         persistence:
             data:
                 volsync:
