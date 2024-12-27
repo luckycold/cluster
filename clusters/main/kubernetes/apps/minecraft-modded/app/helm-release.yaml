@@ -154,4 +154,4 @@ spec:
                     # CF_PARALLEL_DOWNLOADS
                     # CF_SET_LEVEL_FROM
                 mcbackup:
-                  enabled: false
+                  enabled: true
