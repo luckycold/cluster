@@ -78,7 +78,7 @@ spec:
             limits:
                 memory: 9Gi
             requests:
-                memory: 4Gi
+                memory: 1Gi
         workload:
           main:
             podSpec:
@@ -112,7 +112,7 @@ spec:
                     LEVEL: world
                     ONLINE_MODE: true
                     MAX_MEMORY: 8G
-                    INIT_MEMORY: 4G
+                    INIT_MEMORY: 1G
                     RCON_PASSWORD: "${GENERIC_PASSWORD}"
                     ALLOW_FLIGHT: TRUE
                     RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
