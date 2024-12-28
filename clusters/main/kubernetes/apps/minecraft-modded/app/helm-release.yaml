@@ -145,7 +145,7 @@ spec:
                     # CF_API_KEY
                     # CF_PAGE_URL
                     CF_API_KEY: ${CURSEFORGE_API_KEY}
-                    CF_SLUG: all-the-mods-9
+                    CF_SLUG: all-the-mods-10
                     # CF_EXCLUDE_INCLUDE_FILE
                     # CF_EXCLUDE_MODS
                     # CF_FORCE_INCLUDE_MODS
