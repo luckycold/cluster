@@ -53,7 +53,7 @@ spec:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
                         enabled: true
-                      name: backup
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
                         enabled: true
                       type: restic
