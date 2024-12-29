@@ -20,7 +20,7 @@ spec:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
                 bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
-                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                encrKey: ${VOLSYNC_BACKUP_OLD_ENCRKEY}
                 name: ${VOLSYNC_BACKUP_MAIN_NAME}
                 path: ""
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
