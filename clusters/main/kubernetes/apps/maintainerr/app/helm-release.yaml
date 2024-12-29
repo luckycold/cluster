@@ -17,15 +17,15 @@ spec:
     values:
         TZ: US/Central
         credentials:
-            ${VOLSYNC_BACKUP_MAIN_NAME}:
-                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
-                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+            ${VOLSYNC_BACKUP_OLD_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_OLD_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_OLD_BUCKET}
                 encrKey: ${VOLSYNC_BACKUP_OLD_ENCRKEY}
-                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                name: ${VOLSYNC_BACKUP_OLD_NAME}
                 path: ""
-                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                secretKey: ${VOLSYNC_BACKUP_OLD_SECRETKEY}
                 type: s3
-                url: ${VOLSYNC_BACKUP_MAIN_URL}
+                url: ${VOLSYNC_BACKUP_OLD_URL}
         ingress:
             main:
                 enabled: true
@@ -49,10 +49,10 @@ spec:
         persistence:
             data:
                 volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    - credentials: ${VOLSYNC_BACKUP_OLD_NAME}
                       dest:
                         enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      name: ${VOLSYNC_BACKUP_OLD_NAME}
                       src:
                         enabled: true
                       type: restic
