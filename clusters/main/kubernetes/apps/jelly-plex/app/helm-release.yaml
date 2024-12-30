@@ -25,11 +25,10 @@ spec:
         workload:
             main:
                 podSpec:
+                    securityContext:
+                        runAsUser: 0
+                        allowPrivilegeEscalation: true
                     containers:
-                        securityContext:
-                            enabled: true
-                            runAsUser: 0
-                            allowPrivilegeEscalation: true
                         main:
                             securityContext:
                                 privileged: true
