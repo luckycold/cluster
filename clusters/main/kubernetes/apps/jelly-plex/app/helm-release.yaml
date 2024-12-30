@@ -27,6 +27,7 @@ spec:
                 podSpec:
                     containers:
                         securityContext:
+                            enabled: true
                             runAsUser: 0
                             allowPrivilegeEscalation: true
                         main:
