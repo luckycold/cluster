@@ -46,6 +46,7 @@ spec:
                                 PLEX_TOKEN: ${PLEX_TOKEN}
                                 SSL_BYPASS: "True"
                                 SYNC_FROM_PLEX_TO_JELLYFIN: "True"
+                                SYNC_FROM_JELLYFIN_TO_PLEX: "False"
                                 USER_MAPPING: '{"lucky": "luckycold"}'
                             probes:
                                 liveness:
