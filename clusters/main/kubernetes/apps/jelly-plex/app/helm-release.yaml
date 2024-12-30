@@ -31,6 +31,8 @@ spec:
                             runAsUser: 0
                             allowPrivilegeEscalation: true
                         main:
+                            securityContext:
+                                privileged: true
                             env:
                                 DRYRUN: "False"
                                 JELLYFIN_BASEURL: http://jellyfin.jellyfin.svc.cluster.local:8096
@@ -40,5 +42,16 @@ spec:
                                 SSL_BYPASS: "True"
                                 SYNC_FROM_PLEX_TO_JELLYFIN: "True"
                                 USER_MAPPING: '{"lucky": "luckycold"}'
+                livenessProbe:
+                    httpGet:
+                        path: /
+                        port: main
+                    initialDelaySeconds: 30
+                readinessProbe:
+                    httpGet:
+                        path: /
+                        port: main
+                    initialDelaySeconds: 15
+
                 replicas: 1
                 type: Deployment
