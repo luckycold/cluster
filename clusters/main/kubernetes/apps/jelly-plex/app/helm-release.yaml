@@ -43,13 +43,10 @@ spec:
                                 USER_MAPPING: '{"lucky": "luckycold"}'
                             probes:
                                 liveness:
-                                    type: tcp
-                                    port: "{{ .Values.service.main.ports.main.port }}"
+                                    enabled: false
                                 readiness:
-                                    type: tcp
-                                    port: "{{ .Values.service.main.ports.main.port }}"
+                                    enabled: false
                                 startup:
-                                    type: tcp
-                                    port: "{{ .Values.service.main.ports.main.port }}"
+                                    enabled: false
                 replicas: 1
                 type: Deployment
