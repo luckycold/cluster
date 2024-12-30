@@ -42,16 +42,15 @@ spec:
                                 SSL_BYPASS: "True"
                                 SYNC_FROM_PLEX_TO_JELLYFIN: "True"
                                 USER_MAPPING: '{"lucky": "luckycold"}'
-                livenessProbe:
-                    httpGet:
-                        path: /
-                        port: main
-                    initialDelaySeconds: 30
-                readinessProbe:
-                    httpGet:
-                        path: /
-                        port: main
-                    initialDelaySeconds: 15
-
+                            probes:
+                                liveness:
+                                    type: tcp
+                                    port: "{{ .Values.service.main.targetPort }}"
+                                readiness:
+                                    type: tcp
+                                    port: "{{ .Values.service.main.targetPort }}"
+                                startup:
+                                    type: tcp
+                                    port: "{{ .Values.service.main.targetPort }}"
                 replicas: 1
                 type: Deployment
