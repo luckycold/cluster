@@ -17,6 +17,12 @@ spec:
     values:
         TZ: US/Central
         release_name: jelly-plex
+        securityContext:
+            container:
+                readOnlyRootFilesystem: false
+                runAsNonRoot: false
+                runAsUser: 0
+                runAsGroup: 0
         service:
             main:
                 ports:
@@ -25,13 +31,8 @@ spec:
         workload:
             main:
                 podSpec:
-                    securityContext:
-                        runAsUser: 0
-                        allowPrivilegeEscalation: true
                     containers:
                         main:
-                            securityContext:
-                                privileged: true
                             env:
                                 DRYRUN: "False"
                                 JELLYFIN_BASEURL: http://jellyfin.jellyfin.svc.cluster.local:8096
