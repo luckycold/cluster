@@ -17,6 +17,10 @@ spec:
     values:
         TZ: US/Central
         release_name: jelly-plex
+        image:
+            repository: docker.io/luigi311/jellyplex-watched
+            pullPolicy: IfNotPresent
+            tag: latest
         securityContext:
             container:
                 readOnlyRootFilesystem: false
