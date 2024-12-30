@@ -23,6 +23,7 @@ spec:
             tag: latest
         securityContext:
             container:
+                UMASK: "0022"
                 readOnlyRootFilesystem: false
                 runAsNonRoot: false
                 runAsUser: 0
