@@ -83,15 +83,14 @@ spec:
             auto_redirect: true
         cnpg:
             main:
+                mode: recovery
+                database: mealie
+                user: mealie
+                password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
                     revision: "1"
-                cluster:
-                    instances: 1
-                    singleNode: true
-                mode: standalone
-                password: ${MEALIE_CNPG_PASSWORD}
                 recovery:
                     method: object_store
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
