@@ -42,9 +42,13 @@ spec:
                     main:
                         port: 3000
                         targetPort: 3000
+            browser:
+                ports:
                     browser:
                         port: 9222
                         targetPort: 9222
+            meilisearch:
+                ports:
                     meilisearch:
                         port: 7700
                         targetPort: 7700
