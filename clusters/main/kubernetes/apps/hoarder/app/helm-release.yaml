@@ -110,12 +110,15 @@ spec:
                                 liveness:
                                     enabled: true
                                     type: tcp
+                                    port: 9222
                                 readiness:
                                     enabled: true
                                     type: tcp
+                                    port: 9222
                                 startup:
                                     enabled: true
                                     type: tcp
+                                    port: 9222
                         meilisearch:
                             enabled: true
                             env: 
@@ -127,12 +130,15 @@ spec:
                                 liveness:
                                     enabled: true
                                     type: tcp
+                                    port: 7700
                                 readiness:
                                     enabled: true
                                     type: tcp
+                                    port: 7700
                                 startup:
                                     enabled: true
                                     type: tcp
+                                    port: 7700
                 replicas: 1
                 type: Deployment
         persistence:
