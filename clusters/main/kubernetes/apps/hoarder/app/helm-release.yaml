@@ -106,6 +106,16 @@ spec:
                                 - "--remote-debugging-address=0.0.0.0"
                                 - "--remote-debugging-port=9222"
                                 - "--hide-scrollbars"
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    type: tcp
+                                readiness:
+                                    enabled: true
+                                    type: tcp
+                                startup:
+                                    enabled: true
+                                    type: tcp
                         meilisearch:
                             enabled: true
                             env: 
@@ -113,6 +123,16 @@ spec:
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
                                 MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
                                 NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    type: tcp
+                                readiness:
+                                    enabled: true
+                                    type: tcp
+                                startup:
+                                    enabled: true
+                                    type: tcp
                 replicas: 1
                 type: Deployment
         persistence:
