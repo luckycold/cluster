@@ -99,6 +99,8 @@ spec:
                                     type: tcp
                         chrome:
                             enabled: true
+                            command:
+                                - "/usr/bin/chromium-browser"
                             args:
                                 - "--no-sandbox"
                                 - "--disable-gpu"
