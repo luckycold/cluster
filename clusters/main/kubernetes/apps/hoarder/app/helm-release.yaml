@@ -40,8 +40,14 @@ spec:
             main:
                 ports:
                     main:
-                        port: 10300
+                        port: 3000
                         targetPort: 3000
+                    browser:
+                        port: 9222
+                        targetPort: 9222
+                    meilisearch:
+                        port: 7700
+                        targetPort: 7700
         ingress:
             main:
                 enabled: true
@@ -82,8 +88,8 @@ spec:
                                 - containerPort: 3000
                                   name: main
                             env:
-                                MEILI_ADDR: http://meilisearch:7700
-                                BROWSER_WEB_URL: http://chrome:9222
+                                MEILI_ADDR: http://hoarder-custom-app-meilisearch:7700
+                                BROWSER_WEB_URL: http://hoarder-custom-app-chrome:9222
                                 OPENAI_API_KEY: ${OPENAI_API_KEY}
                                 DATA_DIR: "{{.Values.persistence.data.mountPath}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
