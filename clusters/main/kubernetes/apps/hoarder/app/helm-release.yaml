@@ -98,6 +98,7 @@ spec:
                                     enabled: true
                                     type: tcp
                         chrome:
+                            enabled: true
                             args:
                                 - "--no-sandbox"
                                 - "--disable-gpu"
@@ -106,6 +107,7 @@ spec:
                                 - "--remote-debugging-port=9222"
                                 - "--hide-scrollbars"
                         meilisearch:
+                            enabled: true
                             env: 
                                 MEILI_NO_ANALYTICS: "true"
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
