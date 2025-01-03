@@ -36,3 +36,4 @@ resources:
   - romm/ks.yaml
   - minecraft/ks.yaml
   - minecraft-modded/ks.yaml
+  - hoarder/ks.yaml

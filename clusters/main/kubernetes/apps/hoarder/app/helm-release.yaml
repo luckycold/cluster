@@ -1,0 +1,128 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: hoarder
+    namespace: hoarder
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: custom-app
+            version: 14.2.0
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: hoarder
+    values:
+        TZ: US/Central
+        release_name: hoarder
+        image:
+            repository: ghcr.io/hoarder-app/hoarder
+            pullPolicy: IfNotPresent
+            tag: "release"
+        meilisearchImage:
+            repository: getmeili/meilisearch
+            pullPolicy: IfNotPresent
+            tag: "v1.11.1"
+        chromeImage:
+            repository: gcr.io/zenika-hub/alpine-chrome
+            pullPolicy: IfNotPresent
+            tag: "123"
+        # securityContext:
+        #     container:
+        #         UMASK: "0022"
+        #         readOnlyRootFilesystem: false
+        #         runAsNonRoot: false
+        #         runAsUser: 0
+        #         runAsGroup: 0
+        service:
+            main:
+                ports:
+                    main:
+                        port: 10300
+                        targetPort: 3000
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: h.${DOMAIN_0}
+                      paths:
+                          - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: true
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        additionalContainers:
+            chrome:
+                name: chrome
+                image: "{{.Values.chromeImage.repository}}:{{.Values.chromeImage.tag}}"
+                ports:
+                    - containerPort: 9222
+                      name: main
+            meilisearch:
+                name: meilisearch
+                image: "{{.Values.meilisearchImage.repository}}:{{.Values.meilisearchImage.tag}}"
+                ports:
+                    - containerPort: 7700
+                      name: main
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                MEILI_ADDR: http://localhost:7700
+                                BROWSER_WEB_URL: http://localhost:9222
+                                OPENAI_API_KEY: ${OPENAI_API_KEY}
+                                DATA_DIR: "{{.Values.persistence.data.mountPath}}"
+                                HOARDER_VERSION: "{{.Values.image.tag}}"
+                                NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
+                                MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
+                                NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    type: tcp
+                                readiness:
+                                    enabled: true
+                                    type: tcp
+                                startup:
+                                    enabled: true
+                                    type: tcp
+                        chrome:
+                            args:
+                                - "--no-sandbox"
+                                - "--disable-gpu"
+                                - "--disable-dev-shm-usage"
+                                - "--remote-debugging-address=0.0.0.0"
+                                - "--remote-debugging-port=9222"
+                                - "--hide-scrollbars"
+                        meilisearch:
+                            env: 
+                                MEILI_NO_ANALYTICS: "true"
+                                NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
+                                MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
+                                NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
+                replicas: 1
+                type: Deployment
+        persistence:
+            data:
+                enabled: true
+                targetSelector:
+                    main:
+                        main:
+                            mountPath: "/data"
+            meili_data:
+                enabled: true
+                targetSelector:
+                    main:
+                        meilisearch:
+                            mountPath: "/meili_data"
