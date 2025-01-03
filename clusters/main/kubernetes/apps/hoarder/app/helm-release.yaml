@@ -118,6 +118,7 @@ spec:
                                     type: tcp
                         chrome:
                             enabled: true
+                            imageSelector: chromeImage
                             ports:
                                 - containerPort: 9222
                                   name: main
