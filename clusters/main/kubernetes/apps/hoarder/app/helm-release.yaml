@@ -60,24 +60,27 @@ spec:
                         enabled: true
                         entrypoints:
                             - websecure
-        additionalContainers:
-            chrome:
-                name: chrome
-                image: "{{.Values.chromeImage.repository}}:{{.Values.chromeImage.tag}}"
-                ports:
-                    - containerPort: 9222
-                      name: main
-            meilisearch:
-                name: meilisearch
-                image: "{{.Values.meilisearchImage.repository}}:{{.Values.meilisearchImage.tag}}"
-                ports:
-                    - containerPort: 7700
-                      name: main
+        # additionalContainers:
+        #     chrome:
+        #         name: chrome
+        #         image: "{{.Values.chromeImage.repository}}:{{.Values.chromeImage.tag}}"
+        #         ports:
+        #             - containerPort: 9222
+        #               name: main
+        #     meilisearch:
+        #         name: meilisearch
+        #         image: "{{.Values.meilisearchImage.repository}}:{{.Values.meilisearchImage.tag}}"
+        #         ports:
+        #             - containerPort: 7700
+        #               name: main
         workload:
             main:
                 podSpec:
                     containers:
                         main:
+                            ports:
+                                - containerPort: 3000
+                                  name: main
                             env:
                                 MEILI_ADDR: http://localhost:7700
                                 BROWSER_WEB_URL: http://localhost:9222
@@ -98,7 +101,9 @@ spec:
                                     enabled: true
                                     type: tcp
                         chrome:
-                            enabled: true
+                            ports:
+                                - containerPort: 9222
+                                  name: main
                             command:
                                 - "/usr/bin/chromium-browser"
                             args:
@@ -122,7 +127,10 @@ spec:
                                     type: tcp
                                     port: 9222
                         meilisearch:
-                            enabled: true
+                            imageSelector: meilisearchImage
+                            ports:
+                                - containerPort: 7700
+                                  name: main
                             env: 
                                 MEILI_NO_ANALYTICS: "true"
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
