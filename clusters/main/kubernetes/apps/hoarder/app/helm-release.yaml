@@ -29,13 +29,13 @@ spec:
             repository: gcr.io/zenika-hub/alpine-chrome
             pullPolicy: IfNotPresent
             tag: "123"
-        # securityContext:
-        #     container:
-        #         UMASK: "0022"
-        #         readOnlyRootFilesystem: false
-        #         runAsNonRoot: false
-        #         runAsUser: 0
-        #         runAsGroup: 0
+        securityContext:
+            container:
+                UMASK: "0022"
+                readOnlyRootFilesystem: false
+                runAsNonRoot: false
+                runAsUser: 0
+                runAsGroup: 0
         service:
             main:
                 ports:
