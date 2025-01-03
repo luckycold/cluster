@@ -43,11 +43,13 @@ spec:
                         port: 3000
                         targetPort: 3000
             browser:
+                enabled: true
                 ports:
                     browser:
                         port: 9222
                         targetPort: 9222
             meilisearch:
+                enabled: true
                 ports:
                     meilisearch:
                         port: 7700
