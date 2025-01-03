@@ -101,11 +101,10 @@ spec:
                                     enabled: true
                                     type: tcp
                         chrome:
+                            enabled: true
                             ports:
                                 - containerPort: 9222
                                   name: main
-                            command:
-                                - "/usr/bin/chromium-browser"
                             args:
                                 - "--no-sandbox"
                                 - "--disable-gpu"
@@ -127,6 +126,7 @@ spec:
                                     type: tcp
                                     port: 9222
                         meilisearch:
+                            enabled: true
                             imageSelector: meilisearchImage
                             ports:
                                 - containerPort: 7700
