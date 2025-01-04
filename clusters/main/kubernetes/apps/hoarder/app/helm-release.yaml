@@ -101,7 +101,6 @@ spec:
                                 MEILI_ADDR: http://localhost:7700
                                 BROWSER_WEB_URL: http://localhost:9222
                                 NEXTAUTH_URL: http://localhost:3000
-                                DATABASE_URL: "file:/data/db.sqlite"
                                 OPENAI_API_KEY: ${OPENAI_API_KEY}
                                 DATA_DIR: "{{.Values.persistence.data.mountPath}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
