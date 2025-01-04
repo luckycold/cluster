@@ -20,7 +20,7 @@ spec:
         image:
             repository: ghcr.io/hoarder-app/hoarder
             pullPolicy: IfNotPresent
-            tag: "latest"
+            tag: "release"
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
@@ -98,8 +98,8 @@ spec:
                                 - containerPort: 3000
                                   name: main
                             env:
-                                MEILI_ADDR: http://hoarder-custom-app-meilisearch.hoarder.svc.cluster.local:7700
-                                BROWSER_WEB_URL: http://hoarder-custom-app-browser.hoarder.svc.cluster.local:9222
+                                MEILI_ADDR: http://localhost:7700
+                                BROWSER_WEB_URL: http://localhost:9222
                                 OPENAI_API_KEY: ${OPENAI_API_KEY}
                                 DATA_DIR: "{{.Values.persistence.data.mountPath}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
