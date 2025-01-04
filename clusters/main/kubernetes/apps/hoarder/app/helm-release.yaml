@@ -20,7 +20,7 @@ spec:
         image:
             repository: ghcr.io/hoarder-app/hoarder
             pullPolicy: IfNotPresent
-            tag: "release"
+            tag: "latest"
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
