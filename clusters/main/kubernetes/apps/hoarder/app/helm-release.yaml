@@ -102,7 +102,7 @@ spec:
                                 BROWSER_WEB_URL: http://localhost:9222
                                 NEXTAUTH_URL: http://localhost:3000
                                 OPENAI_API_KEY: ${OPENAI_API_KEY}
-                                DATA_DIR: "{{.Values.persistence.data.mountPath}}"
+                                DATA_DIR: "/data"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
                                 MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
@@ -154,7 +154,6 @@ spec:
                             env: 
                                 MEILI_NO_ANALYTICS: "true"
                                 NEXTAUTH_URL: http://localhost:3000
-                                DATABASE_URL: "file:/data/db.sqlite"
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
                                 MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
                                 NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
