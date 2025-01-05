@@ -68,6 +68,16 @@ spec:
             rcon:
                 loadBalancerIP: ${MINECRAFT_IP}
                 type: LoadBalancer
+            bedrock:
+                enabled: true
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
+                ports:
+                    bedrock:
+                        enabled: true
+                        targetPort: 19132
+                        port: 19132
+                        protocol: UDP
             dynmap:
                 enabled: true
                 ports:
@@ -167,7 +177,7 @@ spec:
                     # FTB_LEGACYJAVAFIXER: false
                     # WHITELIST: ""
                     OPS: "lukeycold"
-                    EXISTING_OPS_FILE: "SYNCHRONIZE"
+                    # EXISTING_OPS_FILE: "SYNCHRONIZE"
                     # ICON: ""
                     # SEED: ""
                     # GENERATOR_SETTINGS: ""
