@@ -138,7 +138,6 @@ spec:
                         multiverse-netherportals,
                         multiverse-signportals,
                         invsee++,
-                        zombify,
                         sleeper,
                         waypoints
                     PLUGINS: >-
