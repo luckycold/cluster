@@ -121,7 +121,7 @@ spec:
                     INIT_MEMORY: 1G
                     RCON_PASSWORD: "${GENERIC_PASSWORD}"
                     ALLOW_FLIGHT: TRUE
-                    RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
+                    # RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
                     CF_API_KEY: ${CURSEFORGE_API_KEY}
                     SPIGET_RESOURCES: >-
                         34315
