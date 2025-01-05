@@ -77,7 +77,7 @@ spec:
                         enabled: true
                         targetPort: 19132
                         port: 19132
-                        protocol: UDP
+                        protocol: udp
             dynmap:
                 enabled: true
                 ports:
