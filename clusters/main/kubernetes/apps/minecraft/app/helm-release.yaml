@@ -65,19 +65,15 @@ spec:
             main:
                 loadBalancerIP: ${MINECRAFT_IP}
                 type: LoadBalancer
-            rcon:
-                loadBalancerIP: ${MINECRAFT_IP}
-                type: LoadBalancer
-            bedrock:
-                enabled: true
-                loadBalancerIP: ${MINECRAFT_IP}
-                type: LoadBalancer
                 ports:
                     bedrock:
                         enabled: true
                         targetPort: 19132
                         port: 19132
                         protocol: udp
+            rcon:
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
             dynmap:
                 enabled: true
                 ports:
