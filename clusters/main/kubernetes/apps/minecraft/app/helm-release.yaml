@@ -134,7 +134,12 @@ spec:
                         worldedit,
                         multiverse-core,
                         multiverse-inventories,
+                        multiverse-portals,
+                        multiverse-netherportals,
+                        multiverse-signportals,
                         invsee++,
+                        zombify,
+                        sleeper,
                         waypoints
                     PLUGINS: >-
                         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
