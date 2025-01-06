@@ -86,19 +86,20 @@ spec:
                 podSpec:
                     containers:
                         main:
+                            primary: true
                             ports:
                                 - containerPort: 3000
                                   name: main
                             env:
-                                MEILI_ADDR: http://meilisearch:7700
-                                BROWSER_WEB_URL: http://chrome:9222
+                                MEILI_ADDR: http://localhost:7700
+                                BROWSER_WEB_URL: http://localhost:9222
                                 NEXTAUTH_URL: http://localhost:3000
-                                OPENAI_API_KEY: "${OPENAI_API_KEY}"
                                 DATA_DIR: "/data"
+                                OPENAI_API_KEY: "{{.Values.hoarder.OPENAI_API_KEY}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
-                                NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
-                                MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
-                                NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
+                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXT_AUTH_SECRET}}"
+                                MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
+                                NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
                             probes:
                                 liveness:
                                     enabled: true
@@ -109,12 +110,6 @@ spec:
                                 startup:
                                     enabled: true
                                     type: tcp
-            chrome:
-                enabled: true
-                primary: true
-                type: Deployment
-                podSpec:
-                    containers:
                         chrome:
                             enabled: true
                             imageSelector: chromeImage
@@ -143,12 +138,6 @@ spec:
                                     enabled: true
                                     type: tcp
                                     port: 9222
-            meilisearch:
-                enabled: true
-                primary: true
-                type: Deployment
-                podSpec:
-                    containers:
                         meilisearch:
                             enabled: true
                             imageSelector: meilisearchImage
@@ -157,10 +146,11 @@ spec:
                                   name: main
                             env: 
                                 MEILI_NO_ANALYTICS: "true"
-                                NEXTAUTH_URL: http://main:3000
-                                NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
-                                MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
-                                NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
+                                NEXTAUTH_URL: http://localhost:3000
+                                HOARDER_VERSION: "{{.Values.image.tag}}"
+                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXT_AUTH_SECRET}}"
+                                MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
+                                NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
                             probes:
                                 liveness:
                                     enabled: true
