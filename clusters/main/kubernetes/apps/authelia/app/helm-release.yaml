@@ -45,6 +45,16 @@ spec:
                   subject:
                     - group:admin
                 - domain:
+                    - mc.cs.${DOMAIN_0}
+                  domain_regex: []
+                  networks: []
+                  policy: two_factor
+                  resources:
+                    - ^*/admin.*$
+                  subject:
+                    - group:admin
+                    - group:mcadmin
+                - domain:
                     - pass.${DOMAIN_0}
                   domain_regex: []
                   networks: []
