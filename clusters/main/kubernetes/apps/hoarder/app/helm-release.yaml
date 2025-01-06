@@ -110,6 +110,7 @@ spec:
                                     enabled: true
                                     type: tcp
             chrome:
+                enabled: true
                 podSpec:
                     containers:
                         chrome:
@@ -141,6 +142,7 @@ spec:
                                     type: tcp
                                     port: 9222
             meilisearch:
+                enabled: true
                 podSpec:
                     containers:
                         meilisearch:
