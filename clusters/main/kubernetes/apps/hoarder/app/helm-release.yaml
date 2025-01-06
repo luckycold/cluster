@@ -47,6 +47,7 @@ spec:
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
         hoarder:
+            NEXTAUTH_URL: https://h.${DOMAIN_0}
             NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
             MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
             NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
@@ -104,7 +105,7 @@ spec:
                             env:
                                 MEILI_ADDR: http://localhost:7700
                                 BROWSER_WEB_URL: http://localhost:9222
-                                NEXTAUTH_URL: http://localhost:3000
+                                NEXTAUTH_URL: "{{.Values.hoarder.NEXT_AUTH_URL}}"
                                 DATA_DIR: "/data"
                                 OPENAI_API_KEY: "{{.Values.hoarder.OPENAI_API_KEY}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
@@ -157,7 +158,7 @@ spec:
                                   name: main
                             env: 
                                 MEILI_NO_ANALYTICS: "true"
-                                NEXTAUTH_URL: http://localhost:3000
+                                NEXTAUTH_URL: "{{.Values.hoarder.NEXT_AUTH_URL}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
                                 NEXTAUTH_SECRET: "{{.Values.hoarder.NEXT_AUTH_SECRET}}"
                                 MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
