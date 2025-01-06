@@ -111,6 +111,7 @@ spec:
                                     type: tcp
             chrome:
                 enabled: true
+                primary: true
                 type: Deployment
                 podSpec:
                     containers:
@@ -144,6 +145,7 @@ spec:
                                     port: 9222
             meilisearch:
                 enabled: true
+                primary: true
                 type: Deployment
                 podSpec:
                     containers:
