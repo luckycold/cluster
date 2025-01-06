@@ -52,8 +52,7 @@ spec:
                   resources:
                     - ^*/admin.*$
                   subject:
-                    - group:admin
-                    - group:mcadmin
+                    - group:user
                 - domain:
                     - pass.${DOMAIN_0}
                   domain_regex: []
