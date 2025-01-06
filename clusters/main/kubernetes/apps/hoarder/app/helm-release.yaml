@@ -58,22 +58,22 @@ spec:
                     main:
                         port: 3000
                         targetPort: 3000
-            browser:
-                enabled: true
-                ports:
-                    browser:
-                        enabled: true
-                        protocal: tcp
-                        port: 9222
-                        targetPort: 9222
-            meilisearch:
-                enabled: true
-                ports:
-                    meilisearch:
-                        enabled: true
-                        protocal: tcp
-                        port: 7700
-                        targetPort: 7700
+            # browser:
+            #     enabled: true
+            #     ports:
+            #         browser:
+            #             enabled: true
+            #             protocal: tcp
+            #             port: 9222
+            #             targetPort: 9222
+            # meilisearch:
+            #     enabled: true
+            #     ports:
+            #         meilisearch:
+            #             enabled: true
+            #             protocal: tcp
+            #             port: 7700
+            #             targetPort: 7700
         ingress:
             main:
                 enabled: true
@@ -81,7 +81,6 @@ spec:
                     - host: h.${DOMAIN_0}
                       paths:
                           - path: /
-                      targetPort: 3000
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
@@ -156,7 +155,7 @@ spec:
                             ports:
                                 - containerPort: 7700
                                   name: main
-                            env: 
+                            env:
                                 MEILI_NO_ANALYTICS: "true"
                                 NEXTAUTH_URL: "{{.Values.hoarder.NEXT_AUTH_URL}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
