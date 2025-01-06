@@ -49,8 +49,6 @@ spec:
                   domain_regex: []
                   networks: []
                   policy: two_factor
-                  resources:
-                    - ^*/admin.*$
                   subject:
                     - group:user
                 - domain:
