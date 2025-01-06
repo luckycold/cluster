@@ -108,7 +108,7 @@ spec:
                                 DATA_DIR: "/data"
                                 OPENAI_API_KEY: "{{.Values.hoarder.OPENAI_API_KEY}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
-                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXT_AUTH_SECRET}}"
+                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXTAUTH_SECRET}}"
                                 MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
                                 NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
                             probes:
@@ -157,9 +157,9 @@ spec:
                                   name: main
                             env:
                                 MEILI_NO_ANALYTICS: "true"
-                                NEXTAUTH_URL: "{{.Values.hoarder.NEXT_AUTH_URL}}"
+                                NEXTAUTH_URL: "{{.Values.hoarder.NEXTAUTH_URL}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
-                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXT_AUTH_SECRET}}"
+                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXTAUTH_SECRET}}"
                                 MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
                                 NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
                             probes:
