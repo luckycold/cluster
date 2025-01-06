@@ -36,6 +36,16 @@ spec:
                 runAsNonRoot: false
                 runAsUser: 0
                 runAsGroup: 0
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
         hoarder:
             NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
             MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
