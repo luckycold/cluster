@@ -146,6 +146,7 @@ spec:
                         multiverse-signportals,
                         invsee++,
                         sleeper,
+                        no-block-creeper-plugin,
                         waypoints
                     PLUGINS: >-
                         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
