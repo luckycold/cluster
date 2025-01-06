@@ -7,8 +7,8 @@ spec:
     interval: 15m
     chart:
         spec:
-            chart: custom-app
-            version: 14.2.0
+            chart: app-template
+            version: 14.4.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -36,6 +36,11 @@ spec:
                 runAsNonRoot: false
                 runAsUser: 0
                 runAsGroup: 0
+        hoarder:
+            NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
+            MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
+            NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
+            OPENAI_API_KEY: "${OPENAI_API_KEY}"
         service:
             main:
                 ports:
@@ -76,19 +81,6 @@ spec:
                         enabled: true
                         entrypoints:
                             - websecure
-        # additionalContainers:
-        #     chrome:
-        #         name: chrome
-        #         image: "{{.Values.chromeImage.repository}}:{{.Values.chromeImage.tag}}"
-        #         ports:
-        #             - containerPort: 9222
-        #               name: main
-        #     meilisearch:
-        #         name: meilisearch
-        #         image: "{{.Values.meilisearchImage.repository}}:{{.Values.meilisearchImage.tag}}"
-        #         ports:
-        #             - containerPort: 7700
-        #               name: main
         workload:
             main:
                 podSpec:
@@ -98,10 +90,10 @@ spec:
                                 - containerPort: 3000
                                   name: main
                             env:
-                                MEILI_ADDR: http://localhost:7700
-                                BROWSER_WEB_URL: http://localhost:9222
+                                MEILI_ADDR: http://meilisearch:7700
+                                BROWSER_WEB_URL: http://chrome:9222
                                 NEXTAUTH_URL: http://localhost:3000
-                                OPENAI_API_KEY: ${OPENAI_API_KEY}
+                                OPENAI_API_KEY: "${OPENAI_API_KEY}"
                                 DATA_DIR: "/data"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
@@ -117,6 +109,9 @@ spec:
                                 startup:
                                     enabled: true
                                     type: tcp
+            chrome:
+                podSpec:
+                    containers:
                         chrome:
                             enabled: true
                             imageSelector: chromeImage
@@ -145,6 +140,9 @@ spec:
                                     enabled: true
                                     type: tcp
                                     port: 9222
+            meilisearch:
+                podSpec:
+                    containers:
                         meilisearch:
                             enabled: true
                             imageSelector: meilisearchImage
@@ -153,7 +151,7 @@ spec:
                                   name: main
                             env: 
                                 MEILI_NO_ANALYTICS: "true"
-                                NEXTAUTH_URL: http://localhost:3000
+                                NEXTAUTH_URL: http://main:3000
                                 NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
                                 MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
                                 NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
@@ -179,9 +177,25 @@ spec:
                     main:
                         main:
                             mountPath: "/data"
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
             meili-data:
                 enabled: true
                 targetSelector:
                     main:
                         meilisearch:
                             mountPath: "/meili_data"
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
