@@ -173,7 +173,6 @@ spec:
                                     type: tcp
                                     port: 7700
                 replicas: 1
-                type: Deployment
         persistence:
             data:
                 enabled: true
