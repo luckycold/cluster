@@ -138,6 +138,7 @@ spec:
                         viaversion,
                         viabackwards,
                         worldedit,
+                        worldguard,
                         multiverse-core,
                         multiverse-inventories,
                         multiverse-portals,
