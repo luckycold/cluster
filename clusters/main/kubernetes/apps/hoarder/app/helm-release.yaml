@@ -80,6 +80,7 @@ spec:
                     - host: h.${DOMAIN_0}
                       paths:
                           - path: /
+                      targetPort: 3000
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
