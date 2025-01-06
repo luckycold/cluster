@@ -49,14 +49,13 @@ spec:
                             enabled: true
                             certificateIssuer: domain-0-le-prod
                         traefik:
-                            allowCors: true
                             enabled: true
                             entrypoints:
                                 - websecure
                             middlewares:
                                 - name: authelia
                     hosts:
-                        - host: mc.cs.${DOMAIN_0}
+                        - host: mc-cs.${DOMAIN_0}
         persistence:
             data:
                 volsync:

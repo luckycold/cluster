@@ -26,7 +26,7 @@ spec:
                             enabled: true
                             certificateIssuer: domain-0-le-prod
                     hosts:
-                        - host: rss.cs.${DOMAIN_0}
+                        - host: rss-cs.${DOMAIN_0}
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
