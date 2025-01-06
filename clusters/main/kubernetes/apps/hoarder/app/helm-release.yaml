@@ -104,7 +104,7 @@ spec:
                             env:
                                 MEILI_ADDR: http://localhost:7700
                                 BROWSER_WEB_URL: http://localhost:9222
-                                NEXTAUTH_URL: "{{.Values.hoarder.NEXT_AUTH_URL}}"
+                                NEXTAUTH_URL: "{{.Values.hoarder.NEXTAUTH_URL}}"
                                 DATA_DIR: "/data"
                                 OPENAI_API_KEY: "{{.Values.hoarder.OPENAI_API_KEY}}"
                                 HOARDER_VERSION: "{{.Values.image.tag}}"
