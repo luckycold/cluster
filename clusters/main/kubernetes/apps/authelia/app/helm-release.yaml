@@ -45,7 +45,7 @@ spec:
                   subject:
                     - group:admin
                 - domain:
-                    - mc.cs.${DOMAIN_0}
+                    - mc-cs.${DOMAIN_0}
                   domain_regex: []
                   networks: []
                   policy: two_factor
