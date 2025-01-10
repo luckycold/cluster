@@ -134,7 +134,6 @@ spec:
                     MODRINTH_ALLOWED_VERSION_TYPE: beta
                     MODRINTH_DOWNLOAD_DEPENDENCIES: required
                     MODRINTH_PROJECTS: >-
-                        #dynmap,
                         luckperms,
                         viaversion,
                         viabackwards,
