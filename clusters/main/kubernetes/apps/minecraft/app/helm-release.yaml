@@ -133,7 +133,8 @@ spec:
                     # RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
                     CF_API_KEY: ${CURSEFORGE_API_KEY}
                     SPIGET_RESOURCES: >-
-                        34315
+                        34315,
+                        81456
                     MODRINTH_ALLOWED_VERSION_TYPE: beta
                     MODRINTH_DOWNLOAD_DEPENDENCIES: required
                     MODRINTH_PROJECTS: >-
