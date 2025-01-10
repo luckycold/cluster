@@ -11,11 +11,5 @@
         "dependencyDashboardApproval": true
       }
     ]
-  },
-  "schedule": [
-    {
-      "cron": "0 0-6 * * *",
-      "timezone": "America/Chicago"
-    }
-  ]
+  }
 }
