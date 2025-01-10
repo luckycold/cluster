@@ -58,6 +58,9 @@ spec:
                         - host: mc-cs.${DOMAIN_0}
         persistence:
             data:
+                targetSelector:
+                    mcbackup:
+                        readOnly: false
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
