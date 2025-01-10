@@ -138,6 +138,7 @@ spec:
                     MODRINTH_DOWNLOAD_DEPENDENCIES: required
                     MODRINTH_PROJECTS: >-
                         luckperms,
+                        villagerfollow,
                         viaversion,
                         viabackwards,
                         worldedit,
