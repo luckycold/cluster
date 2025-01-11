@@ -133,8 +133,7 @@ spec:
                     # RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
                     CF_API_KEY: ${CURSEFORGE_API_KEY}
                     SPIGET_RESOURCES: >-
-                        34315,
-                        81456
+                        34315
                     MODRINTH_ALLOWED_VERSION_TYPE: beta
                     MODRINTH_DOWNLOAD_DEPENDENCIES: required
                     MODRINTH_PROJECTS: >-
@@ -155,7 +154,8 @@ spec:
                         waypoints
                     PLUGINS: >-
                         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
-                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot,
+                        https://www.spigotmc.org/resources/craftcontrol-rcon.81456/download?version=396447
                     # PACKWIZ_URL: ""
                     # CUSTOM_SERVER: ""
                     # QUILT_LOADER_VERSION: ""
