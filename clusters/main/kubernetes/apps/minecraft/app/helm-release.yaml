@@ -154,8 +154,7 @@ spec:
                         waypoints
                     PLUGINS: >-
                         https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
-                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot,
-                        https://www.spigotmc.org/resources/craftcontrol-rcon.81456/download?version=396447
+                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
                     # PACKWIZ_URL: ""
                     # CUSTOM_SERVER: ""
                     # QUILT_LOADER_VERSION: ""
