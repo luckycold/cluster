@@ -60,6 +60,7 @@ spec:
             data:
                 targetSelector:
                     mcbackup:
+                        enabled: false
                         readOnly: false
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
