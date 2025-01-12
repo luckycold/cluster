@@ -42,7 +42,7 @@ spec:
                                 DRYRUN: "False"
                                 JELLYFIN_BASEURL: http://jellyfin.jellyfin.svc.cluster.local:8096
                                 JELLYFIN_TOKEN: ${JELLYFIN_TOKEN}
-                                PLEX_BASEURL: http://plex.plex.svc.cluster.local:32400
+                                PLEX_BASEURL: http://tr.lan.1al.cc:32400
                                 PLEX_TOKEN: ${PLEX_TOKEN}
                                 SSL_BYPASS: "True"
                                 SYNC_FROM_PLEX_TO_JELLYFIN: "True"

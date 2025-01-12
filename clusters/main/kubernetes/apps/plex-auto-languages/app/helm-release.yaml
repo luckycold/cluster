@@ -43,4 +43,4 @@ spec:
                         main:
                             env:
                                 PLEX_TOKEN: ${PLEX_TOKEN}
-                                PLEX_URL: http://plex.plex.svc.cluster.local:32400
+                                PLEX_URL: http://tr.lan.1al.cc:32400
