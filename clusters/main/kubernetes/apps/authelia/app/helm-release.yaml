@@ -189,16 +189,6 @@ spec:
             zxcvbn:
                 enabled: true
                 min_score: 3
-        persistence:
-            config:
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: true
-                      type: restic
         release_name: authelia
         service:
             main:
