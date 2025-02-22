@@ -16,6 +16,8 @@ spec:
     releaseName: rsshub
     values:
         TZ: US/Central
+        image:
+            tag: latest
         addons:
             codeserver:
                 enabled: false
