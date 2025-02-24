@@ -52,6 +52,7 @@ spec:
                         enabled: true
                       src:
                         enabled: true
+                        schedule: "0 2 * * *"  # 2:00 AM
                       type: restic
         release_name: mealie
         smtp:
