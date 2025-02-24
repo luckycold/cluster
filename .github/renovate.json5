@@ -11,5 +11,13 @@
         "dependencyDashboardApproval": true
       }
     ]
-  }
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["getmeili/meilisearch"],
+      "dependencyDashboardApproval": true,
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "description": "Require manual approval for all Meilisearch updates due to potential breaking changes in minor versions"
+    }
+  ]
 }
