@@ -52,6 +52,7 @@ spec:
             MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
             NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
             OPENAI_API_KEY: "${OPENAI_API_KEY}"
+            CRAWLER_VIDEO_DOWNLOAD: "true"
         service:
             main:
                 ports:
