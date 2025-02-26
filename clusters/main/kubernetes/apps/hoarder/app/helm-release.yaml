@@ -112,6 +112,7 @@ spec:
                                 NEXTAUTH_SECRET: "{{.Values.hoarder.NEXTAUTH_SECRET}}"
                                 MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
                                 NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
+                                CRAWLER_VIDEO_DOWNLOAD: "true"
                             probes:
                                 liveness:
                                     enabled: true
