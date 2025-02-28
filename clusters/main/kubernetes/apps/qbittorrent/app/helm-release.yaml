@@ -102,6 +102,7 @@ spec:
               enabled: false
             src:
               enabled: true
+              schedule: "45 2 * * *"  # 2:45 AM Central Time
             type: restic
       media:
         enabled: true

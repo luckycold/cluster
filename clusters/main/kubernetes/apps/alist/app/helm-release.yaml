@@ -58,6 +58,6 @@ spec:
                         enabled: true
                       src:
                         enabled: true
-                        schedule: "0 0 * * *"
+                        schedule: "45 2 * * *"
                       type: restic
         release_name: alist

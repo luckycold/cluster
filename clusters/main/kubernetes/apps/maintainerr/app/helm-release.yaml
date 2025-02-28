@@ -55,5 +55,6 @@ spec:
                       name: ${VOLSYNC_BACKUP_OLD_NAME}
                       src:
                         enabled: true
+                        schedule: "45 2 * * *"  # 2:45 AM Central Time
                       type: restic
         release_name: maintainerr
