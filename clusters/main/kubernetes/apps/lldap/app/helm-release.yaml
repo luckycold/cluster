@@ -5,6 +5,17 @@ metadata:
     namespace: lldap
 spec:
     interval: 15m
+    timeout: 15m
+    install:
+        timeout: 15m
+        remediation:
+            retries: 3
+    upgrade:
+        timeout: 15m
+        remediation:
+            retries: 3
+            strategy: rollback
+        cleanupOnFail: true
     chart:
         spec:
             chart: lldap
