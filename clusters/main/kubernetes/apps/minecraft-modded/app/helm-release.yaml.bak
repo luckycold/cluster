@@ -1,0 +1,157 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: minecraft-modded
+    namespace: minecraft
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: minecraft-java
+            version: 11.14.1
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: minecraft-modded
+    values:
+        TZ: US/Central
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        addons:
+            codeserver:
+                enabled: true
+                ingress:
+                    enabled: true
+                    integrations:
+                        certManager:
+                            enabled: true
+                            certificateIssuer: domain-0-le-prod
+                    hosts:
+                        - host: mc-m.cs.${DOMAIN_0}
+        persistence:
+            data:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
+        release_name: minecraft-modded
+        service:
+            main:
+                loadBalancerIP: ${MINECRAFT_MODDED_IP}
+                type: LoadBalancer
+            rcon:
+                loadBalancerIP: ${MINECRAFT_MODDED_IP}
+                type: LoadBalancer
+        resources:
+            limits:
+                memory: 14Gi
+            requests:
+                memory: 4Gi
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  imageSelector: image
+                  env:
+                    EULA: "TRUE"
+                    OVERRIDE_SERVER_PROPERTIES: true
+                    VERSION: "LATEST"
+                    TYPE: "AUTO_CURSEFORGE"
+                    DIFFICULTY: normal
+                    MAX_PLAYERS: 20
+                    MAX_WORLD_SIZE: 10000
+                    ALLOW_NETHER: true
+                    ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+                    ENABLE_COMMAND_BLOCK: true
+                    FORCE_GAMEMODE: false
+                    GENERATE_STRUCTURES: true
+                    HARDCORE: false
+                    MAX_BUILD_HEIGHT: 256
+                    MAX_TICK_TIME: 60000
+                    SPAWN_ANIMALS: true
+                    SPAWN_MONSTERS: true
+                    SPAWN_NPCS: true
+                    VIEW_DISTANCE: 16
+                    MODE: survival
+                    MOTD: "Carson will not join one day :)"
+                    PVP: true
+                    LEVEL_TYPE: DEFAULT
+                    LEVEL: world
+                    ONLINE_MODE: true
+                    MAX_MEMORY: 12G
+                    INIT_MEMORY: 4G
+                    RCON_PASSWORD: "${GENERIC_PASSWORD}"
+                    ALLOW_FLIGHT: TRUE
+                    RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
+                    # PACKWIZ_URL: ""
+                    # CUSTOM_SERVER: ""
+                    # QUILT_LOADER_VERSION: ""
+                    # QUILT_LAUNCHER: ""
+                    # QUILT_LAUNCHER_URL: ""
+                    # PUFFERFISH_BUILD: "lastSuccessfulBuild"
+                    # FORGEVERSION: ""
+                    # FORGE_INSTALLER: ""
+                    # FORGE_INSTALLER_URL: ""
+                    # FABRIC_LOADER_VERSION: ""
+                    # FABRIC_INSTALLER: ""
+                    # FABRIC_INSTALLER_URL: ""
+                    # SPIGOT_DOWNLOAD_URL: ""
+                    # BUILD_FROM_SOURCE: false
+                    # BUKKIT_DOWNLOAD_URL: ""
+                    # PAPERBUILD: ""
+                    # PAPER_DOWNLOAD_URL: ""
+                    # AIRPLANE_BUILD: "lastSuccessfulBuild"
+                    # MAGMA_CHANNEL: "stable"
+                    # MOHIST_BUILD: ""
+                    # CANYON_BUILD: ""
+                    # SPONGEBRANCH: "STABLE"
+                    # SPONGEVERSION: ""
+                    # LIMBO_BUILD: "LATEST"
+                    # LIMBO_SCHEMA_FILENAME: "default.schem"
+                    # CRUCIBLE_RELEASE: "latest"
+                    # FTB_MODPACK_ID: ""
+                    # FTB_MODPACK_VERSION_ID: ""
+                    # CF_SERVER_MOD: ""
+                    # CF_BASE_DIR: ""
+                    # USE_MODPACK_START_SCRIPT: true
+                    # FTB_LEGACYJAVAFIXER: false
+                    # WHITELIST: ""
+                    OPS: "lukeycold"
+                    EXISTING_OPS_FILE: "SYNCHRONIZE"
+                    # ICON: ""
+                    # SEED: ""
+                    # GENERATOR_SETTINGS: ""
+                    # WORLD: ""
+                    # FORCE_REDOWNLOAD: false
+                    # USE_FLARE_FLAGS: false
+                    # USE_AIKAR_FLAGS: true
+                    # USE_SIMD_FLAGS: false
+                    # JVM_OPTS: ""
+                    # JVM_XX_OPTS: ""
+                    # CF_API_KEY
+                    # CF_PAGE_URL
+                    CF_API_KEY: ${CURSEFORGE_API_KEY}
+                    CF_SLUG: all-the-mods-10
+                    # CF_EXCLUDE_INCLUDE_FILE
+                    # CF_EXCLUDE_MODS
+                    # CF_FORCE_INCLUDE_MODS
+                    # CF_FORCE_SYNCHRONIZE
+                    # CF_OVERRIDES_SKIP_EXISTING
+                    # CF_PARALLEL_DOWNLOADS
+                    # CF_SET_LEVEL_FROM
+                mcbackup:
+                  enabled: false

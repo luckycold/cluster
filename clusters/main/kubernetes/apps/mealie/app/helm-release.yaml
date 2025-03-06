@@ -1,0 +1,104 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: mealie
+    namespace: mealie
+spec:
+    interval: 5m
+    chart:
+        spec:
+            chart: mealie
+            version: 24.7.0
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: mealie
+    values:
+        TZ: US/Central
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: m.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            data:
+                volsync:
+                    - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      src:
+                        enabled: true
+                        schedule: "45 2 * * *"  # 2:45 AM Central Time
+                      type: restic
+        release_name: mealie
+        smtp:
+            enabled: true
+            user: ${ADMIN_EMAIL}
+            password: ${SMTP_PASSWORD}
+            host: ${SMTP_SERVER}
+            from_email: ${ADMIN_EMAIL}
+        ldap:
+            auth_enabled: true
+            server_url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
+            tls_insecure: true
+            enable_starttls: false
+            base_dn: ${AUTHELIA_LDAP_BASE_DN}
+            query_bind: ${AUTHELIA_LDAP_USER}
+            query_password: ""
+            user_filter: ""
+            admin_filter: "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))"
+            id_attribute: uid
+            name_attribute: name
+            mail_attribute: mail
+        oidc:
+            auth_enabled: true
+            signup_enabled: false
+            configuration_url: ${EXTERNAL_OIDC_CONFIGURATION_URL}
+            client_id: ${MEALIE_OIDC_CLIENT_ID}
+            client_secret: ${MEALIE_OIDC_CLIENT_SECRET}
+            provider_name: "Proton"
+            auto_redirect: true
+        cnpg:
+            main:
+                mode: recovery
+                database: mealie
+                user: mealie
+                password: ${MEALIE_CNPG_PASSWORD}
+                backups:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    enabled: true
+                    revision: "1"
+                recovery:
+                    method: object_store
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                OPENAI_API_KEY: ${OPENAI_API_KEY}

@@ -1,0 +1,70 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: audiobookshelf
+    namespace: audiobookshelf
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: audiobookshelf
+            version: 11.14.5
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: audiobookshelf
+    values:
+        TZ: US/Central
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: ab.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            config:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                        schedule: "45 2 * * *"  # 2:45 AM Central Time
+                      type: restic
+            audiobooks:
+                enabled: true
+                path: /mnt/Media/library/books/audiobooks
+                readOnly: false
+                server: ${NAS_DOMAIN}
+                type: nfs
+        release_name: audiobookshelf
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                TOKEN_SECRET: ${AUDIOBOOKSHELF_TOKEN_SECRET}

@@ -1,0 +1,93 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: romm
+    namespace: romm
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: romm
+            version: 10.20.8
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: romm
+    values:
+        TZ: US/Central
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: romm.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: true
+                        allowCors: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            config:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                        schedule: "45 2 * * *"  # 2:45 AM Central Time
+                      type: restic
+            library:
+                enabled: true
+                path: /mnt/Media/library/games/emulation
+                mountPath: /romm/library
+                server: ${NAS_DOMAIN}
+                type: nfs
+        release_name: romm
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                    # IGDB client id and secret (not required but recommended to set)
+                    IGDB_CLIENT_ID: "${ROMM_IGDB_CLIENT_ID}"
+                    IGDB_CLIENT_SECRET: "${ROMM_IGDB_CLIENT_SECRET}"
+
+                    # optional api
+                    STEAMGRIDDB_API_KEY: "${ROMM_STEAMGRIDDB_API_KEY}"
+
+                    # paid API only (optional)
+                    # MOBYGAMES_API_KEY: ""
+
+                    # Enable rescanning of library when filesystem changes
+                    ENABLE_RESCAN_ON_FILESYSTEM_CHANGE: true
+
+                    # Delay in minutes before rescanning library when filesystem changes
+                    RESCAN_ON_FILESYSTEM_CHANGE_DELAY: 5
+
+                    # Cron expression for scheduled rescanning
+                    # SCHEDULED_RESCAN_CRON: "0 3 * * *"
+        redis:
+            password: ${ROMM_REDIS_PASSWORD}
+        mariadb:
+            password: ${ROMM_MARIADB_PASSWORD}
+            rootPassword: ${ROMM_MARIADB_ROOT_PASSWORD}

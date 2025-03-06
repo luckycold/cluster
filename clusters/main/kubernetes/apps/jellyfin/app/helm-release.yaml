@@ -1,0 +1,91 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: jellyfin
+    namespace: jellyfin
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: jellyfin
+            version: 20.6.10
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: jellyfin
+    values:
+        TZ: US/Central
+        autodiscovery:
+            enabled: true
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                hosts:
+                    - host: jf.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        persistence:
+            cache:
+                enabled: true
+                medium: Memory
+                type: emptyDir
+            config:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                        schedule: "45 2 * * *"  # 2:45 AM Central Time
+                      type: restic
+            transcode:
+                enabled: true
+                medium: Memory
+                type: emptyDir
+            media:
+                enabled: true
+                type: nfs
+                path: /mnt/Media
+                mountPath: /media
+                server: ${NAS_DOMAIN}
+        release_name: jellyfin
+        service:
+            autodiscovery:
+                enabled: true
+                ports:
+                    autodiscovery:
+                        enabled: true
+                        port: 7359
+                        protocol: udp
+                        targetPort: 7359
+            main:
+                enabled: true
+                loadBalancerIP: ${JELLYFIN_IP}
+                ports:
+                    main:
+                        port: 8096
+                        targetPort: 8096
+                type: LoadBalancer

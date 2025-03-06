@@ -1,0 +1,59 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: jelly-plex
+    namespace: jelly-plex
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: app-template
+            version: 14.5.2
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: jelly-plex
+    values:
+        TZ: US/Central
+        release_name: jelly-plex
+        image:
+            repository: docker.io/luigi311/jellyplex-watched
+            pullPolicy: IfNotPresent
+            tag: latest
+        securityContext:
+            container:
+                UMASK: "0022"
+                readOnlyRootFilesystem: false
+                runAsNonRoot: false
+                runAsUser: 0
+                runAsGroup: 0
+        service:
+            main:
+                ports:
+                    main:
+                        port: 10400
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                DRYRUN: "False"
+                                JELLYFIN_BASEURL: http://jellyfin.jellyfin.svc.cluster.local:8096
+                                JELLYFIN_TOKEN: ${JELLYFIN_TOKEN}
+                                PLEX_BASEURL: http://tr.lan.1al.cc:32400
+                                PLEX_TOKEN: ${PLEX_TOKEN}
+                                SSL_BYPASS: "True"
+                                SYNC_FROM_PLEX_TO_JELLYFIN: "True"
+                                SYNC_FROM_JELLYFIN_TO_PLEX: "False"
+                                USER_MAPPING: '{"lucky": "luckycold"}'
+                            probes:
+                                liveness:
+                                    enabled: false
+                                readiness:
+                                    enabled: false
+                                startup:
+                                    enabled: false
+                replicas: 1
+                type: Deployment
