@@ -4,33 +4,35 @@
     "config:recommended",
     "github>truecharts/public//.github/renovate/main.json5"
   ],
-  "minor": {
-    "packageRules": [
-      {
-        "matchPackageNames": ["ghcr.io/siderolabs/kubelet", "ghcr.io/siderolabs/installer"],
-        "dependencyDashboardApproval": true
-      }
-    ]
-  },
   "packageRules": [
     {
+      "matchPackageNames": ["ghcr.io/siderolabs/kubelet", "ghcr.io/siderolabs/installer"],
+      "groupName": "Sidero Labs updates",
+      "dependencyDashboardApproval": true
+    },
+    {
       "matchPackageNames": ["getmeili/meilisearch"],
+      "groupName": "Meilisearch updates",
       "dependencyDashboardApproval": true,
       "matchUpdateTypes": ["major", "minor", "patch"],
       "description": "Require manual approval for all Meilisearch updates due to potential breaking changes in minor versions"
     },
     {
-      // Keep Hoarder main image on 'release' tag
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/hoarder-app/hoarder"],
       "allowedVersions": "release",
       "description": "Always use the 'release' tag for Hoarder main image"
+    },
+    {
+      "matchPackagePatterns": [".*"],
+      "excludePackageNames": ["ghcr.io/siderolabs/kubelet", "ghcr.io/siderolabs/installer", "getmeili/meilisearch", "ghcr.io/hoarder-app/hoarder"],
+      "groupName": "all other dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ],
-  // Add custom managers to sync with official Hoarder repository
   "customManagers": [
     {
-      // Extract Meilisearch version from Hoarder's Kubernetes manifests
       "customType": "regex",
       "fileMatch": ["^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$"],
       "matchStrings": [
@@ -41,7 +43,6 @@
       "extractVersionTemplate": "image: getmeili\\/meilisearch:(?<version>.*?)\\n"
     },
     {
-      // Extract Chrome version from Hoarder's Kubernetes manifests
       "customType": "regex",
       "fileMatch": ["^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$"],
       "matchStrings": [
