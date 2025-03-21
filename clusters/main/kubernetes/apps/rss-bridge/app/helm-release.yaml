@@ -36,7 +36,6 @@ spec:
                             - websecure
                         middlewares:
                             - name: basic-auth
-                              namespace: traefik
         persistence:
             config:
                 mountPath: /config
