@@ -54,11 +54,5 @@ spec:
             trustForwardHeader: true
       basicAuth:
           - name: basic-auth
-            secretName: basic-auth-secret
-            namespace: traefik
-            removeHeader: false
-    secrets:
-      - name: basic-auth-secret
-        data:
-          username: ${GENERIC_USER}
-          password: ${GENERIC_PASSWORD}
+            users: 
+              - "${GENERIC_USER}:${GENERIC_PASSWORD}"
