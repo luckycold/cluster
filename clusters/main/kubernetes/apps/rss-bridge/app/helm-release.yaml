@@ -34,6 +34,9 @@ spec:
                         enabled: true
                         entrypoints:
                             - websecure
+                        middlewares:
+                            - name: basic-auth
+                              namespace: traefik
         persistence:
             config:
                 mountPath: /config
