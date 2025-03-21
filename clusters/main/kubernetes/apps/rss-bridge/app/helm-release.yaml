@@ -35,8 +35,8 @@ spec:
                         entrypoints:
                             - websecure
                         middlewares:
-                            - name: basic-auth
                             - name: rate-limit
+                            - name: basic-auth
         persistence:
             config:
                 mountPath: /config
