@@ -22,6 +22,14 @@ spec:
                 - domain:
                     - '*.${DOMAIN_0}'
                   domain_regex: []
+                  networks:
+                    - 192.168.0.0/16
+                  policy: bypass
+                  resources: []
+                  subject: []
+                - domain:
+                    - '*.${DOMAIN_0}'
+                  domain_regex: []
                   networks: []
                   policy: bypass
                   resources:
@@ -83,14 +91,6 @@ spec:
                   resources: []
                   subject:
                     - group:admin
-                - domain:
-                    - '*.${DOMAIN_0}'
-                  domain_regex: []
-                  networks:
-                    - 192.168.0.0/22
-                  policy: bypass
-                  resources: []
-                  subject: []
         authentication_backend:
             file:
                 enabled: false
