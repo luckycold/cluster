@@ -57,6 +57,11 @@ spec:
           users: 
             - username: ${GENERIC_USER}
               password: ${GENERIC_PASSWORD}
+      rateLimit:
+        - name: rate-limit
+          burst: 5000
+          period: 1s
+
       ipWhiteList:
         - name: internal-only
           sourceRange:
