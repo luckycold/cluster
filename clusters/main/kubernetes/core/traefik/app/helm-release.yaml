@@ -53,6 +53,6 @@ spec:
               insecureSkipVerify: false
             trustForwardHeader: true
       basicAuth:
-            users: 
-              - username: ${GENERIC_USER}
-                password: ${GENERIC_PASSWORD}
+        - users: 
+            - username: ${GENERIC_USER}
+              password: ${GENERIC_PASSWORD}
