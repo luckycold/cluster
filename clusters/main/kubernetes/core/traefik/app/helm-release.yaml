@@ -59,8 +59,8 @@ spec:
               password: ${GENERIC_PASSWORD}
       rateLimit:
         - name: rate-limit
-          burst: 50
-          period: 10s
+          burst: 1
+          period: 5s
 
       ipWhiteList:
         - name: internal-only
