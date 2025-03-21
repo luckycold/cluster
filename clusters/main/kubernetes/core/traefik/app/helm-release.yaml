@@ -54,5 +54,4 @@ spec:
             trustForwardHeader: true
       basicAuth:
           - name: basic-auth
-            users: 
-              - "${GENERIC_USER}:${GENERIC_PASSWORD}"
+            users: "${GENERIC_USER}:${GENERIC_PASSWORD}"
