@@ -147,6 +147,6 @@ spec:
 
     # Add explicit volumes definition for the config secret
     volumes:
-      - name: config-files # Name for the volume sourced from the secret
-        secret:
-          secretName: matrix-synapse-config-files # Must match secretGenerator name
+      - name: config-files # Name for the volume sourced from the configmap
+        configMap: # Change from secret to configMap
+          name: matrix-synapse-config-files # Must match ConfigMap name
