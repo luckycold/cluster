@@ -35,13 +35,13 @@ spec:
       tag: v1.127.1
       pullPolicy: IfNotPresent
     
-    # Define environment variables here for app-template to create a secret
-    env:
+    # Define app-specific values under a dedicated key
+    matrix_synapse:
       SYNAPSE_SERVER_NAME: ${DOMAIN_0}
       SYNAPSE_REPORT_STATS: "no"
-      POSTGRES_HOST: matrix-synapse-cnpg-main # This references the service name created by cnpg addon
-      POSTGRES_USER: matrix # Should match cnpg.main.user
-      POSTGRES_PASSWORD: ${MATRIX_DB_PASSWORD} # Flux variable substitution
+      POSTGRES_HOST: matrix-synapse-cnpg-main
+      POSTGRES_USER: matrix
+      POSTGRES_PASSWORD: ${MATRIX_DB_PASSWORD}
 
     # Add credentials block for VolSync backup
     credentials:
@@ -119,9 +119,12 @@ spec:
           containers:
             main:
               primary: true
-              envFrom:
-                - secretRef:
-                    name: matrix-synapse-env
+              env:
+                SYNAPSE_SERVER_NAME: "{{ .Values.matrix_synapse.SYNAPSE_SERVER_NAME }}"
+                SYNAPSE_REPORT_STATS: "{{ .Values.matrix_synapse.SYNAPSE_REPORT_STATS }}"
+                POSTGRES_HOST: "{{ .Values.matrix_synapse.POSTGRES_HOST }}"
+                POSTGRES_USER: "{{ .Values.matrix_synapse.POSTGRES_USER }}"
+                POSTGRES_PASSWORD: "{{ .Values.matrix_synapse.POSTGRES_PASSWORD }}"
               volumeMounts:
                 - name: data # Mount the main PVC
                   mountPath: /data

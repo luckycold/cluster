@@ -18,11 +18,11 @@ spec:
         TZ: US/Central
         release_name: hoarder
 
-        # Define environment variables here for app-template to create a secret
-        env:
+        # Define app-specific values under a dedicated key
+        hoarder:
           # Common vars (used by multiple containers)
           NEXTAUTH_URL: http://localhost:3000
-          HOARDER_VERSION: "{{.Values.image.tag}}" # Use Go template for dynamic value
+          # HOARDER_VERSION is handled dynamically below using {{ .Values.image.tag }}
           NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET}
           MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY}
           NEXT_PUBLIC_SECRET: ${HOARDER_NEXT_PUBLIC_SECRET}
@@ -97,9 +97,17 @@ spec:
                             ports:
                                 - containerPort: 3000
                                   name: main
-                            envFrom:
-                              - secretRef:
-                                  name: hoarder-env
+                            env:
+                              MEILI_ADDR: "{{ .Values.hoarder.MEILI_ADDR }}"
+                              BROWSER_WEB_URL: "{{ .Values.hoarder.BROWSER_WEB_URL }}"
+                              NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
+                              DATA_DIR: "{{ .Values.hoarder.DATA_DIR }}"
+                              OPENAI_API_KEY: "{{ .Values.hoarder.OPENAI_API_KEY }}"
+                              HOARDER_VERSION: "{{ .Values.image.tag }}"
+                              NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
+                              MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
+                              NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
+                              CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.hoarder.CRAWLER_VIDEO_DOWNLOAD }}"
                             probes:
                                 liveness:
                                     enabled: true
@@ -144,9 +152,13 @@ spec:
                             ports:
                                 - containerPort: 7700
                                   name: main
-                            envFrom:
-                              - secretRef:
-                                  name: hoarder-env
+                            env:
+                              MEILI_NO_ANALYTICS: "{{ .Values.hoarder.MEILI_NO_ANALYTICS }}"
+                              NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
+                              HOARDER_VERSION: "{{ .Values.image.tag }}"
+                              NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
+                              MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
+                              NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
                             probes:
                                 liveness:
                                     enabled: true
