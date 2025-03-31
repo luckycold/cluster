@@ -1,0 +1,125 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: matrix-synapse
+  namespace: matrix-synapse
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 14.5.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  timeout: 20m
+  maxHistory: 3
+  driftDetection:
+    mode: warn
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: matrixdotorg/synapse
+      tag: v1.98.0
+      pullPolicy: IfNotPresent
+    
+    # Define environment variables here for app-template to create a secret
+    env:
+      SYNAPSE_SERVER_NAME: ${DOMAIN_0}
+      SYNAPSE_REPORT_STATS: "no"
+      POSTGRES_HOST: matrix-synapse-cnpg-main # This references the service name created by cnpg addon
+      POSTGRES_USER: matrix # Should match cnpg.main.user
+      POSTGRES_PASSWORD: ${MATRIX_DB_PASSWORD} # Flux variable substitution
+
+    # Add credentials block for VolSync backup
+    credentials:
+      ${VOLSYNC_BACKUP_MAIN_NAME}: # Flux variable for secret name
+        accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+        bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+        encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+        name: ${VOLSYNC_BACKUP_MAIN_NAME} # Used as the key and potential secret name part
+        path: "" # Optional sub-path within the bucket
+        secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+        type: s3 # Assuming S3 type like hoarder
+        url: ${VOLSYNC_BACKUP_MAIN_URL}
+
+    podSecurityContext:
+      runAsUser: 991
+      runAsGroup: 991
+      fsGroup: 991
+    
+    service:
+      main:
+        ports:
+          main:
+            port: 8008
+            protocol: http
+            targetPort: 8008
+    
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        size: 10Gi
+        volsync:
+          - name: ${VOLSYNC_BACKUP_MAIN_NAME} # Use Flux variable
+            type: restic
+            credentials: ${VOLSYNC_BACKUP_MAIN_NAME} # Use Flux variable
+            src:
+              enabled: true
+              schedule: "45 2 * * *" # Example: 2:45 AM Central Time - ADJUST AS NEEDED
+            dest:
+              enabled: false
+    
+    cnpg:
+      main:
+        enabled: true
+        user: matrix
+        database: matrix
+    
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              primary: true
+              envFrom:
+                - secretRef:
+                    name: matrix-synapse-env
+              volumeMounts:
+                - name: data # Mount the main PVC
+                  mountPath: /data
+                - name: config-files # Mount the secret volume
+                  mountPath: /data/homeserver.yaml # Mount ONLY the file
+                  subPath: homeserver.yaml      # Select the specific file from the secret
+              ports:
+                - containerPort: 8008
+                  name: main
+              probes:
+                liveness:
+                  enabled: true
+                  type: tcp
+                readiness:
+                  enabled: true
+                  type: tcp
+                startup:
+                  enabled: true
+                  type: tcp
+
+    # Add explicit volumes definition for the config secret
+    volumes:
+      - name: config-files # Name for the volume sourced from the secret
+        secret:
+          secretName: matrix-synapse-config-files # Must match secretGenerator name

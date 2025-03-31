@@ -17,6 +17,24 @@ spec:
     values:
         TZ: US/Central
         release_name: hoarder
+
+        # Define environment variables here for app-template to create a secret
+        env:
+          # Common vars (used by multiple containers)
+          NEXTAUTH_URL: http://localhost:3000
+          HOARDER_VERSION: "{{.Values.image.tag}}" # Use Go template for dynamic value
+          NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET}
+          MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY}
+          NEXT_PUBLIC_SECRET: ${HOARDER_NEXT_PUBLIC_SECRET}
+          # Main container specific
+          MEILI_ADDR: http://localhost:7700 # Points to the meilisearch container service
+          BROWSER_WEB_URL: http://localhost:9222 # Points to the chrome container service
+          DATA_DIR: "/data"
+          OPENAI_API_KEY: ${OPENAI_API_KEY}
+          CRAWLER_VIDEO_DOWNLOAD: "true"
+          # Meilisearch container specific
+          MEILI_NO_ANALYTICS: "true"
+
         image:
             repository: ghcr.io/hoarder-app/hoarder
             pullPolicy: IfNotPresent
@@ -46,35 +64,12 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
-        hoarder:
-            NEXTAUTH_URL: http://localhost:3000
-            NEXTAUTH_SECRET: "${HOARDER_NEXTAUTH_SECRET}"
-            MEILI_MASTER_KEY: "${HOARDER_MEILI_MASTER_KEY}"
-            NEXT_PUBLIC_SECRET: "${HOARDER_NEXT_PUBLIC_SECRET}"
-            OPENAI_API_KEY: "${OPENAI_API_KEY}"
-            CRAWLER_VIDEO_DOWNLOAD: "true"
         service:
             main:
                 ports:
                     main:
                         port: 3000
                         targetPort: 3000
-            # browser:
-            #     enabled: true
-            #     ports:
-            #         browser:
-            #             enabled: true
-            #             protocal: tcp
-            #             port: 9222
-            #             targetPort: 9222
-            # meilisearch:
-            #     enabled: true
-            #     ports:
-            #         meilisearch:
-            #             enabled: true
-            #             protocal: tcp
-            #             port: 7700
-            #             targetPort: 7700
         ingress:
             main:
                 enabled: true
@@ -102,17 +97,9 @@ spec:
                             ports:
                                 - containerPort: 3000
                                   name: main
-                            env:
-                                MEILI_ADDR: http://localhost:7700
-                                BROWSER_WEB_URL: http://localhost:9222
-                                NEXTAUTH_URL: "{{.Values.hoarder.NEXTAUTH_URL}}"
-                                DATA_DIR: "/data"
-                                OPENAI_API_KEY: "{{.Values.hoarder.OPENAI_API_KEY}}"
-                                HOARDER_VERSION: "{{.Values.image.tag}}"
-                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXTAUTH_SECRET}}"
-                                MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
-                                NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
-                                CRAWLER_VIDEO_DOWNLOAD: "true"
+                            envFrom:
+                              - secretRef:
+                                  name: hoarder-env
                             probes:
                                 liveness:
                                     enabled: true
@@ -157,13 +144,9 @@ spec:
                             ports:
                                 - containerPort: 7700
                                   name: main
-                            env:
-                                MEILI_NO_ANALYTICS: "true"
-                                NEXTAUTH_URL: "{{.Values.hoarder.NEXTAUTH_URL}}"
-                                HOARDER_VERSION: "{{.Values.image.tag}}"
-                                NEXTAUTH_SECRET: "{{.Values.hoarder.NEXTAUTH_SECRET}}"
-                                MEILI_MASTER_KEY: "{{.Values.hoarder.MEILI_MASTER_KEY}}"
-                                NEXT_PUBLIC_SECRET: "{{.Values.hoarder.NEXT_PUBLIC_SECRET}}"
+                            envFrom:
+                              - secretRef:
+                                  name: hoarder-env
                             probes:
                                 liveness:
                                     enabled: true

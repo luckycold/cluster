@@ -1,0 +1,5 @@
+# kustomizeconfig.yaml
+# Enable variable substitution for Secrets
+varReference:
+- path: data
+  kind: Secret 
