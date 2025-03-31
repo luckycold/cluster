@@ -55,10 +55,6 @@ spec:
         type: s3 # Assuming S3 type like hoarder
         url: ${VOLSYNC_BACKUP_MAIN_URL}
 
-    podSecurityContext:
-      runAsUser: 991
-      runAsGroup: 991
-      fsGroup: 991
     
     service:
       main:
@@ -125,6 +121,8 @@ spec:
                 POSTGRES_HOST: "{{ .Values.matrix_synapse.POSTGRES_HOST }}"
                 POSTGRES_USER: "{{ .Values.matrix_synapse.POSTGRES_USER }}"
                 POSTGRES_PASSWORD: "{{ .Values.matrix_synapse.POSTGRES_PASSWORD }}"
+                UID: "568"
+                GID: "568"
               volumeMounts:
                 - name: data # Mount the main PVC
                   mountPath: /data
