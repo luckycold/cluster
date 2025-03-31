@@ -55,6 +55,10 @@ spec:
         type: s3 # Assuming S3 type like hoarder
         url: ${VOLSYNC_BACKUP_MAIN_URL}
 
+    podSecurityContext:
+      runAsUser: 991 # Ensure user is 991
+      runAsGroup: 991 # Ensure group is 991
+      fsGroup: 991 # Ensure filesystem group is 991
     
     service:
       main:
