@@ -36,3 +36,4 @@ resources:
   - minecraft/ks.yaml
   - minecraft-modded/ks.yaml
   - hoarder/ks.yaml
+  - matrix-synapse/ks.yaml
