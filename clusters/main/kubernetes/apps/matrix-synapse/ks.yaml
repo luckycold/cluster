@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 15m
-  path: ./clusters/main/kubernetes/apps/matrix-synapse/app
+  path: clusters/main/kubernetes/apps/matrix-synapse/app
   prune: true
   wait: true
   sourceRef:
