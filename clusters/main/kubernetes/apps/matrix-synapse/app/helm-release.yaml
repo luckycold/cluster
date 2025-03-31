@@ -93,6 +93,10 @@ spec:
         enabled: true
         type: pvc
         size: 10Gi
+        targetSelector:
+          main:
+            main:
+              mountPath: /data
         volsync:
           - name: ${VOLSYNC_BACKUP_MAIN_NAME} # Use Flux variable
             type: restic
