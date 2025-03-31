@@ -4,15 +4,8 @@ kind: Kustomization
 resources:
   - namespace.yaml # Add namespace definition first
   - helm-release.yaml
-
-# Generate a Secret from the homeserver.yaml file stored in Git
-# Note the path is relative to this kustomization.yaml file
-secretGenerator:
-- name: matrix-synapse-config-files # Name of the secret to create
-  namespace: matrix-synapse # Must match the HelmRelease namespace
-  files:
-  - homeserver.yaml=../config/homeserver.yaml # Correct path to the config file
+  - config-secret.yaml # Include the explicitly defined secret
 
 # Enable variable substitution using the config file created above
-configurations:
-- kustomizeconfig.yaml 
+# configurations:
+# - kustomizeconfig.yaml 
