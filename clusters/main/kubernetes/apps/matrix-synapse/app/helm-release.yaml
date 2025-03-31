@@ -112,6 +112,7 @@ spec:
         enabled: true
         user: matrix
         database: matrix
+        password: ${MATRIX_DB_PASSWORD}
     
     workload:
       main:
