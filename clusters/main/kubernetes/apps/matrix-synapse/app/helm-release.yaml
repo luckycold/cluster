@@ -132,23 +132,23 @@ spec:
               ports:
                 - containerPort: 8008
                   name: main
-              # Configure more robust HTTP probes
+              # Configure probes (switching back to TCP for diagnostics)
               probes:
                 liveness:
                   enabled: true
                   # spec: # Use default spec from app-template, usually fine
                   port: 8008
-                  type: http
-                  path: /health # Synapse health endpoint
+                  type: tcp # Changed from http
+                  # path: /health # Removed path
                 readiness:
                   enabled: true
                   # spec: # Use default spec
                   port: 8008
-                  type: http
-                  path: /health
+                  type: tcp # Changed from http
+                  # path: /health # Removed path
                 startup:
                   enabled: true
                   # spec: # Use default spec
                   port: 8008
-                  type: http
-                  path: /health
+                  type: tcp # Changed from http
+                  # path: /health # Removed path
