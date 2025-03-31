@@ -12,5 +12,4 @@ spec:
     kind: GitRepository
     name: cluster
   dependsOn:
-    - name: external-secrets-stores
     - name: cnpg-cluster
