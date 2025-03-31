@@ -32,7 +32,7 @@ spec:
   values:
     image:
       repository: matrixdotorg/synapse
-      tag: v1.127.1
+      tag: latest
       pullPolicy: IfNotPresent
     
     # Define app-specific values under a dedicated key
