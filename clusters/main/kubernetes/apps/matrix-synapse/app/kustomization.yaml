@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml # Add namespace definition first
   - helm-release.yaml
-  - config-map.yaml # Update resource reference
 
 # Enable variable substitution using the config file created above
 # configurations:

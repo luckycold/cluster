@@ -128,9 +128,6 @@ spec:
               volumeMounts:
                 - name: data # Mount the main PVC
                   mountPath: /data
-                - name: config-files # Mount the secret volume
-                  mountPath: /data/homeserver.yaml # Mount ONLY the file
-                  subPath: homeserver.yaml      # Select the specific file from the secret
               ports:
                 - containerPort: 8008
                   name: main
@@ -144,9 +141,3 @@ spec:
                 startup:
                   enabled: true
                   type: tcp
-
-    # Add explicit volumes definition for the config secret
-    volumes:
-      - name: config-files # Name for the volume sourced from the configmap
-        configMap: # Change from secret to configMap
-          name: matrix-synapse-config-files # Must match ConfigMap name
