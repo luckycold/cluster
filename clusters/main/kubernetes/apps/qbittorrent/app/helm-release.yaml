@@ -59,8 +59,6 @@ spec:
             - op: add
               path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
               value: 1
-            - op: remove
-              path: /spec/template/spec/initContainers
   timeout: 20m
   maxHistory: 3
   install:
