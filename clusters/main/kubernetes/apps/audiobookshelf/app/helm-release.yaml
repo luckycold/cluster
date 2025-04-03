@@ -63,7 +63,7 @@ spec:
             ebooks:
                 enabled: true
                 mountPath: /ebooks
-                path: /mnt/Media/library/books/ebooks
+                path: /mnt/Media/library/books/eBooks
                 readOnly: false
                 server: ${NAS_DOMAIN}
                 type: nfs
