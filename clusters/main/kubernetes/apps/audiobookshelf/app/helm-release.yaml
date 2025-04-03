@@ -60,6 +60,13 @@ spec:
                 readOnly: false
                 server: ${NAS_DOMAIN}
                 type: nfs
+            ebooks:
+                enabled: true
+                mountPath: /ebooks
+                path: /mnt/Media/library/books/ebooks
+                readOnly: false
+                server: ${NAS_DOMAIN}
+                type: nfs
         release_name: audiobookshelf
         workload:
             main:
