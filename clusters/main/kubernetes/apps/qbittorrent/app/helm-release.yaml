@@ -23,8 +23,44 @@ spec:
             name: qbittorrent
           patch: |
             - op: add
+              path: /spec/template/spec/containers/0/lifecycle
+              value:
+                postStart:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - |
+                        echo "Waiting for qBittorrent API and Gluetun VPN..."
+                        while true; do
+                          qbt_ready=false
+                          vpn_ready=false
+                          # Check qBittorrent API (using credentials from env vars)
+                          # Use --fail to exit non-zero on HTTP errors >= 400
+                          # Use -s for silent, -o /dev/null to discard body
+                          if curl -s --fail -X POST http://localhost:8080/api/v2/auth/login -d "username=${QBT_USERNAME}&password=${QBT_PASSWORD}" -o /dev/null; then
+                            qbt_ready=true
+                          fi
+                          # Check Gluetun healthcheck endpoint
+                          if curl -s --fail http://localhost:8000/v1/healthcheck -o /dev/null; then
+                            vpn_ready=true
+                          fi
+
+                          if [ "$qbt_ready" = true ] && [ "$vpn_ready" = true ]; then
+                            echo "qBittorrent API and Gluetun VPN are ready. Updating MAM cookie..."
+                            curl -c /config/mam.cookies -b 'mam_id=${MAIN_MAM_COOKIE}' https://t.myanonamouse.net/json/dynamicSeedbox.php
+                            echo "MAM cookie update command executed."
+                            break # Exit the loop
+                          else
+                            echo "Services not ready yet (qBittorrent: $qbt_ready, VPN: $vpn_ready). Retrying in 10 seconds..."
+                            sleep 10
+                          fi
+                        done
+            - op: add
               path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
               value: 1
+            - op: remove
+              path: /spec/template/spec/initContainers
   timeout: 20m
   maxHistory: 3
   install:
