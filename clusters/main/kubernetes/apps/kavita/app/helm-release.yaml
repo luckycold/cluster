@@ -41,6 +41,12 @@ spec:
                         enabled: false
                     traefik:
                         enabled: true
+                        allowCors: true
+                        entrypoints:
+                            - websecure
+        notifier:
+            disable_startup_check: false
+            filesystem:
                         entrypoints:
                             - websecure
         persistence:
