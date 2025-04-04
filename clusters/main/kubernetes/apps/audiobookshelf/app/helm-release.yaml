@@ -30,7 +30,7 @@ spec:
             main:
                 enabled: true
                 hosts:
-                    - host: ab.${DOMAIN_0}
+                    - host: books.${DOMAIN_0}
                       paths:
                         - path: /
                 integrations:

@@ -30,7 +30,7 @@ spec:
             main:
                 enabled: true
                 hosts:
-                    - host: books.${DOMAIN_0}
+                    - host: manga.${DOMAIN_0}
                       paths:
                         - path: /
                 integrations:
@@ -62,7 +62,7 @@ spec:
                       type: restic
             books:
                 enabled: true
-                path: /mnt/Media/library/books/eBooks
+                path: /mnt/Media/library/books
                 mountPath: /books
                 server: ${NAS_DOMAIN}
                 type: nfs
