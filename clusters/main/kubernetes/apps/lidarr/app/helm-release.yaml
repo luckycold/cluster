@@ -41,10 +41,9 @@ spec:
                         enabled: false
                     traefik:
                         enabled: true
-                        entrypoints:
-                            - websecure
                         middlewares:
                             - name: authentik
+                              namespace: traefik
         metrics:
             main:
                 enabled: false
