@@ -43,8 +43,6 @@ spec:
                         enabled: false
                     traefik:
                         enabled: true
-                        entrypoints:
-                            - websecure
         authentik:
           credentials:
             email: ${GENERIC_EMAIL}
