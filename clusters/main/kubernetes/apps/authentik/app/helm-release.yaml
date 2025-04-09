@@ -31,8 +31,6 @@ spec:
                 enabled: true
                 hosts:
                     - host: auth1.${DOMAIN_0}
-                      paths:
-                        - path: /
                     - host: "*.${DOMAIN_0}"
                       paths:
                         - path: /outpost.goauthentik.io
