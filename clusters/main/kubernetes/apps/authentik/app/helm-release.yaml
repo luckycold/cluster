@@ -30,7 +30,7 @@ spec:
             main:
                 enabled: true
                 hosts:
-                    - host: auth1.${DOMAIN_0}
+                    - host: auth.${DOMAIN_0}
                     - host: "*.${DOMAIN_0}"
                       paths:
                         - path: /outpost.goauthentik.io
@@ -49,3 +49,10 @@ spec:
           credentials:
             email: ${GENERIC_EMAIL}
             password: ${GENERIC_ADMIN_PASSWORD}
+        cnpg:
+            main:
+                backups:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    enabled: true
+                recovery:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
