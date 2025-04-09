@@ -45,7 +45,7 @@ spec:
                         entrypoints:
                             - websecure
                         middlewares:
-                            - name: authelia
+                            - name: authentik
         metrics:
             main:
                 enabled: false

@@ -53,7 +53,7 @@ spec:
                             entrypoints:
                                 - websecure
                             middlewares:
-                                - name: authelia
+                                - name: authentik
                     hosts:
                         - host: mc-cs.${DOMAIN_0}
         persistence:

@@ -56,7 +56,7 @@ spec:
                         entrypoints:
                             - websecure
                         middlewares:
-                            - name: authelia
+                            - name: authentik
         persistence:
             data:
                 volsync:
