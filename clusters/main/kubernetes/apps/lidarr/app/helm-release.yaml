@@ -43,7 +43,6 @@ spec:
                         enabled: true
                         middlewares:
                             - name: authentik
-                              namespace: traefik
         metrics:
             main:
                 enabled: false
