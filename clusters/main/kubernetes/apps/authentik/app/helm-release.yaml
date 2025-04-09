@@ -47,5 +47,5 @@ spec:
                             - websecure
         authentik:
           credentials:
-            email: ${GENERIC_USERNAME}
+            email: ${GENERIC_EMAIL}
             password: ${GENERIC_ADMIN_PASSWORD}
