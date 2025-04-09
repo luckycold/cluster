@@ -155,7 +155,7 @@ spec:
             main:
                 enabled: true
                 hosts:
-                    - host: auth.${DOMAIN_0}
+                    - host: auth1.${DOMAIN_0}
                       paths:
                         - path: /
                 integrations:
