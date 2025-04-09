@@ -49,6 +49,13 @@ spec:
           credentials:
             email: ${GENERIC_EMAIL}
             password: ${GENERIC_ADMIN_PASSWORD}
+        email:
+          host: ${SMTP_SERVER}
+          port: 465
+          username: ${ADMIN_EMAIL}
+          password: ${SMTP_PASSWORD}
+          useTLS: true
+          useSSL: true
         cnpg:
             main:
                 backups:
