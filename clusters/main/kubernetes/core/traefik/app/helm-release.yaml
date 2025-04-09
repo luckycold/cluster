@@ -52,9 +52,9 @@ spec:
             tls:
               insecureSkipVerify: false
             trustForwardHeader: true
-          - address: http://authentik-http.authentik.svc.cluster.local:10230/outpost.goauthentik.io/auth/traefik
+          - address: http://authentik.authentik.svc.cluster.local:10230/outpost.goauthentik.io/auth/traefik
             name: authentik
-            authRequestHeaders: 
+            authResponseHeaders:
               - X-authentik-username
               - X-authentik-groups
               - X-authentik-email
