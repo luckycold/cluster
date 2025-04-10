@@ -58,6 +58,7 @@ spec:
           useSSL: true
         cnpg:
             main:
+                mode: recovery
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
