@@ -51,11 +51,11 @@ spec:
             password: ${GENERIC_ADMIN_PASSWORD}
         email:
           host: ${SMTP_SERVER}
-          port: 465
+          port: 587
           username: ${ADMIN_EMAIL}
           password: ${SMTP_PASSWORD}
           useTLS: true
-          useSSL: true
+          useSSL: false
         cnpg:
             main:
                 backups:
