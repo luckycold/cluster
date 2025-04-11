@@ -22,6 +22,9 @@ spec:
         bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
         encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
         name: ${VOLSYNC_BACKUP_MAIN_NAME}
+        secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+        type: s3
+        url: ${VOLSYNC_BACKUP_MAIN_URL}
     ingress:
       main:
         enabled: true
