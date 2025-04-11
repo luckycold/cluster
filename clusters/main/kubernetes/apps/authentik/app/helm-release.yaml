@@ -55,7 +55,7 @@ spec:
           username: ${ADMIN_EMAIL}
           password: ${SMTP_PASSWORD}
           useTLS: true
-          useSSL: false
+          useSSL: true
         cnpg:
             main:
                 backups:

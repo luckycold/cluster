@@ -38,3 +38,4 @@ resources:
   - matrix-synapse/ks.yaml
   - speakarr/ks.yaml
   - authentik/ks.yaml
+  - changedetection-io/ks.yaml
