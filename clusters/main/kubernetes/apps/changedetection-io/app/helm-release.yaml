@@ -29,7 +29,7 @@ spec:
       main:
         enabled: true
         hosts:
-          - host: "changedetection.${DOMAIN_0}" # Define hostname
+          - host: "change.${DOMAIN_0}" # Define hostname
             paths:
               - path: /
                 pathType: Prefix
