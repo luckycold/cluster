@@ -58,9 +58,7 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
+                    nginx:
                         enabled: true
-                        entrypoints:
-                            - websecure
         notifiarr:
             apikey: ${NOTIFIARR_API_KEY}

@@ -39,10 +39,9 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
+                    nginx:
                         enabled: true
-                        entrypoints:
-                            - websecure
+                        ingressClassName: external
         persistence:
             data:
                 volsync:

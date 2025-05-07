@@ -3,15 +3,16 @@ kind: Kustomization
 resources:
   - cert-manager/ks.yaml
   - cloudnative-pg/ks.yaml
+  - generic-device-plugin/ks.yaml
+  - kube-prometheus-stack/ks.yaml
   - kubernetes-reflector/ks.yaml
-  - kyverno/ks.yaml
   - longhorn/ks.yaml
   - metallb/ks.yaml
   - openebs/ks.yaml
-  - prometheus-operator/ks.yaml
   - snapshot-controller/ks.yaml
   - spegel/ks.yaml
   - system-upgrade-controller/ks.yaml
-  - traefik-crds/ks.yaml
   - volsync/ks.yaml
-  - generic-device-plugin/ks.yaml
+  - kyverno/ks.yaml
+  - prometheus-operator/ks.yaml
+  - reloader/ks.yaml

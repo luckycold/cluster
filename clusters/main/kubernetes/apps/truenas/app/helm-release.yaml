@@ -17,26 +17,21 @@ spec:
     values:
         ingress:
             main:
-                annotations:
-                    traefik.frontend.passHostHeader: "false"
                 enabled: true
                 hosts:
                     - host: tr.${DOMAIN_0}
                       paths:
                         - path: /
                           pathType: Prefix
-                ingressClassName: ""
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
+                    nginx:
                         enabled: true
-                        entrypoints:
-                            - websecure
+                        ingressClassName: external
         release_name: truenas
         service:
             main:

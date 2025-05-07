@@ -82,11 +82,8 @@ spec:
             enabled: true
           homepage:
             enabled: false # Assuming no homepage integration needed
-          traefik:
-            allowCors: true # Often needed for web clients
+          nginx:
             enabled: true
-            entrypoints:
-              - websecure # Use HTTPS entrypoint
 
     persistence:
       data:

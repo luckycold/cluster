@@ -1,0 +1,13 @@
+# Contents from new-cluster/clusters/main/kubernetes/system/kube-prometheus-stack/ks.yaml
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kube-prometheus-stack
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./clusters/main/kubernetes/system/kube-prometheus-stack/app # Updated path
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: cluster # Assuming your repo source is named 'cluster' 

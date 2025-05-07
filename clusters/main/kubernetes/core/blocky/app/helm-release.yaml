@@ -50,9 +50,9 @@ spec:
           domain: dns01.clouddns.com
 
       forward:
-        enabled: true
-        secondary: tls://1.1.1.1
-        primary: tls://192.168.0.1
+        enabled: false
+        primary: tls://1.1.1.1
+        secondary: tls://1.0.0.1
         options:
           - name: tls_servername
             value: cloudflare-dns.com

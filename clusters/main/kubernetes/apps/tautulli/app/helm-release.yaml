@@ -39,11 +39,8 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
+                    nginx:
                         enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             config:
                 volsync:

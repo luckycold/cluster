@@ -17,8 +17,8 @@ spec:
     values:
         ingress:
             main:
-                annotations:
-                    traefik.frontend.passHostHeader: "false"
+                # annotations: # Remove old Traefik annotation block if it only contained that
+                #     traefik.frontend.passHostHeader: "false"
                 enabled: true
                 hosts:
                     - host: pve.${DOMAIN_0}
@@ -28,6 +28,9 @@ spec:
                     certManager:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
+                    nginx:
+                        enabled: true
+                        ingressClassName: external
         release_name: proxmox
         service:
             main:

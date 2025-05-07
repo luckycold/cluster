@@ -1,8 +1,9 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:recommended',
-    'github>truecharts/public//.github/renovate/main.json5',
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>.github/renovate/base.json5",
+    "local>.github/renovate/package-rules.json5",
+    "local>.github/renovate/custom-managers.json5"
   ],
   timezone: 'America/Chicago',
   schedule: [
@@ -54,7 +55,27 @@
         '!getmeili/meilisearch',
         '!ghcr.io/hoarder-app/hoarder',
       ],
+      "groupName": "all other dependencies - minor/patch",
+      "groupSlug": "all-minor-patch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
     },
+    {
+      "matchPackagePatterns": [
+        ".*"
+      ],
+      "excludePackageNames": [
+        "ghcr.io/siderolabs/kubelet",
+        "ghcr.io/siderolabs/installer",
+        "getmeili/meilisearch",
+        "ghcr.io/hoarder-app/hoarder"
+      ],
+      "matchUpdateTypes": ["major"],
+      "groupName": "all other dependencies - major",
+      "dependencyDashboardApproval": true
+    }
   ],
   customManagers: [
     {
@@ -77,10 +98,28 @@
       matchStrings: [
         'chromeImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+"(?<currentValue>.*?)"',
       ],
-      datasourceTemplate: 'github-contents',
-      registryUrlTemplate: 'https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/chrome-deployment.yaml',
-      extractVersionTemplate: 'image: gcr.io\\/zenika-hub\\/alpine-chrome:(?<version>.*?)\\n',
+      "datasourceTemplate": "github-contents",
+      "registryUrlTemplate": "https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/chrome-deployment.yaml",
+      "extractVersionTemplate": "image: gcr.io\\/zenika-hub\\/alpine-chrome:(?<version>.*?)\\n"
     },
+    {
+      "customType": "regex",
+      "fileMatch": ["^clusters/main/kubernetes/flux-system/flux/upgradesettings\\.yaml$"],
+      "matchStrings": ["TALOS_VERSION:\\s*(?<currentValue>v\\d+\\.\\d+\\.\\d+)"],
+      "depNameTemplate": "ghcr.io/siderolabs/installer",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^clusters/main/kubernetes/flux-system/flux/upgradesettings\\.yaml$"],
+      "matchStrings": ["KUBERNETES_VERSION:\\s*(?<currentValue>v\\d+\\.\\d+\\.\\d+)"],
+      "depNameTemplate": "ghcr.io/siderolabs/kubelet",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)",
+      "dependencyDashboardApproval": true
+    }
   ],
   hostRules: [
     {

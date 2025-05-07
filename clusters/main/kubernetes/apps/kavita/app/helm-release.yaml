@@ -39,11 +39,9 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
+                    nginx:
                         enabled: true
-                        allowCors: true
-                        entrypoints:
-                            - websecure
+                        ingressClassName: external
         notifier:
             disable_startup_check: false
             filesystem:

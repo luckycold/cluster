@@ -83,11 +83,9 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: true
+                    nginx:
                         enabled: true
-                        entrypoints:
-                            - websecure
+                        ingressClassName: external
         workload:
             main:
                 podSpec:

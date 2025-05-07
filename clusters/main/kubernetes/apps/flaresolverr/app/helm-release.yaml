@@ -23,4 +23,12 @@ spec:
                     - host: flare.${DOMAIN_0}
                       paths:
                         - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    nginx: 
+                        enabled: true
         release_name: flaresolverr
