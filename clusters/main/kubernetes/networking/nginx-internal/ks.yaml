@@ -8,13 +8,7 @@ spec:
   # Point to the directory containing the HelmRelease and Namespace
   path: ./clusters/main/kubernetes/networking/nginx-internal/app
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     # Make sure this matches the name of your main GitRepository source in flux-system
-    name: cluster # Or flux-system, or whatever your main repo source is called
-  dependsOn:
-    # NGINX needs MetalLB to be ready to assign the IP
-    - name: metallb-config
-    # NGINX needs the OCI repo mirror to be ready
-    - name: helm-repositories 
+    name: cluster # Or flux-system, or whatever your main repo source is called 
