@@ -1,8 +1,8 @@
 clusterName: ${CLUSTERNAME}
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.5
+talosVersion: v1.9.1
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.32.3
+kubernetesVersion: v1.31.4
 endpoint: https://${VIP}:6443
 allowSchedulingOnControlPlanes: true
 additionalMachineCertSans:
@@ -58,7 +58,12 @@ controlPlane:
                     - siderolabs/qemu-guest-agent
     machineFiles:
     - content: |
-        [plugins."io.containerd.cri.v1.images"]
+        [plugins."io.containerd.grpc.v1.cri"]
+          enable_unprivileged_ports = true
+          enable_unprivileged_icmp = true
+        [plugins."io.containerd.grpc.v1.cri".containerd]
+          discard_unpacked_layers = false
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
           discard_unpacked_layers = false
       permissions: 0
       path: /etc/cri/conf.d/20-customization.part
@@ -92,7 +97,12 @@ worker:
                     - siderolabs/qemu-guest-agent
     machineFiles:
     - content: |
-        [plugins."io.containerd.cri.v1.images"]
+        [plugins."io.containerd.grpc.v1.cri"]
+          enable_unprivileged_ports = true
+          enable_unprivileged_icmp = true
+        [plugins."io.containerd.grpc.v1.cri".containerd]
+          discard_unpacked_layers = false
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
           discard_unpacked_layers = false
       permissions: 0
       path: /etc/cri/conf.d/20-customization.part

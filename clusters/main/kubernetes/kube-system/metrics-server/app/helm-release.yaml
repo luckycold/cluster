@@ -9,10 +9,10 @@ spec:
   chart:
       spec:
           chart: metrics-server
-          version: 3.12.2
+          version: 0.1.0
           sourceRef:
               kind: HelmRepository
-              name: home-ops-mirror
+              name: truecharts
               namespace: flux-system
           interval: 15m
   timeout: 20m

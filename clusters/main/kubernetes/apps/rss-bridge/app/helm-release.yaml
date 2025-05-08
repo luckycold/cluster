@@ -29,9 +29,14 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    nginx:
+                    traefik:
+                        allowCors: false
                         enabled: true
-                        ingressClassName: external
+                        entrypoints:
+                            - websecure
+                        middlewares:
+                            - name: basic-auth
+                            - name: rate-limit
         persistence:
             config:
                 mountPath: /config

@@ -72,8 +72,12 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    nginx:
+                    traefik:
                         enabled: true
+                        entrypoints:
+                            - websecure
+                        middlewares:
+                            - name: internal-only
         persistence:
             data:
                 volsync:

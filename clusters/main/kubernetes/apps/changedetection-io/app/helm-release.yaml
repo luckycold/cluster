@@ -37,9 +37,10 @@ spec:
           certManager:
             certificateIssuer: domain-0-le-prod # Use the same issuer as authentik
             enabled: true
-          nginx:
+          traefik:
             enabled: true
-            ingressClassName: external # Assuming external
+            entrypoints:
+              - websecure
 
     workload:
       main:

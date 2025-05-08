@@ -4,22 +4,28 @@ metadata:
     name: helm-repos
     namespace: flux-system
 resources:
-  # Mandatory repositories from clustertool v2 article
   - bjw-s.yaml
+  - cilium.yaml
   - cloudnative-pg.yaml
-  - home-ops-mirror.yaml
-  - jetstack.yaml
-  - prometheus-community.yaml
-  - spegel.yaml
-  - truecharts.yaml
-  # Add any other .yaml files present in this directory (cluster/repositories/helm/)
-  # that define HelmRepository CRDs and you want to include.
-  # For example, if you have custom ones or ones not in the default list.
-  # Ensure all listed files exist in this directory.
-
-  # From your existing files, we can also include:
+  - coredns.yaml
   - csi-driver-nfs.yaml
   - descheduler.yaml
   - intel.yaml
+  - jetstack.yaml
+  - kubernetes-sigs-metrics-server.yaml
+  - kustomization.yaml
+  - kyverno.yaml
+  - longhorn.yaml
+  - metallb.yaml
+  - metrics-server.yaml
+  - node-feature-discovery.yaml
   - nvidia.yaml
+  - openebs.yaml
+  - piraeus.yaml
+  - postfinance.yaml
+  - prometheus-community.yaml
+  - spegel.yaml
+  - stakater.yaml
+  - topolvm.yaml
+  - truecharts.yaml
 # more goes here!

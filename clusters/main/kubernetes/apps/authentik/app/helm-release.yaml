@@ -41,9 +41,10 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    nginx:
+                    traefik:
                         enabled: true
-                        ingressClassName: external
+                        entrypoints:
+                            - websecure
         authentik:
           credentials:
             email: ${GENERIC_EMAIL}

@@ -15,9 +15,6 @@ spec:
   exclusive: true
   nodeSelector:
     matchExpressions:
-      - key: kubernetes.io/os
-        operator: In
-        values: ["linux"]
       - key: feature.node.kubernetes.io/system-os_release.ID
         operator: In
         values: ["talos"]
@@ -30,15 +27,27 @@ spec:
     - key: node-role.kubernetes.io/control-plane
       operator: Exists
       effect: NoSchedule
-  upgrade:
-    image: ghcr.io/jfroy/tnu:0.4.1
+  prepare: &prepare
+    image: ghcr.io/siderolabs/talosctl:${TALOS_VERSION}
     envs:
-      - name: NODE
+      - name: NODE_IP
         valueFrom:
           fieldRef:
-            fieldPath: spec.nodeName
+            fieldPath: status.hostIP
+      - name: SCHEMATIC
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.annotations['extensions.talos.dev/schematic']
     args:
-      - --node=$(NODE)
-      - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
-      ## Reenable if your setup REALLY needs full reboots
-      # - --powercycle
+      - --nodes=$(NODE_IP)
+      - health
+      - --server=false
+  upgrade:
+    <<: *prepare
+    args:
+      - --nodes=$(NODE_IP)
+      - upgrade
+      - --image=factory.talos.dev/installer/$(SCHEMATIC):$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+      - --preserve=true
+      - --wait=false
+      - --force
