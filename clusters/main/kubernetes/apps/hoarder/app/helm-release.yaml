@@ -42,7 +42,7 @@ spec:
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
-            tag: "v1.14.0"
+            tag: "v1.11.1"
         chromeImage:
             repository: gcr.io/zenika-hub/alpine-chrome
             pullPolicy: IfNotPresent
