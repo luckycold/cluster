@@ -1,0 +1,70 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: prowlarr
+    namespace: prowlarr
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: prowlarr
+            version: 18.22.1
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: prowlarr
+    values:
+        TZ: US/Central
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                hosts:
+                    - host: p.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+                        middlewares:
+                            - name: authentik
+        metrics:
+            main:
+                enabled: false
+                prometheusRule:
+                    enabled: false
+        persistence:
+            backups:
+                enabled: true
+                type: nfs
+                mountPath: /config/Backups
+                path: /mnt/Apps/backups/prowlarr
+                server: ${NAS_DOMAIN}
+        release_name: prowlarr
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  env:
+                     # External | Basic | Forms
+                    PROWLARR__AUTH__METHOD: "External"

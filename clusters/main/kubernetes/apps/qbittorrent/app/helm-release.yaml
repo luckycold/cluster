@@ -1,0 +1,124 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: qbittorrent
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: qbittorrent
+      version: 22.5.2
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+      interval: 15m
+  postRenderers:
+  - kustomize:
+      patches:
+        - target:
+            version: v1
+            kind: Deployment
+            name: qbittorrent
+          patch: |
+            - op: add
+              path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
+              value: 1
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    credentials:
+        ${VOLSYNC_BACKUP_MAIN_NAME}:
+            accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+            bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+            encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+            name: ${VOLSYNC_BACKUP_MAIN_NAME}
+            path: ""
+            secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+            type: s3
+            url: ${VOLSYNC_BACKUP_MAIN_URL}
+    qbitportforward:
+      enabled: true
+      QBT_USERNAME: "${GENERIC_USER}"
+      QBT_PASSWORD: "${GENERIC_PASSWORD}"
+    addons:
+      vpn:
+        type: gluetun
+        killSwitch: true
+        excludedNetworks_IPv4:
+          - "192.168.0.0/22"
+        excludedNetworks_IPv6: []
+        env:
+          VPN_SERVICE_PROVIDER: ${MAIN_VPN_SERVICE_PROVIDER}
+          VPN_TYPE: ${MAIN_VPN_TYPE}
+          # OPENVPN_USER: "${MAIN_OPENVPN_USER}"
+          # OPENVPN_PASSWORD: "${MAIN_OPENVPN_PASSWORD}"
+          # WIREGUARD_PUBLIC_KEY: ${MAIN_WIREGUARD_PUBLIC_KEY}
+          WIREGUARD_PRIVATE_KEY: ${MAIN_WIREGUARD_PRIVATE_KEY}
+          # WIREGUARD_ENDPOINT_IP: ${MAIN_VPN_ENDPOINT}
+          # WIREGUARD_ENDPOINT_PORT: ${MAIN_VPN_ENDPOINT_PORT}
+          # WIREGUARD_ADDRESSES: ${MAIN_WIREGUARD_ADDRESSES}
+          SERVER_COUNTRIES: ${MAIN_VPN_COUNTRIES}
+          SERVER_CITIES: ${MAIN_VPN_CITIES}
+          # SERVER_HOSTNAMES: ${MAIN_VPN_HOSTNAMES}
+          PORT_FORWARD_ONLY: "on"
+          # VPN_PORT_FORWARDING_PROVIDER: ${MAIN_VPN_PORT_FORWARDING_PROVIDER}
+          VPN_PORT_FORWARDING: "on"
+          FIREWALL_INPUT_PORTS: 10095,8000
+    ingress:
+      main:
+        enabled: true
+        integrations:
+          traefik:
+            enabled: true
+            entrypoints:
+              - websecure
+            middlewares:
+              - name: authentik
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-prod
+        ingressClassName: internal
+        hosts:
+          - host: t.${DOMAIN_0}
+            paths:
+              - path: /
+    persistence:
+      config:
+        volsync:
+          - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+            credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+            dest:
+              enabled: true
+            src:
+              enabled: true
+            type: restic
+      media:
+        enabled: true
+        type: nfs
+        mountPath: /data
+        path: /mnt/Media
+        server: ${NAS_DOMAIN}
+      themes:
+        enabled: true
+        type: nfs
+        mountPath: /config/themes
+        path: /mnt/Apps/config/qbittorrent/themes
+        server: ${NAS_DOMAIN}
+      backup:
+        enabled: false
+        type: nfs
+        mountPath: /backup
+        path: /mnt/Apps/config/qbittorrent/qBittorrent
+        server: ${NAS_DOMAIN}

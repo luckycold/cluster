@@ -2,3 +2,41 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - kubernetes-dashboard/ks.yaml
+  - alist/ks.yaml
+  - audiobookshelf/ks.yaml
+  - authelia/ks.yaml
+  - authentik/ks.yaml
+  - changedetection-io/ks.yaml
+  - cloudflared/ks.yaml
+  - flaresolverr/ks.yaml
+  - freshrss/ks.yaml
+  - hoarder/ks.yaml
+  - jelly-plex/ks.yaml
+  - jellyfin/ks.yaml
+  - kavita/ks.yaml
+  - kubernetes-dashboard copy/ks.yaml
+  - lidarr/ks.yaml
+  - lldap/ks.yaml
+  - maintainerr/ks.yaml
+  - matrix-synapse/ks.yaml
+  - mealie/ks.yaml
+  - minecraft/ks.yaml
+  - notifiarr/ks.yaml
+  - ntfy/ks.yaml
+  - overseerr/ks.yaml
+  - pgadmin/ks.yaml
+  - plex-auto-languages/ks.yaml
+  - prowlarr/ks.yaml
+  - proxmox/ks.yaml
+  - qbitmanage/ks.yaml
+  - qbittorrent/ks.yaml
+  - radarr/ks.yaml
+  - readarr/ks.yaml
+  - romm/ks.yaml
+  - rss-bridge/ks.yaml
+  - rsshub/ks.yaml
+  - sonarr/ks.yaml
+  - speakarr/ks.yaml
+  - tautulli/ks.yaml
+  - truenas/ks.yaml
+  - unpackerr/ks.yaml

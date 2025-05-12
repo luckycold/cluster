@@ -1,0 +1,205 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: hoarder
+    namespace: hoarder
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: app-template
+            version: 14.5.3
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: hoarder
+    values:
+        TZ: US/Central
+        release_name: hoarder
+
+        # Define app-specific values under a dedicated key
+        hoarder:
+          # Common vars (used by multiple containers)
+          NEXTAUTH_URL: http://localhost:3000
+          # HOARDER_VERSION is handled dynamically below using {{ .Values.image.tag }}
+          NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET}
+          MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY}
+          NEXT_PUBLIC_SECRET: ${HOARDER_NEXT_PUBLIC_SECRET}
+          # Main container specific
+          MEILI_ADDR: http://localhost:7700 # Points to the meilisearch container service
+          BROWSER_WEB_URL: http://localhost:9222 # Points to the chrome container service
+          DATA_DIR: "/data"
+          OPENAI_API_KEY: ${OPENAI_API_KEY}
+          CRAWLER_VIDEO_DOWNLOAD: "true"
+          # Meilisearch container specific
+          MEILI_NO_ANALYTICS: "true"
+
+        image:
+            repository: ghcr.io/hoarder-app/hoarder
+            pullPolicy: IfNotPresent
+            tag: "release@sha256:e72341d7626b7f92ea9b4d5e1a671ae1b8b2f6d85873a5f482e836978b650f99"
+        meilisearchImage:
+            repository: getmeili/meilisearch
+            pullPolicy: IfNotPresent
+            tag: "v1.11.3"
+        chromeImage:
+            repository: gcr.io/zenika-hub/alpine-chrome
+            pullPolicy: IfNotPresent
+            tag: "123"
+        securityContext:
+            container:
+                UMASK: "0022"
+                readOnlyRootFilesystem: false
+                runAsNonRoot: false
+                runAsUser: 0
+                runAsGroup: 0
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        service:
+            main:
+                ports:
+                    main:
+                        port: 3000
+                        targetPort: 3000
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: external
+                hosts:
+                    - host: h.${DOMAIN_0}
+                      paths:
+                          - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: true
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            primary: true
+                            ports:
+                                - containerPort: 3000
+                                  name: main
+                            env:
+                              MEILI_ADDR: "{{ .Values.hoarder.MEILI_ADDR }}"
+                              BROWSER_WEB_URL: "{{ .Values.hoarder.BROWSER_WEB_URL }}"
+                              NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
+                              DATA_DIR: "{{ .Values.hoarder.DATA_DIR }}"
+                              OPENAI_API_KEY: "{{ .Values.hoarder.OPENAI_API_KEY }}"
+                              HOARDER_VERSION: "{{ .Values.image.tag }}"
+                              NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
+                              MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
+                              NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
+                              CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.hoarder.CRAWLER_VIDEO_DOWNLOAD }}"
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    type: tcp
+                                readiness:
+                                    enabled: true
+                                    type: tcp
+                                startup:
+                                    enabled: true
+                                    type: tcp
+                        chrome:
+                            enabled: true
+                            imageSelector: chromeImage
+                            ports:
+                                - containerPort: 9222
+                                  name: main
+                            command:
+                                - chromium-browser
+                                - --headless
+                                - --no-sandbox
+                                - --disable-gpu
+                                - --disable-dev-shm-usage
+                                - --remote-debugging-address=0.0.0.0
+                                - --remote-debugging-port=9222
+                                - --hide-scrollbars
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    type: tcp
+                                    port: 9222
+                                readiness:
+                                    enabled: true
+                                    type: tcp
+                                    port: 9222
+                                startup:
+                                    enabled: true
+                                    type: tcp
+                                    port: 9222
+                        meilisearch:
+                            enabled: true
+                            imageSelector: meilisearchImage
+                            ports:
+                                - containerPort: 7700
+                                  name: main
+                            env:
+                              MEILI_NO_ANALYTICS: "{{ .Values.hoarder.MEILI_NO_ANALYTICS }}"
+                              NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
+                              HOARDER_VERSION: "{{ .Values.image.tag }}"
+                              NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
+                              MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
+                              NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
+                            probes:
+                                liveness:
+                                    enabled: true
+                                    type: tcp
+                                    port: 7700
+                                readiness:
+                                    enabled: true
+                                    type: tcp
+                                    port: 7700
+                                startup:
+                                    enabled: true
+                                    type: tcp
+                                    port: 7700
+                replicas: 1
+        persistence:
+            data:
+                enabled: true
+                targetSelector:
+                    main:
+                        main:
+                            mountPath: "/data"
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
+            meili-data:
+                enabled: true
+                targetSelector:
+                    main:
+                        meilisearch:
+                            mountPath: "/meili_data"
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic

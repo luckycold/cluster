@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: truenas
+    namespace: truenas
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: external-service
+            version: 15.6.2
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: truenas
+    values:
+        ingress:
+            main:
+                annotations:
+                    traefik.frontend.passHostHeader: "false"
+                enabled: true
+                ingressClassName: external
+                hosts:
+                    - host: tr.${DOMAIN_0}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        release_name: truenas
+        service:
+            main:
+                enabled: true
+                externalIP: ${NAS_DOMAIN}
+                ports:
+                    main:
+                        enabled: true
+                        port: 444
+                        protocol: https
+                type: ExternalIP

@@ -1,0 +1,115 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: lldap
+    namespace: lldap
+spec:
+    interval: 15m
+    timeout: 15m
+    install:
+        timeout: 15m
+        remediation:
+            retries: 3
+    upgrade:
+        timeout: 15m
+        remediation:
+            retries: 3
+            strategy: rollback
+        cleanupOnFail: true
+    chart:
+        spec:
+            chart: lldap
+            version: 7.6.1
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: lldap
+    values:
+        TZ: US/Central
+        addons:
+            codeserver:
+                enabled: false
+            netshoot:
+                enabled: false
+            vpn:
+                type: disabled
+        cnpg:
+            main:
+                backups:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    enabled: true
+                    revision: "1"
+                cluster:
+                    instances: 1
+                    singleNode: true
+                mode: recovery
+                password: ${LLDAP_CNPG_PASSWORD}
+                recovery:
+                    revision: "1"
+                    method: object_store
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                hosts:
+                    - host: lldap.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
+                        middlewares:
+                            - name: internal-only
+        persistence:
+            data:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
+        release_name: lldap
+        service:
+            ldap:
+                enabled: true
+                type: ClusterIP
+            main:
+                enabled: true
+                type: ClusterIP
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                LLDAP_HTTP_URL: https://lldap.${DOMAIN_0}
+                                LLDAP_LDAP_BASE_DN: ${LLDAP_LDAP_BASE_DN}
+                                LLDAP_LDAP_USER_EMAIL: ${ADMIN_EMAIL}
+                                LLDAP_LDAP_USER_PASS: ${LLDAP_LDAP_USER_PASS}
+                                LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: true
+                                LLDAP_SMTP_OPTIONS__FROM: LLDAP Admin <${ADMIN_EMAIL}>
+                                LLDAP_SMTP_OPTIONS__PASSWORD: ${SMTP_PASSWORD}
+                                LLDAP_SMTP_OPTIONS__SERVER: ${SMTP_SERVER}
+                                LLDAP_SMTP_OPTIONS__USER: ${ADMIN_EMAIL}
+                                smtp: true

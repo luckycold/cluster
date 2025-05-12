@@ -1,0 +1,217 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: minecraft
+    namespace: minecraft
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: minecraft-java
+            version: 22.34.11
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: minecraft
+    values:
+        TZ: US/Central
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: internal
+                hosts:
+                    - host: dynmap.${DOMAIN_0}
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    traefik:
+                        enabled: true
+                        entrypoints:
+                            - websecure
+        addons:
+            codeserver:
+                enabled: true
+                ingress:
+                    enabled: true
+                    integrations:
+                        certManager:
+                            enabled: true
+                            certificateIssuer: domain-0-le-prod
+                        traefik:
+                            enabled: true
+                            entrypoints:
+                                - websecure
+                            middlewares:
+                                - name: authentik
+                    ingressClassName: internal
+                    hosts:
+                        - host: mc-cs.${DOMAIN_0}
+        persistence:
+            data:
+                targetSelector:
+                    mcbackup:
+                        enabled: false
+                        readOnly: false
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: true
+                      type: restic
+        release_name: minecraft
+        service:
+            main:
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
+                ports:
+                    bedrock:
+                        enabled: true
+                        targetPort: 19132
+                        port: 19132
+                        protocol: udp
+            rcon:
+                loadBalancerIP: ${MINECRAFT_IP}
+                type: LoadBalancer
+            dynmap:
+                enabled: true
+                ports:
+                    dynmap:
+                        enabled: true
+                        port: 8123
+        resources:
+            limits:
+                memory: 9Gi
+            requests:
+                memory: 1Gi
+        workload:
+          main:
+            podSpec:
+              containers:
+                main:
+                  imageSelector: image
+                  env:
+                    EULA: "TRUE"
+                    OVERRIDE_SERVER_PROPERTIES: true
+                    VERSION: "1.21.3"
+                    TYPE: "PAPER"
+                    DIFFICULTY: normal
+                    MAX_PLAYERS: 20
+                    MAX_WORLD_SIZE: 10000
+                    ALLOW_NETHER: true
+                    ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+                    ENABLE_COMMAND_BLOCK: true
+                    FORCE_GAMEMODE: false
+                    GENERATE_STRUCTURES: true
+                    HARDCORE: false
+                    MAX_BUILD_HEIGHT: 256
+                    MAX_TICK_TIME: 60000
+                    SPAWN_ANIMALS: true
+                    SPAWN_MONSTERS: true
+                    SPAWN_NPCS: true
+                    VIEW_DISTANCE: 16
+                    MODE: survival
+                    MOTD: "Carson will join one day :)"
+                    PVP: true
+                    LEVEL_TYPE: DEFAULT
+                    LEVEL: world
+                    ONLINE_MODE: true
+                    MAX_MEMORY: 8G
+                    INIT_MEMORY: 1G
+                    RCON_PASSWORD: "${GENERIC_PASSWORD}"
+                    ALLOW_FLIGHT: TRUE
+                    # RESOURCE_PACK: https://www.curseforge.com/api/v1/mods/353554/files/5493450/download
+                    CF_API_KEY: ${CURSEFORGE_API_KEY}
+                    SPIGET_RESOURCES: >-
+                        34315
+                    MODRINTH_ALLOWED_VERSION_TYPE: beta
+                    MODRINTH_DOWNLOAD_DEPENDENCIES: required
+                    MODRINTH_PROJECTS: >-
+                        luckperms,
+                        villagerfollow,
+                        viaversion,
+                        viabackwards,
+                        worldedit,
+                        worldguard,
+                        multiverse-core,
+                        multiverse-inventories,
+                        multiverse-portals,
+                        multiverse-netherportals,
+                        multiverse-signportals,
+                        invsee++,
+                        sleeper,
+                        no-block-creeper-plugin,
+                        waypoints
+                    PLUGINS: >-
+                        https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot,
+                        https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+                    # PACKWIZ_URL: ""
+                    # CUSTOM_SERVER: ""
+                    # QUILT_LOADER_VERSION: ""
+                    # QUILT_LAUNCHER: ""
+                    # QUILT_LAUNCHER_URL: ""
+                    # PUFFERFISH_BUILD: "lastSuccessfulBuild"
+                    # FORGEVERSION: ""
+                    # FORGE_INSTALLER: ""
+                    # FORGE_INSTALLER_URL: ""
+                    # FABRIC_LOADER_VERSION: ""
+                    # FABRIC_INSTALLER: ""
+                    # FABRIC_INSTALLER_URL: ""
+                    # SPIGOT_DOWNLOAD_URL: ""
+                    # BUILD_FROM_SOURCE: false
+                    # BUKKIT_DOWNLOAD_URL: ""
+                    # PAPERBUILD: ""
+                    # PAPER_DOWNLOAD_URL: ""
+                    # AIRPLANE_BUILD: "lastSuccessfulBuild"
+                    # MAGMA_CHANNEL: "stable"
+                    # MOHIST_BUILD: ""
+                    # CANYON_BUILD: ""
+                    # SPONGEBRANCH: "STABLE"
+                    # SPONGEVERSION: ""
+                    # LIMBO_BUILD: "LATEST"
+                    # LIMBO_SCHEMA_FILENAME: "default.schem"
+                    # CRUCIBLE_RELEASE: "latest"
+                    # FTB_MODPACK_ID: ""
+                    # FTB_MODPACK_VERSION_ID: ""
+                    # CF_SERVER_MOD: ""
+                    # CF_BASE_DIR: ""
+                    # USE_MODPACK_START_SCRIPT: true
+                    # FTB_LEGACYJAVAFIXER: false
+                    # WHITELIST: ""
+                    OPS: "lukeycold"
+                    # EXISTING_OPS_FILE: "SYNCHRONIZE"
+                    # ICON: ""
+                    # SEED: ""
+                    # GENERATOR_SETTINGS: ""
+                    # WORLD: ""
+                    # FORCE_REDOWNLOAD: false
+                    # USE_FLARE_FLAGS: false
+                    # USE_AIKAR_FLAGS: true
+                    # USE_SIMD_FLAGS: false
+                    # JVM_OPTS: ""
+                    # JVM_XX_OPTS: ""
+                    # CF_API_KEY
+                    # CF_PAGE_URL
+                    # CF_SLUG
+                    # CF_EXCLUDE_INCLUDE_FILE
+                    # CF_EXCLUDE_MODS
+                    # CF_FORCE_INCLUDE_MODS
+                    # CF_FORCE_SYNCHRONIZE
+                    # CF_OVERRIDES_SKIP_EXISTING
+                    # CF_PARALLEL_DOWNLOADS
+                    # CF_SET_LEVEL_FROM
+                mcbackup:
+                  enabled: false
