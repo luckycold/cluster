@@ -53,11 +53,9 @@ spec:
                         enabled: false
                     traefik:
                         allowCors: false
-                        enabled: true
+                        enabled: false
                         entrypoints:
                             - websecure
-                        middlewares:
-                            - name: authentik
         persistence:
             data:
                 volsync:

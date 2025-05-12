@@ -32,12 +32,9 @@ spec:
                         enabled: false
                     traefik:
                         allowCors: false
-                        enabled: true
+                        enabled: false
                         entrypoints:
                             - websecure
-                        middlewares:
-                            - name: basic-auth
-                            - name: rate-limit
         persistence:
             config:
                 mountPath: /config

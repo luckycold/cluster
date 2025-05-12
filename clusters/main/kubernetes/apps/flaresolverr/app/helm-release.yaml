@@ -24,3 +24,10 @@ spec:
                       paths:
                         - path: /
         release_name: flaresolverr
+        homepage:
+            enabled: false
+        traefik:
+            allowCors: false
+            enabled: false
+            entrypoints:
+                - websecure

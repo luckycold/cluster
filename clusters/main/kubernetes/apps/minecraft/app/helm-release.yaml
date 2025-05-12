@@ -37,7 +37,8 @@ spec:
                         certificateIssuer: domain-0-le-prod
                         enabled: true
                     traefik:
-                        enabled: true
+                        allowCors: false
+                        enabled: false
                         entrypoints:
                             - websecure
         addons:

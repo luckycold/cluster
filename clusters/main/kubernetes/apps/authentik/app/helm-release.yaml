@@ -43,7 +43,8 @@ spec:
                     homepage:
                         enabled: false
                     traefik:
-                        enabled: true
+                        allowCors: false
+                        enabled: false
                         entrypoints:
                             - websecure
         authentik:

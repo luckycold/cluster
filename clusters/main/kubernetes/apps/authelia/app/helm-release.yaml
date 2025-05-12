@@ -166,8 +166,8 @@ spec:
                     homepage:
                         enabled: false
                     traefik:
-                        enabled: true
-                        allowCors: true
+                        allowCors: false
+                        enabled: false
                         entrypoints:
                             - websecure
         notifier:

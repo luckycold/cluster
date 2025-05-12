@@ -41,9 +41,10 @@ spec:
                     homepage:
                         enabled: false
                     traefik:
-                        enabled: true
-                        middlewares:
-                            - name: authentik
+                        allowCors: false
+                        enabled: false
+                        entrypoints:
+                            - websecure
         metrics:
             main:
                 enabled: false

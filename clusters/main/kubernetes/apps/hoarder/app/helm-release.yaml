@@ -85,8 +85,8 @@ spec:
                     homepage:
                         enabled: false
                     traefik:
-                        allowCors: true
-                        enabled: true
+                        allowCors: false
+                        enabled: false
                         entrypoints:
                             - websecure
         workload:

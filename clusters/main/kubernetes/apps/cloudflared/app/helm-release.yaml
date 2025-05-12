@@ -23,3 +23,10 @@ spec:
                         main:
                             env:
                                 TUNNEL_TOKEN: ${CLOUDFLARED_TUNNEL_TOKEN}
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: false
+                        entrypoints:
+                            - websecure

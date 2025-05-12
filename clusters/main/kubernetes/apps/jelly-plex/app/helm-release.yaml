@@ -55,5 +55,12 @@ spec:
                                     enabled: false
                                 startup:
                                     enabled: false
+                    homepage:
+                        enabled: false
+                    traefik:
+                        allowCors: false
+                        enabled: false
+                        entrypoints:
+                            - websecure
                 replicas: 1
                 type: Deployment

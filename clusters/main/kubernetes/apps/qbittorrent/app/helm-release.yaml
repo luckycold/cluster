@@ -80,12 +80,6 @@ spec:
       main:
         enabled: true
         integrations:
-          traefik:
-            enabled: true
-            entrypoints:
-              - websecure
-            middlewares:
-              - name: authentik
           certManager:
             enabled: true
             certificateIssuer: domain-0-le-prod
@@ -122,3 +116,10 @@ spec:
         mountPath: /backup
         path: /mnt/Apps/config/qbittorrent/qBittorrent
         server: ${NAS_DOMAIN}
+    homepage:
+      enabled: false
+    traefik:
+      allowCors: false
+      enabled: false
+      entrypoints:
+        - websecure

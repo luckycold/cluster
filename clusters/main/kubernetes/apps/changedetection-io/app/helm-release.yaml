@@ -39,7 +39,8 @@ spec:
             certificateIssuer: domain-0-le-prod # Use the same issuer as authentik
             enabled: true
           traefik:
-            enabled: true
+            allowCors: false
+            enabled: false
             entrypoints:
               - websecure
 

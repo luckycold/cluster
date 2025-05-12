@@ -82,12 +82,12 @@ spec:
             certificateIssuer: domain-0-le-prod # Use the same issuer as hoarder
             enabled: true
           homepage:
-            enabled: false # Assuming no homepage integration needed
+            enabled: false
           traefik:
-            allowCors: true # Often needed for web clients
-            enabled: true
+            allowCors: false
+            enabled: false
             entrypoints:
-              - websecure # Use HTTPS entrypoint
+              - websecure
 
     persistence:
       data:
