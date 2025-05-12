@@ -4,7 +4,8 @@ metadata:
   name: matrix-synapse
   namespace: flux-system
 spec:
-  interval: 15m
+  suspend: true
+  interval: 10m
   path: clusters/main/kubernetes/apps/matrix-synapse/app
   prune: true
   wait: true

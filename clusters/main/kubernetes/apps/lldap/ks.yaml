@@ -6,6 +6,7 @@ metadata:
   annotations:
     volsync.backube/privileged-movers: "true"
 spec:
+  suspend: true
   interval: 10m
   path: clusters/main/kubernetes/apps/lldap/app
   prune: true
