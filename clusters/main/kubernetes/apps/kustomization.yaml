@@ -39,3 +39,4 @@ resources:
   - tautulli/ks.yaml
   - truenas/ks.yaml
   - unpackerr/ks.yaml
+  - generic-device-plugin/ks.yaml
