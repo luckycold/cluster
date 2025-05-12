@@ -4,7 +4,6 @@ metadata:
   name: qbitmanage
   namespace: flux-system
 spec:
-  suspend: true
   interval: 10m
   path: clusters/main/kubernetes/apps/qbitmanage/app
   prune: true
