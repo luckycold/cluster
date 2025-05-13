@@ -34,8 +34,8 @@ spec:
                     - host: auth.${DOMAIN_0}
                     - host: "*.${DOMAIN_0}"
                       paths:
-                        - path: /outpost.goauthentik.io/
-                          pathType: Prefix
+                        - path: /outpost.goauthentik.io
+                          pathType: ImplementationSpecific
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
