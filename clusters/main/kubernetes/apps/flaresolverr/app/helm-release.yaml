@@ -18,6 +18,7 @@ spec:
         TZ: US/Central
         ingress:
             main:
+                ingressClassName: internal
                 enabled: true
                 hosts:
                     - host: flare.${DOMAIN_0}
@@ -26,8 +27,3 @@ spec:
         release_name: flaresolverr
         homepage:
             enabled: false
-        traefik:
-            allowCors: false
-            enabled: false
-            entrypoints:
-                - websecure
