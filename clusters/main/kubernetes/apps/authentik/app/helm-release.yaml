@@ -68,3 +68,6 @@ spec:
                 recovery:
                     revision: "1"
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    clusterName: "authentik-cnpg-main"
+                    pitrTarget:
+                      time: "20250409T200947"
