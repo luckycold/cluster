@@ -113,8 +113,10 @@ spec:
         backups:
           enabled: true
           credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+          revision: "1"
         recovery:
           credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+          revision: "1"
         user: matrix
         database: matrix
         password: ${MATRIX_DB_PASSWORD}

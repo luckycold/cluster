@@ -123,6 +123,7 @@ spec:
                 recovery:
                     method: object_store
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    revision: "1"
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
