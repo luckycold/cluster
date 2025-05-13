@@ -68,3 +68,16 @@ spec:
                 recovery:
                     #revision: "1"
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                externalClusters:
+                  - name: authentik-cnpg-main
+                    barmanObjectStore:
+                      destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/authentik/cnpg
+                      endpointURL: https://${VOLSYNC_BACKUP_MAIN_URL}
+                      # serverName: authentik-cnpg-main
+                      s3Credentials:
+                        accessKeyId:
+                          name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                          key: accessKey
+                        secretAccessKey:
+                          name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                          key: secretKey
