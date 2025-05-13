@@ -24,6 +24,9 @@ spec:
                     - host: flare.${DOMAIN_0}
                       paths:
                         - path: /
+                integrations:
+                    traefik:
+                        enabled: false
         release_name: flaresolverr
         homepage:
             enabled: false
