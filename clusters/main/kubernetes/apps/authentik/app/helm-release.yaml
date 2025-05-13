@@ -66,5 +66,5 @@ spec:
                     enabled: true
                     revision: "1"
                 recovery:
-                    revision: "1"
+                    #revision: "1"
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
