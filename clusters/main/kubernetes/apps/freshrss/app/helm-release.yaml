@@ -25,6 +25,8 @@ spec:
                         certManager:
                             enabled: true
                             certificateIssuer: domain-0-le-prod
+                        traefik:
+                            enabled: false
                     ingressClassName: internal
                     hosts:
                         - host: rss-cs.${DOMAIN_0}
