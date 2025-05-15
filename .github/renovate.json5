@@ -1,91 +1,91 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:recommended',
-    'github>truecharts/public//.github/renovate/main.json5',
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "github>truecharts/public//.github/renovate/main.json5"
   ],
-  timezone: 'America/Chicago',
-  schedule: [
-    '* 22-23,0-5 * * *',
+  "timezone": "America/Chicago",
+  "schedule": [
+    "* 22-23,0-5 * * *"
   ],
-  packageRules: [
+  "packageRules": [
     {
-      matchPackageNames: [
-        'ghcr.io/siderolabs/kubelet',
-        'ghcr.io/siderolabs/installer',
+      "matchPackageNames": [
+        "ghcr.io/siderolabs/kubelet",
+        "ghcr.io/siderolabs/installer"
       ],
-      groupName: 'Sidero Labs updates',
-      dependencyDashboardApproval: true,
+      "groupName": "Sidero Labs updates",
+      "dependencyDashboardApproval": true
     },
     {
-      matchPackageNames: [
-        'getmeili/meilisearch',
+      "matchPackageNames": [
+        "getmeili/meilisearch"
       ],
-      groupName: 'Meilisearch updates',
-      dependencyDashboardApproval: true,
-      matchUpdateTypes: [
-        'major',
-        'minor',
-        'patch',
+      "groupName": "Meilisearch updates",
+      "dependencyDashboardApproval": true,
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
       ],
-      description: 'Require manual approval for all Meilisearch updates due to potential breaking changes in minor versions',
+      "description": "Require manual approval for all Meilisearch updates due to potential breaking changes in minor versions"
     },
     {
-      matchDatasources: [
-        'docker',
+      "matchDatasources": [
+        "docker"
       ],
-      matchPackageNames: [
-        'ghcr.io/hoarder-app/hoarder',
+      "matchPackageNames": [
+        "ghcr.io/hoarder-app/hoarder"
       ],
-      allowedVersions: 'release',
-      description: "Always use the 'release' tag for Hoarder main image",
+      "allowedVersions": "release",
+      "description": "Always use the 'release' tag for Hoarder main image"
     },
     {
-      groupName: 'all other dependencies',
-      groupSlug: 'all-minor-patch',
-      matchUpdateTypes: [
-        'minor',
-        'patch',
+      "groupName": "all other dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
       ],
-      matchPackageNames: [
-        '/.*/',
-        '!ghcr.io/siderolabs/kubelet',
-        '!ghcr.io/siderolabs/installer',
-        '!getmeili/meilisearch',
-        '!ghcr.io/hoarder-app/hoarder',
-      ],
-    },
+      "matchPackageNames": [
+        "/.*/",
+        "!ghcr.io/siderolabs/kubelet",
+        "!ghcr.io/siderolabs/installer",
+        "!getmeili/meilisearch",
+        "!ghcr.io/hoarder-app/hoarder"
+      ]
+    }
   ],
-  customManagers: [
+  "customManagers": [
     {
-      customType: 'regex',
-      managerFilePatterns: [
-        '/^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$/',
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$/"
       ],
-      matchStrings: [
-        'meilisearchImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+"(?<currentValue>.*?)"',
+      "matchStrings": [
+        "meilisearchImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+\"(?<currentValue>.*?)\""
       ],
-      datasourceTemplate: 'github-contents',
-      registryUrlTemplate: 'https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/meilisearch-deployment.yaml',
-      extractVersionTemplate: 'image: getmeili\\/meilisearch:(?<version>.*?)\\n',
+      "datasourceTemplate": "github-contents",
+      "registryUrlTemplate": "https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/meilisearch-deployment.yaml",
+      "extractVersionTemplate": "image: getmeili\\/meilisearch:(?<version>.*?)\\n"
     },
     {
-      customType: 'regex',
-      managerFilePatterns: [
-        '/^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$/',
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$/"
       ],
-      matchStrings: [
-        'chromeImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+"(?<currentValue>.*?)"',
+      "matchStrings": [
+        "chromeImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+\"(?<currentValue>.*?)\""
       ],
-      datasourceTemplate: 'github-contents',
-      registryUrlTemplate: 'https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/chrome-deployment.yaml',
-      extractVersionTemplate: 'image: gcr.io\\/zenika-hub\\/alpine-chrome:(?<version>.*?)\\n',
-    },
+      "datasourceTemplate": "github-contents",
+      "registryUrlTemplate": "https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/chrome-deployment.yaml",
+      "extractVersionTemplate": "image: gcr.io\\/zenika-hub\\/alpine-chrome:(?<version>.*?)\\n"
+    }
   ],
-  hostRules: [
+  "hostRules": [
     {
-      matchHost: 'https://api.github.com/repos/hoarder-app/hoarder/contents',
-      hostType: 'github-contents',
-    },
-  ],
+      "matchHost": "https://api.github.com/repos/hoarder-app/hoarder/contents",
+      "hostType": "github-contents"
+    }
+  ]
 }
