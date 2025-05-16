@@ -12,10 +12,12 @@
     {
       "matchPackageNames": [
         "ghcr.io/siderolabs/kubelet",
-        "ghcr.io/siderolabs/installer"
+        "ghcr.io/siderolabs/installer",
+        "registry.k8s.io/kubectl"
       ],
       "groupName": "Sidero Labs updates",
-      "dependencyDashboardApproval": true
+      "dependencyDashboardApproval": true,
+      "automerge": false
     },
     {
       "matchPackageNames": [
