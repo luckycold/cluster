@@ -46,7 +46,7 @@ spec:
         chromeImage:
             repository: gcr.io/zenika-hub/alpine-chrome
             pullPolicy: IfNotPresent
-            tag: "123"
+            tag: "124"
         securityContext:
             container:
                 UMASK: "0022"
