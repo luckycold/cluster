@@ -42,11 +42,11 @@ spec:
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
-            tag: "v1.16.0"
+            tag: "v1.11.1"
         chromeImage:
             repository: gcr.io/zenika-hub/alpine-chrome
             pullPolicy: IfNotPresent
-            tag: "123"
+            tag: "124"
         securityContext:
             container:
                 UMASK: "0022"
