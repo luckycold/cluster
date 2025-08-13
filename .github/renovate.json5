@@ -43,6 +43,20 @@
       "description": "Always use the 'release' tag for Hoarder main image"
     },
     {
+      "matchPackageNames": [
+        "*rss-bridge*",
+        "*rsshub*"
+      ],
+      "groupName": "RSS applications auto-updates",
+      "automerge": true,
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Auto-update rss-bridge and rsshub applications including major versions"
+    },
+    {
       "groupName": "all other dependencies",
       "groupSlug": "all-minor-patch",
       "matchUpdateTypes": [
@@ -54,7 +68,9 @@
         "!ghcr.io/siderolabs/kubelet",
         "!ghcr.io/siderolabs/installer",
         "!getmeili/meilisearch",
-        "!ghcr.io/hoarder-app/hoarder"
+        "!ghcr.io/hoarder-app/hoarder",
+        "!*rss-bridge*",
+        "!*rsshub*"
       ]
     }
   ],
