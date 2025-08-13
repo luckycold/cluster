@@ -77,8 +77,6 @@ spec:
       rollOutPods: true
       replicas: 1
     rollOutCiliumPods: true
-    devices:
-    - eth0
     nodePort:
       bindProtection: false
     nodeport:
