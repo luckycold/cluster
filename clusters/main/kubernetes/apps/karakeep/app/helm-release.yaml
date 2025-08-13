@@ -18,35 +18,33 @@ spec:
         TZ: US/Central
         release_name: karakeep
 
-        # Define app-specific values under a dedicated key
         karakeep:
-          # Common vars (used by multiple containers)
-          NEXTAUTH_URL: http://localhost:3000
-          # KARAKEEP_VERSION is handled dynamically below using {{ .Values.image.tag }}
-          NEXTAUTH_SECRET: ${KARAKEEP_NEXTAUTH_SECRET}
-          MEILI_MASTER_KEY: ${KARAKEEP_MEILI_MASTER_KEY}
-          NEXT_PUBLIC_SECRET: ${KARAKEEP_NEXT_PUBLIC_SECRET}
-          # Main container specific
-          MEILI_ADDR: http://localhost:7700 # Points to the meilisearch container service
-          BROWSER_WEB_URL: http://localhost:9222 # Points to the chrome container service
-          DATA_DIR: "/data"
-          OPENAI_API_KEY: ${OPENAI_API_KEY}
-          CRAWLER_VIDEO_DOWNLOAD: "true"
-          # Meilisearch container specific
-          MEILI_NO_ANALYTICS: "true"
+            NEXTAUTH_URL: https://k.${DOMAIN_0}
+            NEXTAUTH_SECRET: ${KARAKEEP_NEXTAUTH_SECRET}
+            MEILI_MASTER_KEY: ${KARAKEEP_MEILI_MASTER_KEY}
+            DATA_DIR: "/data"
+            MEILI_ADDR: "http://localhost:7700"
+            BROWSER_WEB_URL: "http://localhost:9222"
+            OPENAI_API_KEY: ${OPENAI_API_KEY}
+            CRAWLER_VIDEO_DOWNLOAD: "true"
+            MEILI_ENV: "production"
+            MEILI_NO_ANALYTICS: "true"
 
         image:
             repository: ghcr.io/karakeep-app/karakeep
             pullPolicy: IfNotPresent
-            tag: "release@sha256:f575a34ed3f8975225c156786442f177846126cf27d7fd37350f3af23c549d22"
+            tag: "0.26.0"
+            
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
             tag: "v1.11.1"
+            
         chromeImage:
             repository: gcr.io/zenika-hub/alpine-chrome
             pullPolicy: IfNotPresent
             tag: "124"
+
         securityContext:
             container:
                 UMASK: "0022"
@@ -54,28 +52,20 @@ spec:
                 runAsNonRoot: false
                 runAsUser: 0
                 runAsGroup: 0
-        credentials:
-            ${VOLSYNC_BACKUP_MAIN_NAME}:
-                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
-                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
-                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
-                name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                path: ""
-                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
-                type: s3
-                url: ${VOLSYNC_BACKUP_MAIN_URL}
+
         service:
             main:
                 ports:
                     main:
                         port: 3000
                         targetPort: 3000
+
         ingress:
             main:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: h.${DOMAIN_0}
+                    - host: k.${DOMAIN_0}
                       paths:
                           - path: /
                 integrations:
@@ -89,6 +79,7 @@ spec:
                         enabled: false
                         entrypoints:
                             - websecure
+
         workload:
             main:
                 podSpec:
@@ -99,26 +90,28 @@ spec:
                                 - containerPort: 3000
                                   name: main
                             env:
-                              MEILI_ADDR: "{{ .Values.karakeep.MEILI_ADDR }}"
-                              BROWSER_WEB_URL: "{{ .Values.karakeep.BROWSER_WEB_URL }}"
-                              NEXTAUTH_URL: "{{ .Values.karakeep.NEXTAUTH_URL }}"
-                              DATA_DIR: "{{ .Values.karakeep.DATA_DIR }}"
-                              OPENAI_API_KEY: "{{ .Values.karakeep.OPENAI_API_KEY }}"
-                              KARAKEEP_VERSION: "{{ .Values.image.tag }}"
-                              NEXTAUTH_SECRET: "{{ .Values.karakeep.NEXTAUTH_SECRET }}"
-                              MEILI_MASTER_KEY: "{{ .Values.karakeep.MEILI_MASTER_KEY }}"
-                              NEXT_PUBLIC_SECRET: "{{ .Values.karakeep.NEXT_PUBLIC_SECRET }}"
-                              CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.karakeep.CRAWLER_VIDEO_DOWNLOAD }}"
+                                MEILI_ADDR: "{{ .Values.karakeep.MEILI_ADDR }}"
+                                BROWSER_WEB_URL: "{{ .Values.karakeep.BROWSER_WEB_URL }}"
+                                NEXTAUTH_URL: "{{ .Values.karakeep.NEXTAUTH_URL }}"
+                                DATA_DIR: "{{ .Values.karakeep.DATA_DIR }}"
+                                OPENAI_API_KEY: "{{ .Values.karakeep.OPENAI_API_KEY }}"
+                                HOARDER_VERSION: "{{ .Values.image.tag }}"
+                                NEXTAUTH_SECRET: "{{ .Values.karakeep.NEXTAUTH_SECRET }}"
+                                MEILI_MASTER_KEY: "{{ .Values.karakeep.MEILI_MASTER_KEY }}"
+                                CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.karakeep.CRAWLER_VIDEO_DOWNLOAD }}"
                             probes:
                                 liveness:
                                     enabled: true
-                                    type: tcp
+                                    type: http
+                                    path: /api/health
                                 readiness:
                                     enabled: true
-                                    type: tcp
+                                    type: http
+                                    path: /api/health
                                 startup:
                                     enabled: true
-                                    type: tcp
+                                    type: http
+                                    path: /api/health
                         chrome:
                             enabled: true
                             imageSelector: chromeImage
@@ -154,12 +147,9 @@ spec:
                                 - containerPort: 7700
                                   name: main
                             env:
-                              MEILI_NO_ANALYTICS: "{{ .Values.karakeep.MEILI_NO_ANALYTICS }}"
-                              NEXTAUTH_URL: "{{ .Values.karakeep.NEXTAUTH_URL }}"
-                              KARAKEEP_VERSION: "{{ .Values.image.tag }}"
-                              NEXTAUTH_SECRET: "{{ .Values.karakeep.NEXTAUTH_SECRET }}"
-                              MEILI_MASTER_KEY: "{{ .Values.karakeep.MEILI_MASTER_KEY }}"
-                              NEXT_PUBLIC_SECRET: "{{ .Values.karakeep.NEXT_PUBLIC_SECRET }}"
+                                MEILI_NO_ANALYTICS: "{{ .Values.karakeep.MEILI_NO_ANALYTICS }}"
+                                MEILI_ENV: "{{ .Values.karakeep.MEILI_ENV }}"
+                                MEILI_MASTER_KEY: "{{ .Values.karakeep.MEILI_MASTER_KEY }}"
                             probes:
                                 liveness:
                                     enabled: true
@@ -174,6 +164,7 @@ spec:
                                     type: tcp
                                     port: 7700
                 replicas: 1
+                
         persistence:
             data:
                 enabled: true
@@ -181,25 +172,9 @@ spec:
                     main:
                         main:
                             mountPath: "/data"
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: true
-                      type: restic
             meili-data:
                 enabled: true
                 targetSelector:
                     main:
                         meilisearch:
                             mountPath: "/meili_data"
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: true
-                      type: restic
