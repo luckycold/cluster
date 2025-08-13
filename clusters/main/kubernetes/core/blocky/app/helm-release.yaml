@@ -43,7 +43,7 @@ spec:
       main:
         replicas: 1
     blocking:
-      clientGroupsBlock: []
+      clientGroupsBlock:  []
     k8sgateway:
       domains:
       - domain: "${DOMAIN_0}"
@@ -54,9 +54,6 @@ spec:
         dnsChallenge:
           enabled: false
           domain: dns01.clouddns.com
-    conditional:
-      mapping:
-        "${DOMAIN_0}": "blocky-k8sgateway:5353"
     defaultUpstreams:
     - "https://1.1.1.1/dns-query"
     bootstrapDns:
