@@ -26,6 +26,7 @@ nodes:
       ipAddress: ${MASTER1IP_IP}
       controlPlane: true
       nameservers:
+        - 192.168.0.1
         - 1.1.1.1
         - 8.8.8.8
       installDiskSelector:
