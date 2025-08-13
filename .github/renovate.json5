@@ -60,20 +60,6 @@
       "description": "Auto-update rss-bridge and rsshub applications including major versions"
     },
     {
-      "matchDatasources": [
-        "custom.karakeep-meilisearch",
-        "custom.karakeep-chrome"
-      ],
-      "groupName": "Karakeep upstream dependencies",
-      "automerge": true,
-      "matchUpdateTypes": [
-        "major",
-        "minor",
-        "patch"
-      ],
-      "description": "Auto-update meilisearch and chrome versions from upstream Karakeep repository"
-    },
-    {
       "groupName": "all other dependencies",
       "groupSlug": "all-minor-patch",
       "matchUpdateTypes": [
@@ -87,9 +73,7 @@
         "!getmeili/meilisearch",
         "!ghcr.io/karakeep-app/karakeep",
         "!rss-bridge",
-        "!rsshub",
-        "!karakeep-meilisearch",
-        "!karakeep-chrome"
+        "!rsshub"
       ]
     }
   ],
@@ -100,39 +84,25 @@
         "^clusters/.*/karakeep/.*\\.ya?ml$"
       ],
       "matchStrings": [
-        "# karakeep-upstream-meilisearch: (?<currentValue>.*)"
+        "# karakeep-upstream-meilisearch: (?<currentValue>.*?)\\s",
+        "\\s*meilisearchImage:\\s*repository:\\s*(?<depName>getmeili/meilisearch)\\s*pullPolicy:\\s*.*?\\s*tag:\\s*\"(?<currentValue>.*?)\""
       ],
-      "depNameTemplate": "karakeep-meilisearch",
-      "datasourceTemplate": "custom.karakeep-meilisearch",
-      "versioningTemplate": "loose"
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker",
+      "autoReplaceStringTemplate": "# karakeep-upstream-meilisearch: {{{newValue}}}\n        meilisearchImage:\n            repository: {{{depName}}}\n            pullPolicy: IfNotPresent\n            tag: \"{{{newValue}}}\""
     },
     {
-      "customType": "regex",
+      "customType": "regex", 
       "fileMatch": [
         "^clusters/.*/karakeep/.*\\.ya?ml$"
       ],
       "matchStrings": [
-        "# karakeep-upstream-chrome: (?<currentValue>.*)"
+        "# karakeep-upstream-chrome: (?<currentValue>.*?)\\s",
+        "\\s*chromeImage:\\s*repository:\\s*(?<depName>gcr\\.io/zenika-hub/alpine-chrome)\\s*pullPolicy:\\s*.*?\\s*tag:\\s*\"(?<currentValue>.*?)\""
       ],
-      "depNameTemplate": "karakeep-chrome",
-      "datasourceTemplate": "custom.karakeep-chrome",
-      "versioningTemplate": "loose"
+      "datasourceTemplate": "docker", 
+      "versioningTemplate": "docker",
+      "autoReplaceStringTemplate": "# karakeep-upstream-chrome: {{{newValue}}}\n        chromeImage:\n            repository: {{{depName}}}\n            pullPolicy: IfNotPresent\n            tag: \"{{{newValue}}}\""
     }
-  ],
-  "customDatasources": {
-    "karakeep-meilisearch": {
-      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/karakeep-app/karakeep/main/kubernetes/meilisearch-deployment.yaml",
-      "format": "plain",
-      "transformTemplates": [
-        "($match := /image: getmeili\\/meilisearch:(.+)/; {\"releases\": [{\"version\": $match.groups[0]}]})"
-      ]
-    },
-    "karakeep-chrome": {
-      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/karakeep-app/karakeep/main/kubernetes/chrome-deployment.yaml", 
-      "format": "plain",
-      "transformTemplates": [
-        "($match := /image: gcr\\.io\\/zenika-hub\\/alpine-chrome:(.+)/; {\"releases\": [{\"version\": $match.groups[0]}]})"
-      ]
-    }
-  }
+  ]
 }
