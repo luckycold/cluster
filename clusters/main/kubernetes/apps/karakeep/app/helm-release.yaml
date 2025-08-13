@@ -1,8 +1,10 @@
+# karakeep-upstream-meilisearch: v1.11.1
+# karakeep-upstream-chrome: 124
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-    name: hoarder
-    namespace: hoarder
+    name: karakeep
+    namespace: karakeep
 spec:
     interval: 15m
     chart:
@@ -13,19 +15,19 @@ spec:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
-    releaseName: hoarder
+    releaseName: karakeep
     values:
         TZ: US/Central
-        release_name: hoarder
+        release_name: karakeep
 
         # Define app-specific values under a dedicated key
-        hoarder:
+        karakeep:
           # Common vars (used by multiple containers)
           NEXTAUTH_URL: http://localhost:3000
-          # HOARDER_VERSION is handled dynamically below using {{ .Values.image.tag }}
-          NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET}
-          MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY}
-          NEXT_PUBLIC_SECRET: ${HOARDER_NEXT_PUBLIC_SECRET}
+          # KARAKEEP_VERSION is handled dynamically below using {{ .Values.image.tag }}
+          NEXTAUTH_SECRET: ${KARAKEEP_NEXTAUTH_SECRET}
+          MEILI_MASTER_KEY: ${KARAKEEP_MEILI_MASTER_KEY}
+          NEXT_PUBLIC_SECRET: ${KARAKEEP_NEXT_PUBLIC_SECRET}
           # Main container specific
           MEILI_ADDR: http://localhost:7700 # Points to the meilisearch container service
           BROWSER_WEB_URL: http://localhost:9222 # Points to the chrome container service
@@ -36,7 +38,7 @@ spec:
           MEILI_NO_ANALYTICS: "true"
 
         image:
-            repository: ghcr.io/hoarder-app/hoarder
+            repository: ghcr.io/karakeep-app/karakeep
             pullPolicy: IfNotPresent
             tag: "release@sha256:f575a34ed3f8975225c156786442f177846126cf27d7fd37350f3af23c549d22"
         meilisearchImage:
@@ -99,16 +101,16 @@ spec:
                                 - containerPort: 3000
                                   name: main
                             env:
-                              MEILI_ADDR: "{{ .Values.hoarder.MEILI_ADDR }}"
-                              BROWSER_WEB_URL: "{{ .Values.hoarder.BROWSER_WEB_URL }}"
-                              NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
-                              DATA_DIR: "{{ .Values.hoarder.DATA_DIR }}"
-                              OPENAI_API_KEY: "{{ .Values.hoarder.OPENAI_API_KEY }}"
-                              HOARDER_VERSION: "{{ .Values.image.tag }}"
-                              NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
-                              MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
-                              NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
-                              CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.hoarder.CRAWLER_VIDEO_DOWNLOAD }}"
+                              MEILI_ADDR: "{{ .Values.karakeep.MEILI_ADDR }}"
+                              BROWSER_WEB_URL: "{{ .Values.karakeep.BROWSER_WEB_URL }}"
+                              NEXTAUTH_URL: "{{ .Values.karakeep.NEXTAUTH_URL }}"
+                              DATA_DIR: "{{ .Values.karakeep.DATA_DIR }}"
+                              OPENAI_API_KEY: "{{ .Values.karakeep.OPENAI_API_KEY }}"
+                              KARAKEEP_VERSION: "{{ .Values.image.tag }}"
+                              NEXTAUTH_SECRET: "{{ .Values.karakeep.NEXTAUTH_SECRET }}"
+                              MEILI_MASTER_KEY: "{{ .Values.karakeep.MEILI_MASTER_KEY }}"
+                              NEXT_PUBLIC_SECRET: "{{ .Values.karakeep.NEXT_PUBLIC_SECRET }}"
+                              CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.karakeep.CRAWLER_VIDEO_DOWNLOAD }}"
                             probes:
                                 liveness:
                                     enabled: true
@@ -154,12 +156,12 @@ spec:
                                 - containerPort: 7700
                                   name: main
                             env:
-                              MEILI_NO_ANALYTICS: "{{ .Values.hoarder.MEILI_NO_ANALYTICS }}"
-                              NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
-                              HOARDER_VERSION: "{{ .Values.image.tag }}"
-                              NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
-                              MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
-                              NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
+                              MEILI_NO_ANALYTICS: "{{ .Values.karakeep.MEILI_NO_ANALYTICS }}"
+                              NEXTAUTH_URL: "{{ .Values.karakeep.NEXTAUTH_URL }}"
+                              KARAKEEP_VERSION: "{{ .Values.image.tag }}"
+                              NEXTAUTH_SECRET: "{{ .Values.karakeep.NEXTAUTH_SECRET }}"
+                              MEILI_MASTER_KEY: "{{ .Values.karakeep.MEILI_MASTER_KEY }}"
+                              NEXT_PUBLIC_SECRET: "{{ .Values.karakeep.NEXT_PUBLIC_SECRET }}"
                             probes:
                                 liveness:
                                     enabled: true

@@ -37,10 +37,10 @@
         "docker"
       ],
       "matchPackageNames": [
-        "ghcr.io/hoarder-app/hoarder"
+        "ghcr.io/karakeep-app/karakeep"
       ],
       "allowedVersions": "release",
-      "description": "Always use the 'release' tag for Hoarder main image"
+      "description": "Always use the 'release' tag for Karakeep main image"
     },
     {
       "matchDatasources": [
@@ -60,6 +60,15 @@
       "description": "Auto-update rss-bridge and rsshub applications including major versions"
     },
     {
+      "matchDatasources": [
+        "custom.karakeep-meilisearch",
+        "custom.karakeep-chrome"
+      ],
+      "groupName": "Karakeep upstream dependencies",
+      "dependencyDashboardApproval": true,
+      "description": "Track meilisearch and chrome versions from upstream Karakeep repository"
+    },
+    {
       "groupName": "all other dependencies",
       "groupSlug": "all-minor-patch",
       "matchUpdateTypes": [
@@ -71,10 +80,54 @@
         "!ghcr.io/siderolabs/kubelet",
         "!ghcr.io/siderolabs/installer",
         "!getmeili/meilisearch",
-        "!ghcr.io/hoarder-app/hoarder",
+        "!ghcr.io/karakeep-app/karakeep",
         "!rss-bridge",
-        "!rsshub"
+        "!rsshub",
+        "!karakeep-meilisearch",
+        "!karakeep-chrome"
       ]
     }
-  ]
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^clusters/.*/karakeep/.*\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "# karakeep-upstream-meilisearch: (?<currentValue>.*)"
+      ],
+      "depNameTemplate": "karakeep-meilisearch",
+      "datasourceTemplate": "custom.karakeep-meilisearch",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^clusters/.*/karakeep/.*\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "# karakeep-upstream-chrome: (?<currentValue>.*)"
+      ],
+      "depNameTemplate": "karakeep-chrome",
+      "datasourceTemplate": "custom.karakeep-chrome",
+      "versioningTemplate": "loose"
+    }
+  ],
+  "customDatasources": {
+    "karakeep-meilisearch": {
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/karakeep-app/karakeep/main/kubernetes/meilisearch-deployment.yaml",
+      "format": "plain",
+      "transformTemplates": [
+        "($match := /image: getmeili\\/meilisearch:(.+)/; {\"releases\": [{\"version\": $match.groups[0]}]})"
+      ]
+    },
+    "karakeep-chrome": {
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/karakeep-app/karakeep/main/kubernetes/chrome-deployment.yaml", 
+      "format": "plain",
+      "transformTemplates": [
+        "($match := /image: gcr\\.io\\/zenika-hub\\/alpine-chrome:(.+)/; {\"releases\": [{\"version\": $match.groups[0]}]})"
+      ]
+    }
+  }
 }
