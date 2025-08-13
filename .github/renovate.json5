@@ -43,9 +43,12 @@
       "description": "Always use the 'release' tag for Hoarder main image"
     },
     {
+      "matchDatasources": [
+        "helm"
+      ],
       "matchPackageNames": [
-        "*rss-bridge*",
-        "*rsshub*"
+        "rss-bridge",
+        "rsshub"
       ],
       "groupName": "RSS applications auto-updates",
       "automerge": true,
@@ -69,8 +72,8 @@
         "!ghcr.io/siderolabs/installer",
         "!getmeili/meilisearch",
         "!ghcr.io/hoarder-app/hoarder",
-        "!*rss-bridge*",
-        "!*rsshub*"
+        "!rss-bridge",
+        "!rsshub"
       ]
     }
   ],
