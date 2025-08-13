@@ -76,37 +76,5 @@
         "!rsshub"
       ]
     }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$/"
-      ],
-      "matchStrings": [
-        "meilisearchImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+\"(?<currentValue>.*?)\""
-      ],
-      "datasourceTemplate": "github-contents",
-      "registryUrlTemplate": "https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/meilisearch-deployment.yaml",
-      "extractVersionTemplate": "image: getmeili\\/meilisearch:(?<version>.*?)\\n"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^clusters/main/kubernetes/apps/hoarder/app/helm-release\\.yaml$/"
-      ],
-      "matchStrings": [
-        "chromeImage:\\s+repository:\\s+(?<depName>.*?)\\s+pullPolicy:\\s+.*?\\s+tag:\\s+\"(?<currentValue>.*?)\""
-      ],
-      "datasourceTemplate": "github-contents",
-      "registryUrlTemplate": "https://api.github.com/repos/hoarder-app/hoarder/contents/kubernetes/chrome-deployment.yaml",
-      "extractVersionTemplate": "image: gcr.io\\/zenika-hub\\/alpine-chrome:(?<version>.*?)\\n"
-    }
-  ],
-  "hostRules": [
-    {
-      "matchHost": "https://api.github.com/repos/hoarder-app/hoarder/contents",
-      "hostType": "github-contents"
-    }
   ]
 }
