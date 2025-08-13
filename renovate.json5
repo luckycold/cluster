@@ -1,0 +1,80 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "github>truecharts/public//.github/renovate/main.json5"
+  ],
+  "timezone": "America/Chicago", 
+  "schedule": [
+    "* 22-23,0-5 * * *"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "ghcr.io/siderolabs/kubelet",
+        "ghcr.io/siderolabs/installer", 
+        "registry.k8s.io/kubectl"
+      ],
+      "groupName": "Sidero Labs updates",
+      "dependencyDashboardApproval": true,
+      "automerge": false
+    },
+    {
+      "matchPackageNames": [
+        "getmeili/meilisearch"
+      ],
+      "groupName": "Meilisearch updates",
+      "dependencyDashboardApproval": true,
+      "matchUpdateTypes": [
+        "major",
+        "minor", 
+        "patch"
+      ],
+      "description": "Require manual approval for all Meilisearch updates due to potential breaking changes in minor versions"
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/karakeep-app/karakeep"
+      ],
+      "allowedVersions": "release",
+      "description": "Always use the 'release' tag for Karakeep main image"
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchPackageNames": [
+        "rss-bridge",
+        "rsshub"
+      ],
+      "groupName": "RSS applications auto-updates",
+      "automerge": true,
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Auto-update rss-bridge and rsshub applications including major versions"
+    },
+    {
+      "groupName": "all other dependencies",
+      "groupSlug": "all-minor-patch", 
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "/.*/",
+        "!ghcr.io/siderolabs/kubelet",
+        "!ghcr.io/siderolabs/installer",
+        "!getmeili/meilisearch",
+        "!ghcr.io/karakeep-app/karakeep",
+        "!rss-bridge",
+        "!rsshub"
+      ]
+    }
+  ]
+}
