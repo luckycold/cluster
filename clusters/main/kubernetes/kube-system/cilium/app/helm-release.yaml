@@ -34,8 +34,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # autoDirectNodeRoutes: true
-    # routingMode: native
     hubble:
       enabled: false
     cluster:
@@ -46,21 +44,21 @@ spec:
       privileged: true
       capabilities:
         ciliumAgent:
-          - CHOWN
-          - KILL
-          - NET_ADMIN
-          - NET_RAW
-          - IPC_LOCK
-          - SYS_ADMIN
-          - SYS_RESOURCE
-          - DAC_OVERRIDE
-          - FOWNER
-          - SETGID
-          - SETUID
+        - CHOWN
+        - KILL
+        - NET_ADMIN
+        - NET_RAW
+        - IPC_LOCK
+        - SYS_ADMIN
+        - SYS_RESOURCE
+        - DAC_OVERRIDE
+        - FOWNER
+        - SETGID
+        - SETUID
         cleanCiliumState:
-          - NET_ADMIN
-          - SYS_ADMIN
-          - SYS_RESOURCE
+        - NET_ADMIN
+        - SYS_ADMIN
+        - SYS_RESOURCE
     cgroup:
       automount:
         enabled: false
@@ -78,3 +76,10 @@ spec:
     operator:
       rollOutPods: true
     rollOutCiliumPods: true
+    devices:
+    - eth0
+    nodePort:
+      bindProtection: false
+    nodeport:
+      addresses:
+      - 192.168.0.0/23
