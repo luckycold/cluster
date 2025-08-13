@@ -1,5 +1,3 @@
-# karakeep-upstream-meilisearch: v1.11.1
-# karakeep-upstream-chrome: 124
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:

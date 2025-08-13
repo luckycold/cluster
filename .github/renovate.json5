@@ -76,33 +76,5 @@
         "!rsshub"
       ]
     }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^clusters/.*/karakeep/.*\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "# karakeep-upstream-meilisearch: (?<currentValue>.*?)\\s",
-        "\\s*meilisearchImage:\\s*repository:\\s*(?<depName>getmeili/meilisearch)\\s*pullPolicy:\\s*.*?\\s*tag:\\s*\"(?<currentValue>.*?)\""
-      ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker",
-      "autoReplaceStringTemplate": "# karakeep-upstream-meilisearch: {{{newValue}}}\n        meilisearchImage:\n            repository: {{{depName}}}\n            pullPolicy: IfNotPresent\n            tag: \"{{{newValue}}}\""
-    },
-    {
-      "customType": "regex", 
-      "fileMatch": [
-        "^clusters/.*/karakeep/.*\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "# karakeep-upstream-chrome: (?<currentValue>.*?)\\s",
-        "\\s*chromeImage:\\s*repository:\\s*(?<depName>gcr\\.io/zenika-hub/alpine-chrome)\\s*pullPolicy:\\s*.*?\\s*tag:\\s*\"(?<currentValue>.*?)\""
-      ],
-      "datasourceTemplate": "docker", 
-      "versioningTemplate": "docker",
-      "autoReplaceStringTemplate": "# karakeep-upstream-chrome: {{{newValue}}}\n        chromeImage:\n            repository: {{{depName}}}\n            pullPolicy: IfNotPresent\n            tag: \"{{{newValue}}}\""
-    }
   ]
 }
