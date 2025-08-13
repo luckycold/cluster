@@ -28,7 +28,7 @@ spec:
     controller:
       replicaCount: 1
       service:
-        externalTrafficPolicy: Local
+        externalTrafficPolicy: Cluster
         annotations:
           metallb.io/ip-allocated-from-pool: main
           metallb.io/loadBalancerIPs: ${NGINX_INTERNAL_IP}
