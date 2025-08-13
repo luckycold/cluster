@@ -65,8 +65,13 @@
         "custom.karakeep-chrome"
       ],
       "groupName": "Karakeep upstream dependencies",
-      "dependencyDashboardApproval": true,
-      "description": "Track meilisearch and chrome versions from upstream Karakeep repository"
+      "automerge": true,
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Auto-update meilisearch and chrome versions from upstream Karakeep repository"
     },
     {
       "groupName": "all other dependencies",
