@@ -33,14 +33,24 @@ spec:
                     http:
                         port: 10230
                         targetPort: 10230
+                type: ClusterIP
+            main:
+                enabled: true
+                ports:
+                    main:
+                        port: 10229
+                        targetPort: 10229
+                type: ClusterIP
         ingress:
             main:
                 enabled: true
                 ingressClassName: external
-                serviceName: authentik-http
-                servicePort: 10230
+                targetService: http
                 hosts:
                     - host: auth.${DOMAIN_0}
+                      paths:
+                        - path: /
+                          pathType: Prefix
                     - host: "*.${DOMAIN_0}"
                       paths:
                         - path: /outpost.goauthentik.io
