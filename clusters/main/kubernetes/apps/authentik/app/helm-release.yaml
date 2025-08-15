@@ -69,9 +69,10 @@ spec:
             useSSL: true
         cnpg:
             main:
-                mode: standalone
+                mode: recovery
                 user: authentik
                 database: authentik
+                password: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true

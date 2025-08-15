@@ -64,9 +64,10 @@ spec:
             from_email: ${ADMIN_EMAIL}
         cnpg:
             main:
-                mode: standalone
+                mode: recovery
                 database: mealie
                 user: mealie
+                password: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
