@@ -60,14 +60,8 @@ spec:
           useSSL: true
         cnpg:
             main:
-                mode: recovery
+                mode: standalone
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
                     revision: "1"
-                recovery:
-                    revision: "1"
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                    clusterName: "authentik-cnpg-main"
-                    pitrTarget:
-                      time: "20250409T200947"
