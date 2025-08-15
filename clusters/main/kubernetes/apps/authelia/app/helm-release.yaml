@@ -125,7 +125,7 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
-        default_redirection_url: https://auth1.${DOMAIN_0}
+        default_redirection_url: https://auth.${DOMAIN_0}
         domain: ${DOMAIN_0}
         duo_api:
             enabled: true
@@ -148,7 +148,7 @@ spec:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: auth1.${DOMAIN_0}
+                    - host: auth.${DOMAIN_0}
                       paths:
                         - path: /
                 integrations:
