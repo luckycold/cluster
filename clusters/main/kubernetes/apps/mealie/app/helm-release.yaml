@@ -67,7 +67,6 @@ spec:
                 mode: standalone
                 database: mealie
                 user: mealie
-                password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true

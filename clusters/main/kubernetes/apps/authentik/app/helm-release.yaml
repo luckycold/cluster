@@ -26,10 +26,19 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
+        service:
+            http:
+                enabled: true
+                ports:
+                    http:
+                        port: 10230
+                        targetPort: 10230
         ingress:
             main:
                 enabled: true
                 ingressClassName: external
+                serviceName: authentik-http
+                servicePort: 10230
                 hosts:
                     - host: auth.${DOMAIN_0}
                     - host: "*.${DOMAIN_0}"
@@ -48,19 +57,21 @@ spec:
                         entrypoints:
                             - websecure
         authentik:
-          credentials:
-            email: ${GENERIC_EMAIL}
-            password: ${GENERIC_ADMIN_PASSWORD}
+            credentials:
+                email: ${GENERIC_EMAIL}
+                password: ${GENERIC_ADMIN_PASSWORD}
         email:
-          host: ${SMTP_SERVER}
-          port: 587
-          username: ${ADMIN_EMAIL}
-          password: ${SMTP_PASSWORD}
-          useTLS: true
-          useSSL: true
+            host: ${SMTP_SERVER}
+            port: 587
+            username: ${ADMIN_EMAIL}
+            password: ${SMTP_PASSWORD}
+            useTLS: true
+            useSSL: true
         cnpg:
             main:
                 mode: standalone
+                user: authentik
+                database: authentik
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
