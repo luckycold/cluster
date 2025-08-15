@@ -64,17 +64,13 @@ spec:
             from_email: ${ADMIN_EMAIL}
         cnpg:
             main:
-                mode: recovery
+                mode: standalone
                 database: mealie
                 user: mealie
                 password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
-                    revision: "1"
-                recovery:
-                    method: object_store
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     revision: "1"
         workload:
             main:
