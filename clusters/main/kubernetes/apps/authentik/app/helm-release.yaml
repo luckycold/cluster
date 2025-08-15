@@ -73,6 +73,8 @@ spec:
                 user: authentik
                 database: authentik
                 password: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                recovery:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true

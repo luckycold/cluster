@@ -68,6 +68,8 @@ spec:
                 database: mealie
                 user: mealie
                 password: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                recovery:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
