@@ -93,22 +93,17 @@ spec:
                     - group:admin
         authentication_backend:
             file:
-                enabled: false
-            ldap:
-                additional_groups_dn: ou=groups
-                additional_users_dn: ou=people
-                base_dn: ${AUTHELIA_LDAP_BASE_DN}
-                display_name_attribute: displayName
                 enabled: true
-                group_name_attribute: cn
-                groups_filter: (member={dn})
-                implementation: custom
-                mail_attribute: mail
-                plain_password: ${AUTHELIA_LDAP_PASSWORD}
-                url: ${AUTHELIA_LDAP_URL}
-                user: ${AUTHELIA_LDAP_USER}
-                username_attribute: uid
-                users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))
+                users:
+                    admin:
+                        displayname: "Admin"
+                        password: "${GENERIC_ADMIN_PASSWORD}"
+                        email: "${ADMIN_EMAIL}"
+                        groups:
+                            - admin
+                            - user
+            ldap:
+                enabled: false
         cnpg:
             main:
                 backups:
