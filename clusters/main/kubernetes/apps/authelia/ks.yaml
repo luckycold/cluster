@@ -4,7 +4,7 @@ metadata:
   name: authelia
   namespace: flux-system
 spec:
-  suspend: true
+  suspend: false
   interval: 10m
   path: clusters/main/kubernetes/apps/authelia/app
   prune: true
