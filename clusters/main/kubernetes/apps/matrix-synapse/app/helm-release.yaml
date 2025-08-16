@@ -109,7 +109,7 @@ spec:
     
     cnpg:
       main:
-        mode: recovery
+        mode: standalone
         backups:
           enabled: true
           credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
