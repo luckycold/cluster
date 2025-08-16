@@ -24,6 +24,17 @@ spec:
     remediation:
       retries: 3
   values:
+    ingress:
+    main:
+      integrations:
+        nginx:
+          enabled: true
+          auth:
+            type: "authelia"
+            internalHost: "authelia.authelia.svc.cluster.local:9091"
+            externalHost: "auth.${DOMAIN_0}"
+            # Can be left default in most cases
+            responseHeaders: []
     nameOverride: nginx-internal
     controller:
       replicaCount: 1

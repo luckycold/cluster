@@ -16,7 +16,6 @@ resources:
   - lidarr/ks.yaml
   - lldap/ks.yaml
   - maintainerr/ks.yaml
-  - matrix-synapse/ks.yaml
   - mealie/ks.yaml
   - minecraft/ks.yaml
   - notifiarr/ks.yaml
