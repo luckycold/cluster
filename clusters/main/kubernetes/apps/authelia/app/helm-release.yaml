@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: authelia
-            version: 29.2.1
+            version: 29.7.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -22,8 +22,16 @@ spec:
                 authelia_url: https://auth.${DOMAIN_0}
         TZ: US/Central
         workload:
-            main:
-                replicas: 1
+          main:
+            replicas: 2
+            podSpec:
+              containers:
+                main:
+                  env:
+                    # Update the following secrets with your own values
+                    AUTHELIA_SESSION_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                    AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                    AUTHELIA_STORAGE_ENCRYPTION_KEY: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
         access_control:
             default_policy: deny
             rules:
