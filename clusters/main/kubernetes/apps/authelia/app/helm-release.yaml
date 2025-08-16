@@ -21,10 +21,7 @@ spec:
               - domain: ${DOMAIN_0}
                 authelia_url: https://auth.${DOMAIN_0}
           authentication_backend:
-                file:
-                    enabled: false
                 ldap:
-                    enabled: true
                     implementation: lldap
                     url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
                     base_dn: ${LLDAP_LDAP_BASE_DN}
@@ -109,7 +106,6 @@ spec:
               smtp:
                   address: submission://${SMTP_SERVER}:587
                   password: ${SMTP_PASSWORD}
-                  port: 587
                   sender: ${ADMIN_EMAIL}
                   username: ${ADMIN_EMAIL}
                   tls:
