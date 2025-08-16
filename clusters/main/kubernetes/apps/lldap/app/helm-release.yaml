@@ -60,7 +60,7 @@ spec:
                 enabled: true
                 ingressClassName: internal
                 hosts:
-                    - host: lldap.${DOMAIN_0}
+                    - host: ldap.${DOMAIN_0}
                       paths:
                         - path: /
                 integrations:
@@ -95,7 +95,7 @@ spec:
                     containers:
                         main:
                             env:
-                                LLDAP_HTTP_URL: https://lldap.${DOMAIN_0}
+                                LLDAP_HTTP_URL: https://ldap.${DOMAIN_0}
                                 LLDAP_LDAP_BASE_DN: ${LLDAP_LDAP_BASE_DN}
                                 LLDAP_LDAP_USER_EMAIL: ${ADMIN_EMAIL}
                                 LLDAP_LDAP_USER_PASS: ${LLDAP_LDAP_USER_PASS}
