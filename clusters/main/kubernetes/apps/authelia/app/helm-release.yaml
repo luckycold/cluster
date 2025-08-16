@@ -93,19 +93,31 @@ spec:
                     - group:admin
         authentication_backend:
             file:
-                enabled: true
-                users:
-                    admin:
-                        displayname: "Admin"
-                        password: "${GENERIC_ADMIN_PASSWORD}"
-                        email: "${ADMIN_EMAIL}"
-                        groups:
-                            - admin
-                            - user
-            ldap:
                 enabled: false
+            ldap:
+                enabled: true
+                implementation: custom
+                url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
+                timeout: 5s
+                start_tls: false
+                tls:
+                    skip_verify: false
+                    minimum_version: TLS1.2
+                base_dn: ${LLDAP_LDAP_BASE_DN}
+                username_attribute: uid
+                additional_users_dn: ou=people
+                users_filter: (&({username_attribute}={input})(objectClass=person))
+                additional_groups_dn: ou=groups
+                groups_filter: (member={dn})
+                group_name_attribute: cn
+                mail_attribute: mail
+                display_name_attribute: displayName
+                user: uid=admin,ou=people,${LLDAP_LDAP_BASE_DN}
+                password: ${LLDAP_LDAP_USER_PASS}
         cnpg:
             main:
+                mode: standalone
+                password: ${AUTHELIA_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
@@ -113,8 +125,6 @@ spec:
                 cluster:
                     instances: 1
                     singleNode: true
-                mode: standalone
-                password: ${AUTHELIA_CNPG_PASSWORD}
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
@@ -157,11 +167,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: false
-                        entrypoints:
-                            - websecure
         notifier:
             disable_startup_check: false
             filesystem:

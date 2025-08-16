@@ -36,6 +36,8 @@ spec:
                 type: disabled
         cnpg:
             main:
+                mode: standalone
+                password: ${LLDAP_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
@@ -43,8 +45,6 @@ spec:
                 cluster:
                     instances: 1
                     singleNode: true
-                mode: standalone
-                password: ${LLDAP_CNPG_PASSWORD}
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
@@ -69,11 +69,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: false
-                        entrypoints:
-                            - websecure
         persistence:
             data:
                 volsync:

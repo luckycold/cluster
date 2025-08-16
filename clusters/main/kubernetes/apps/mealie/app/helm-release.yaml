@@ -40,11 +40,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: false
-                        entrypoints:
-                            - websecure
         persistence:
             data:
                 volsync:
@@ -65,9 +60,7 @@ spec:
         cnpg:
             main:
                 mode: standalone
-                database: mealie
-                user: mealie
-                password: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
