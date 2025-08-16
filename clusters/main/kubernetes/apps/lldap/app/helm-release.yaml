@@ -69,6 +69,8 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
+                    traefik:
+                        enabled: false
         persistence:
             data:
                 volsync:
