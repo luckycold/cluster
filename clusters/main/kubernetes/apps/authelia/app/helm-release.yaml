@@ -21,6 +21,9 @@ spec:
               - domain: ${DOMAIN_0}
                 authelia_url: https://auth.${DOMAIN_0}
         TZ: US/Central
+        workload:
+            main:
+                replicas: 1
         access_control:
             default_policy: deny
             rules:
