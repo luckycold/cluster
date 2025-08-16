@@ -112,7 +112,7 @@ spec:
                 group_name_attribute: cn
                 mail_attribute: mail
                 display_name_attribute: displayName
-                user: uid=admin,ou=people,${LLDAP_LDAP_BASE_DN}
+                user: uid=manager,ou=people,${LLDAP_LDAP_BASE_DN}
                 password: ${LLDAP_LDAP_USER_PASS}
         cnpg:
             main:
@@ -121,10 +121,6 @@ spec:
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: true
-                    revision: "1"
-                cluster:
-                    instances: 1
-                    singleNode: true
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
