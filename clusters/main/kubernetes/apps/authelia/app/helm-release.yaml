@@ -15,6 +15,11 @@ spec:
                 namespace: flux-system
     releaseName: authelia
     values:
+        authelia:
+          session:
+            cookies:
+              - domain: ${DOMAIN_0}
+                authelia_url: https://auth.${DOMAIN_0}
         TZ: US/Central
         access_control:
             default_policy: deny
@@ -118,24 +123,6 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
-        default_redirection_url: https://auth.${DOMAIN_0}
-        domain: ${DOMAIN_0}
-        duo_api:
-            enabled: true
-            hostname: ${AUTHELIA_DUO_API_HOSTNAME}
-            integration_key: ${AUTHELIA_DUO_INTEGRATION_KEY}
-            plain_api_key: ${AUTHELIA_DUO_API_KEY}
-        identity_providers:
-            oidc:
-            ## Enables this in the config map. Currently in beta stage.
-            ## See https://www.authelia.com/docs/configuration/identity-providers/oidc.html#roadmap
-                access_token_lifespan: 1h
-                authorize_code_lifespan: 1m
-                enable_client_debug_messages: false
-                enabled: false
-                id_token_lifespan: 1h
-                minimum_parameter_entropy: 8
-                refresh_token_lifespan: 90m
         ingress:
             main:
                 enabled: true
@@ -143,7 +130,6 @@ spec:
                 hosts:
                     - host: auth.${DOMAIN_0}
                       paths:
-                        - path: /
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
@@ -151,36 +137,18 @@ spec:
                     homepage:
                         enabled: false
         notifier:
-            disable_startup_check: false
-            filesystem:
-                enabled: false
             smtp:
-                disable_html_emails: false
-                disable_require_tls: false
-                enabled: true
-                host: ${SMTP_SERVER}
-                identifier: "Lucky"
-                plain_password: ${SMTP_PASSWORD}
+                address: submission://${SMTP_SERVER}:587
+                password: ${SMTP_PASSWORD}
                 port: 587
                 sender: ${ADMIN_EMAIL}
-                startup_check_address: test@authelia.com
-                subject: '[Authelia] {title}'
                 username: ${ADMIN_EMAIL}
-        password_policy:
-            zxcvbn:
-                enabled: true
-                min_score: 3
+                tls:
+                  server_name: ${SMTP_SERVER}
+                  minimum_version: TLS1.2
+                  skip_verify: false
         release_name: authelia
         service:
             main:
                 loadBalancerIP: ${AUTHELIA_IP}
                 type: LoadBalancer
-        session:
-            expiration: 1h
-            inactivity: 5m
-            name: authelia_session
-            remember_me_duration: 1M
-            same_site: lax
-        theme: auto
-        totp:
-            issuer: Lucky
