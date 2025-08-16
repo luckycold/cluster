@@ -61,8 +61,6 @@ spec:
                 ingressClassName: internal
                 hosts:
                     - host: ldap.${DOMAIN_0}
-                      paths:
-                        - path: /
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
