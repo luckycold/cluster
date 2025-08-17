@@ -108,10 +108,10 @@ data:
     # OIDC Identity Provider Configuration
     identity_providers:
       oidc:
-        hmac_secret: {{ secret "/config/secret/hmac_secret" }}
+        hmac_secret: {{ secret "/config/secrets/hmac_secret" }}
         jwks:
           - key: |
-              {{ secret "/config/secret/jwks_key.pem" | mindent 10 "|" | msquote }}
+              {{ secret "/config/secrets/jwks_key.pem" | mindent 10 "|" | msquote }}
         authorization_policies:
           matrix:
             default_policy: 'deny'
@@ -123,7 +123,7 @@ data:
         clients:
           - client_id: 'matrix'
             client_name: 'Matrix Server'
-            client_secret: {{ secret "/config/secret/clients_matrix_client_secret" }}
+            client_secret: {{ secret "/config/secrets/clients_matrix_client_secret" }}
             public: false
             authorization_policy: 'matrix'
             require_pkce: true
