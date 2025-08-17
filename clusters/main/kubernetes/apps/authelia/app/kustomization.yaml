@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - namespace.yaml
+  - authelia-oidc.secret.yaml
+  - authelia-oidc.configmap.yaml

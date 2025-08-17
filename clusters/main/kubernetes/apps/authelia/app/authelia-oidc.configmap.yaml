@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authelia-oidc-config
+  namespace: authelia
+data:
+  oidc-config.yml: |
+    identity_providers:
+      oidc:
+        hmac_secret: {{ secret "/config/secrets/hmac_secret" }}
+        jwks:
+          - key: |
+              {{ secret "/config/secrets/jwks_key.pem" | mindent 10 "|" | msquote }}
+        authorization_policies:
+          matrix:
+            default_policy: 'deny'
+            rules:
+              - policy: 'two_factor'
+                subject: 'group:user'
+              - policy: 'two_factor'
+                subject: 'group:admin'
+        clients:
+          - client_id: 'matrix'
+            client_name: 'Matrix Server'
+            client_secret: {{ secret "/config/secrets/clients_matrix_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            require_pkce: true
+            pkce_challenge_method: 'S256'
+            redirect_uris:
+              - 'https://matrix.${DOMAIN_0}/_synapse/client/oidc/callback'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
+            response_types:
+              - 'code'
+            grant_types:
+              - 'authorization_code'
