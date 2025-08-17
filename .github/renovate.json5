@@ -39,8 +39,8 @@
       "matchPackageNames": [
         "ghcr.io/karakeep-app/karakeep"
       ],
-      "allowedVersions": "release",
-      "description": "Always use the 'release' tag for Karakeep main image"
+      "enabled": false,
+      "description": "Disable updates for Karakeep - always use the 'release' tag"
     },
     {
       "matchDatasources": [
