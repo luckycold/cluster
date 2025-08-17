@@ -115,9 +115,12 @@ spec:
           # OIDC Identity Provider Configuration
           identity_providers:
             oidc:
+              issuer: https://auth.${DOMAIN_0}
               hmac_secret: ${AUTHELIA_OIDC_HMAC_SECRET}
-              jwks:
-                - key: ${AUTHELIA_OIDC_JWKS_KEY}
+              issuer_private_keys:
+                - key_id: matrix_key
+                  algorithm: RS256
+                  key: ${AUTHELIA_OIDC_JWKS_KEY}
               authorization_policies:
                 matrix:
                   default_policy: deny
