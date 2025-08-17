@@ -112,6 +112,38 @@ spec:
                     server_name: ${SMTP_SERVER}
                     minimum_version: TLS1.2
                     skip_verify: false
+          # OIDC Identity Provider Configuration
+          identity_providers:
+            oidc:
+              hmac_secret: ${AUTHELIA_OIDC_HMAC_SECRET}
+              jwks:
+                - key: ${AUTHELIA_OIDC_JWKS_KEY}
+              authorization_policies:
+                matrix:
+                  default_policy: deny
+                  rules:
+                    - policy: two_factor
+                      subject: group:user
+                    - policy: two_factor
+                      subject: group:admin
+              clients:
+                - client_id: matrix
+                  client_name: Matrix Server
+                  client_secret: ${AUTHELIA_OIDC_MATRIX_SECRET}
+                  public: false
+                  authorization_policy: matrix
+                  require_pkce: true
+                  pkce_challenge_method: S256
+                  redirect_uris:
+                    - https://matrix.${DOMAIN_0}/_synapse/client/oidc/callback
+                  scopes:
+                    - openid
+                    - profile
+                    - email
+                  response_types:
+                    - code
+                  grant_types:
+                    - authorization_code
         TZ: US/Central
         workload:
           main:
@@ -124,6 +156,9 @@ spec:
                     AUTHELIA_SESSION_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     AUTHELIA_STORAGE_ENCRYPTION_KEY: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                    AUTHELIA_OIDC_HMAC_SECRET: ${AUTHELIA_OIDC_HMAC_SECRET}
+                    AUTHELIA_OIDC_JWKS_KEY: ${AUTHELIA_OIDC_JWKS_KEY}
+                    AUTHELIA_OIDC_MATRIX_SECRET: ${AUTHELIA_OIDC_MATRIX_SECRET}
         cnpg:
             main:
                 mode: standalone
