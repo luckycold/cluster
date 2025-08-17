@@ -108,6 +108,7 @@ data:
     # OIDC Identity Provider Configuration
     identity_providers:
       oidc:
+        issuer: https://auth.${DOMAIN_0}
         hmac_secret: {{ secret "/config/secrets/hmac_secret" }}
         jwks:
           - key: |
