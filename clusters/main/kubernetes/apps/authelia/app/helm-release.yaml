@@ -15,118 +15,23 @@ spec:
                 namespace: flux-system
     releaseName: authelia
     values:
-        authelia:
-          session:
-            cookies:
-              - domain: ${DOMAIN_0}
-                authelia_url: https://auth.${DOMAIN_0}
-          authentication_backend:
-                ldap:
-                    implementation: lldap
-                    url: ldap://lldap-ldap.lldap.svc.cluster.local:3890
-                    base_dn: ${LLDAP_LDAP_BASE_DN}
-                    user: uid=manager,ou=people,${LLDAP_LDAP_BASE_DN}
-                    password: ${LLDAP_LDAP_USER_PASS}
-          access_control:
-                default_policy: deny
-                rules:
-                    - domain:
-                        - '*.${DOMAIN_0}'
-                      domain_regex: []
-                      networks:
-                        - 192.168.0.0/16
-                      policy: bypass
-                      resources: []
-                      subject: []
-                    - domain:
-                        - '*.${DOMAIN_0}'
-                      domain_regex: []
-                      networks: []
-                      policy: bypass
-                      resources:
-                        - ^/api([/?].*)?$
-                        - ^/identity.*$
-                        - ^/triggers.*$
-                        - ^/meshagents.*$
-                        - ^/meshsettings.*$
-                        - ^/agent.*$
-                        - ^/control.*$
-                        - ^/meshrelay.*$
-                        - ^/wl.*$
-                      subject: []
-                    - domain:
-                        - pass.${DOMAIN_0}
-                      domain_regex: []
-                      networks: []
-                      policy: two_factor
-                      resources:
-                        - ^*/admin.*$
-                      subject:
-                        - group:admin
-                    - domain:
-                        - mc-cs.${DOMAIN_0}
-                      domain_regex: []
-                      networks: []
-                      policy: two_factor
-                      subject:
-                        - group:user
-                    - domain:
-                        - pass.${DOMAIN_0}
-                      domain_regex: []
-                      networks: []
-                      policy: deny
-                      resources:
-                        - ^*/admin.*$
-                      subject: []
-                    - domain:
-                        - pass.${DOMAIN_0}
-                      domain_regex: []
-                      networks: []
-                      policy: bypass
-                      resources: []
-                      subject: []
-                    - domain:
-                        - changeme.${DOMAIN_0}
-                      domain_regex: []
-                      networks: []
-                      policy: two_factor
-                      resources: []
-                      subject:
-                        - group:user
-                    - domain:
-                        - ${DOMAIN_0}
-                        - '*.${DOMAIN_0}'
-                      domain_regex: []
-                      networks: []
-                      policy: two_factor
-                      resources: []
-                      subject:
-                        - group:admin
-          notifier:
-              smtp:
-                  address: submission://${SMTP_SERVER}:587
-                  password: ${SMTP_PASSWORD}
-                  sender: ${ADMIN_EMAIL}
-                  username: ${ADMIN_EMAIL}
-                  tls:
-                    server_name: ${SMTP_SERVER}
-                    minimum_version: TLS1.2
-                    skip_verify: false
         TZ: US/Central
         persistence:
-          oidc-config:
+          configfile:
             enabled: true
             type: configmap
-            objectName: authelia-oidc-config
-            mountPath: /config/oidc-config.yml
-            subPath: oidc-config.yml
+            objectName: authelia-configfile
+            mountPath: /configuration.yaml
+            subPath: configuration.yaml
             readOnly: true
-          oidc-secrets:
+            expandObjectName: false
+          secrets:
             enabled: true
             type: secret
             objectName: authelia-oidc-secret
             mountPath: /config/secrets
             readOnly: true
+            expandObjectName: false
         workload:
           main:
             replicas: 2
@@ -138,7 +43,6 @@ spec:
                     AUTHELIA_SESSION_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     AUTHELIA_STORAGE_ENCRYPTION_KEY: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
-                    AUTHELIA_CONFIGURATION_FILE: /configuration.yaml,/config/oidc-config.yml
                     X_AUTHELIA_CONFIG_FILTERS: template
         cnpg:
             main:
