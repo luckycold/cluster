@@ -165,12 +165,13 @@ data:
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
-              - 'https://books.${DOMAIN_0}/auth/openid/callback'
-              - 'https://books.${DOMAIN_0}/auth/openid/mobile-redirect'
+              - 'https://books.${DOMAIN_0}/audiobookshelf/auth/openid/callback'
+              - 'https://books.${DOMAIN_0}/audiobookshelf/auth/openid/mobile-redirect'
             scopes:
               - 'openid'
               - 'profile'
               - 'email'
+              - 'groups'
             response_types:
               - 'code'
             grant_types:
