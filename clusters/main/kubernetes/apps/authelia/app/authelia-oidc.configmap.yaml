@@ -240,6 +240,7 @@ data:
             # client_secret not needed for public clients
             public: true
             authorization_policy: 'matrix'
+            require_pkce: false
             grant_types:
               - 'authorization_code'
             redirect_uris:
