@@ -75,7 +75,7 @@ spec:
 
                                 # OIDC Authentication Configuration
                                 OIDC_AUTH_ENABLED: "true"
-                                OIDC_ISSUER_URL: "https://auth.${DOMAIN_0}"
+                                OIDC_CONFIGURATION_URL: "https://auth.${DOMAIN_0}/.well-known/openid-configuration"
                                 OIDC_CLIENT_ID: "mealie"
                                 OIDC_CLIENT_SECRET: "${MEALIE_OIDC_CLIENT_SECRET}"
                                 OIDC_USER_CLAIM: "preferred_username"
