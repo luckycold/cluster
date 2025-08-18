@@ -74,7 +74,7 @@ spec:
                                 OPENAI_API_KEY: ${OPENAI_API_KEY}
 
                                 # OIDC Authentication Configuration
-                                OIDC_ENABLED: "true"
+                                OIDC_AUTH_ENABLED: "true"
                                 OIDC_ISSUER_URL: "https://auth.${DOMAIN_0}"
                                 OIDC_CLIENT_ID: "mealie"
                                 OIDC_CLIENT_SECRET: "${MEALIE_OIDC_CLIENT_SECRET}"
