@@ -140,7 +140,6 @@ data:
         hmac_secret: {{ secret "/config/secrets/hmac_secret" }}
         jwks:
           - key: |
-          - key: |
               {{ secret "/config/secrets/jwks_key.pem" | mindent 10 "|" | msquote }}
 
         claims_policies:
