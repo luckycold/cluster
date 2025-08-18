@@ -94,6 +94,7 @@ data:
           subject:
             - group:admin
             - group:trusted
+            - group:user
     
     notifier:
       smtp:
