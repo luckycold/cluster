@@ -32,7 +32,7 @@ spec:
             # OIDC Configuration
             OAUTH_CLIENT_ID: "hoarder"
             OAUTH_CLIENT_SECRET: ${clients_hoarder_client_secret}
-            OAUTH_WELLKNOWN_URL: "https://auth.${DOMAIN_0}/.well-known/openid_configuration"
+            OAUTH_WELLKNOWN_URL: "https://auth.${DOMAIN_0}/.well-known/openid-configuration"
             OAUTH_PROVIDER_NAME: "Authelia"
             OAUTH_AUTHORIZATION_URL: "https://auth.${DOMAIN_0}/api/oidc/authorization"
             OAUTH_TOKEN_URL: "https://auth.${DOMAIN_0}/api/oidc/token"
