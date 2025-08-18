@@ -93,6 +93,7 @@ data:
           resources: []
           subject:
             - group:admin
+            - group:trusted
     
     notifier:
       smtp:
@@ -120,6 +121,8 @@ data:
                 subject: 'group:user'
               - policy: 'two_factor'
                 subject: 'group:admin'
+              - policy: 'two_factor'
+                subject: 'group:trusted'
         clients:
           - client_id: 'matrix'
             client_name: 'Matrix Server'
