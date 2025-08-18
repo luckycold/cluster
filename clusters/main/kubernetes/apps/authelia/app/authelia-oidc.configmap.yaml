@@ -282,7 +282,7 @@ data:
             response_types:
               - 'code'
             redirect_uris:
-              - 'https://h.${DOMAIN_0}/api/auth/callback/oidc'
+              - 'https://h.${DOMAIN_0}/api/auth/callback/custom'
             claims_policy: 'with_email'
             scopes:
               - 'openid'
