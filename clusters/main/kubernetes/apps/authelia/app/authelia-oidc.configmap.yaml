@@ -272,3 +272,21 @@ data:
               - 'profile'
             userinfo_signed_response_alg: 'none'
             token_endpoint_auth_method: 'client_secret_basic'
+          - client_id: 'hoarder'
+            client_name: 'Hoarder'
+            client_secret: {{ secret "/config/secrets/clients_hoarder_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            grant_types:
+              - 'authorization_code'
+            response_types:
+              - 'code'
+            redirect_uris:
+              - 'https://h.${DOMAIN_0}/api/auth/callback/oidc'
+            claims_policy: 'with_email'
+            scopes:
+              - 'openid'
+              - 'email'
+              - 'profile'
+            userinfo_signed_response_alg: 'none'
+            token_endpoint_auth_method: 'client_secret_basic'
