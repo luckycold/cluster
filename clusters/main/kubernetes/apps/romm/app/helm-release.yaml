@@ -84,26 +84,14 @@ spec:
                     # Delay in minutes before rescanning library when filesystem changes
                     RESCAN_ON_FILESYSTEM_CHANGE_DELAY: 5
 
-                    # OIDC Authentication Configuration
-                    ROMM_AUTH__ENABLED: "true"
-                    ROMM_AUTH__METHOD: "oauth"
-                    ROMM_AUTH__OAUTH_PROVIDER: "custom"
 
-                    # Authelia OIDC Settings
-                    ROMM_AUTH__OAUTH_CLIENT_ID: "romm"
-                    ROMM_AUTH__OAUTH_CLIENT_SECRET: "${ROMM_OAUTH_CLIENT_SECRET}"
-                    ROMM_AUTH__OAUTH_SCOPES: "openid profile email"
-
-                    # Authelia Endpoints
-                    ROMM_AUTH__OAUTH_AUTHORIZATION_URL: "https://auth.${DOMAIN_0}/api/oidc/authorization"
-                    ROMM_AUTH__OAUTH_TOKEN_URL: "https://auth.${DOMAIN_0}/api/oidc/token"
-                    ROMM_AUTH__OAUTH_USERINFO_URL: "https://auth.${DOMAIN_0}/api/oidc/userinfo"
-                    ROMM_AUTH__OAUTH_REDIRECT_URI: "https://romm.${DOMAIN_0}/auth/callback"
-
-                    # User mapping
-                    ROMM_AUTH__OAUTH_USERNAME_CLAIM: "preferred_username"
-                    ROMM_AUTH__OAUTH_EMAIL_CLAIM: "email"
-                    ROMM_AUTH__OAUTH_NAME_CLAIM: "name"
+                    # OIDC Authentication Configuration  
+                    OIDC_ENABLED: "true"
+                    OIDC_PROVIDER: "authelia"
+                    OIDC_CLIENT_ID: "romm"
+                    OIDC_CLIENT_SECRET: "${ROMM_OAUTH_CLIENT_SECRET}"
+                    OIDC_REDIRECT_URI: "https://romm.${DOMAIN_0}/api/oauth/openid"
+                    OIDC_SERVER_APPLICATION_URL: "https://auth.${DOMAIN_0}"
 
                     # Cron expression for scheduled rescanning
                     # SCHEDULED_RESCAN_CRON: "0 3 * * *"
