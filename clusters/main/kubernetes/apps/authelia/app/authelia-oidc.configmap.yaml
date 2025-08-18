@@ -199,8 +199,9 @@ data:
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
+              - 'app.immich:///oauth-callback'
               - 'https://${DOMAIN_2}/auth/login'
-              - 'https://${DOMAIN_2}/api/oauth/mobile-redirect'
+              - 'https://${DOMAIN_2}/user-settings'
             scopes:
               - 'openid'
               - 'profile'
