@@ -37,6 +37,8 @@ spec:
             OAUTH_AUTHORIZATION_URL: "https://auth.${DOMAIN_0}/api/oidc/authorization"
             OAUTH_TOKEN_URL: "https://auth.${DOMAIN_0}/api/oidc/token"
             OAUTH_USERINFO_URL: "https://auth.${DOMAIN_0}/api/oidc/userinfo"
+            # Enable OAuth user registration
+            DISABLE_SIGNUPS: "false"
             # Allow OAuth account creation and linking
             NEXTAUTH_ALLOW_DANGEROUS_EMAIL_LINKING: "true"
             OAUTH_AUTO_REGISTER: "true"
@@ -136,6 +138,8 @@ spec:
                                 OAUTH_AUTHORIZATION_URL: "{{ .Values.hoarder.OAUTH_AUTHORIZATION_URL }}"
                                 OAUTH_TOKEN_URL: "{{ .Values.hoarder.OAUTH_TOKEN_URL }}"
                                 OAUTH_USERINFO_URL: "{{ .Values.hoarder.OAUTH_USERINFO_URL }}"
+                                # Enable OAuth user registration
+                                DISABLE_SIGNUPS: "{{ .Values.hoarder.DISABLE_SIGNUPS }}"
                                 # Allow OAuth account creation and linking
                                 NEXTAUTH_ALLOW_DANGEROUS_EMAIL_LINKING: "{{ .Values.hoarder.NEXTAUTH_ALLOW_DANGEROUS_EMAIL_LINKING }}"
                                 OAUTH_AUTO_REGISTER: "{{ .Values.hoarder.OAUTH_AUTO_REGISTER }}"
