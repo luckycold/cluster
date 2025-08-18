@@ -264,7 +264,7 @@ data:
             response_types:
               - 'code'
             redirect_uris:
-              - 'https://m.${DOMAIN_0}/login'
+              - 'https://m.${DOMAIN_0}/api/auth/oauth/callback'
             claims_policy: 'with_email'
             scopes:
               - 'openid'
