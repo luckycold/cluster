@@ -138,3 +138,40 @@ data:
               - 'code'
             grant_types:
               - 'authorization_code'
+          - client_id: 'generic-test'
+            client_name: 'Generic Test Client'
+            client_secret: {{ secret "/config/secrets/clients_generic_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            require_pkce: true
+            pkce_challenge_method: 'S256'
+            redirect_uris:
+              - 'https://oidcdebugger.com/debug'
+              - 'http://localhost:8080/callback'
+              - 'https://oauth.pstmn.io/v1/callback'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
+            response_types:
+              - 'code'
+            grant_types:
+              - 'authorization_code'
+          - client_id: 'audiobookshelf'
+            client_name: 'Audiobookshelf'
+            client_secret: {{ secret "/config/secrets/clients_audiobookshelf_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            require_pkce: true
+            pkce_challenge_method: 'S256'
+            redirect_uris:
+              - 'https://books.${DOMAIN_0}/auth/openid/callback'
+              - 'https://books.${DOMAIN_0}/auth/openid/mobile-redirect'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
+            response_types:
+              - 'code'
+            grant_types:
+              - 'authorization_code'
