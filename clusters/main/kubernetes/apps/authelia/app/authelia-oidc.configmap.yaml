@@ -46,6 +46,22 @@ data:
             - ^/wl.*$
           subject: []
         - domain:
+            - '*.${DOMAIN_2}'
+          domain_regex: []
+          networks: []
+          policy: bypass
+          resources:
+            - ^/api([/?].*)?$
+            - ^/identity.*$
+            - ^/triggers.*$
+            - ^/meshagents.*$
+            - ^/meshsettings.*$
+            - ^/agent.*$
+            - ^/control.*$
+            - ^/meshrelay.*$
+            - ^/wl.*$
+          subject: []
+        - domain:
             - pass.${DOMAIN_0}
           domain_regex: []
           networks: []
@@ -202,6 +218,23 @@ data:
               - 'app.immich:///oauth-callback'
               - 'https://${DOMAIN_2}/auth/login'
               - 'https://${DOMAIN_2}/user-settings'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
+            response_types:
+              - 'code'
+            grant_types:
+              - 'authorization_code'
+          - client_id: 'romm'
+            client_name: 'RomM'
+            client_secret: {{ secret "/config/secrets/clients_romm_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            require_pkce: true
+            pkce_challenge_method: 'S256'
+            redirect_uris:
+              - 'https://romm.${DOMAIN_0}/auth/callback'
             scopes:
               - 'openid'
               - 'profile'
