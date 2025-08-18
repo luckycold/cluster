@@ -243,6 +243,8 @@ data:
             require_pkce: false
             grant_types:
               - 'authorization_code'
+            response_types:
+              - 'code'
             redirect_uris:
               - 'https://romm.${DOMAIN_0}/api/oauth/openid'
             claims_policy: 'with_email'
@@ -252,3 +254,4 @@ data:
               - 'profile'
             userinfo_signed_response_alg: 'none'
             token_endpoint_auth_method: 'client_secret_basic'
+
