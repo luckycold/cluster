@@ -85,6 +85,17 @@ data:
           subject:
             - group:user
         - domain:
+            - ${DOMAIN_2}
+            - '*.${DOMAIN_2}'
+          domain_regex: []
+          networks: []
+          policy: two_factor
+          resources: []
+          subject:
+            - group:admin
+            - group:trusted
+            - group:user
+        - domain:
             - ${DOMAIN_0}
             - '*.${DOMAIN_0}'
           domain_regex: []
@@ -176,6 +187,24 @@ data:
               - 'profile'
               - 'email'
               - 'groups'
+            response_types:
+              - 'code'
+            grant_types:
+              - 'authorization_code'
+          - client_id: 'immich'
+            client_name: 'Immich'
+            client_secret: {{ secret "/config/secrets/clients_immich_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            require_pkce: true
+            pkce_challenge_method: 'S256'
+            redirect_uris:
+              - 'https://${DOMAIN_2}/auth/login'
+              - 'https://${DOMAIN_2}/api/oauth/mobile-redirect'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
             response_types:
               - 'code'
             grant_types:
