@@ -237,8 +237,8 @@ data:
               - 'authorization_code'
           - client_id: 'romm'
             client_name: 'RomM'
-            # client_secret not needed for public clients
-            public: true
+            client_secret: {{ secret "/config/secrets/clients_romm_client_secret" }}
+            public: false
             authorization_policy: 'matrix'
             require_pkce: false
             grant_types:
@@ -251,4 +251,4 @@ data:
               - 'email'
               - 'profile'
             userinfo_signed_response_alg: 'none'
-            token_endpoint_auth_method: 'none'
+            token_endpoint_auth_method: 'client_secret_basic'
