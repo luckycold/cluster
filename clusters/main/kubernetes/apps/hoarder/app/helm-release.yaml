@@ -40,7 +40,7 @@ spec:
             # Enable OAuth user registration
             DISABLE_SIGNUPS: "false"
             # Allow OAuth account creation and linking
-            NEXTAUTH_ALLOW_DANGEROUS_EMAIL_LINKING: "true"
+            OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
             OAUTH_AUTO_REGISTER: "true"
             # OAuth provider type and user creation
             OAUTH_PROVIDER_TYPE: "oidc"
