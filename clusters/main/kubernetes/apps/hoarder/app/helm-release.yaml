@@ -131,7 +131,7 @@ spec:
                                 # Enable OAuth user registration
                                 DISABLE_SIGNUPS: "{{ .Values.hoarder.DISABLE_SIGNUPS }}"
                                 # Allow OAuth account creation and linking
-                                NEXTAUTH_ALLOW_DANGEROUS_EMAIL_LINKING: "{{ .Values.hoarder.NEXTAUTH_ALLOW_DANGEROUS_EMAIL_LINKING }}"
+                                OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "{{ .Values.hoarder.OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING }}"
                                 # OAuth provider type and user creation
                                 OAUTH_PROVIDER_TYPE: "{{ .Values.hoarder.OAUTH_PROVIDER_TYPE }}"
                             probes:
