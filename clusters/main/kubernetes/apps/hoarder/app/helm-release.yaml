@@ -36,6 +36,7 @@ spec:
             OAUTH_PROVIDER_NAME: "Authelia"
             # Enable OAuth user registration
             DISABLE_SIGNUPS: "false"
+            DISABLE_PASSWORD_AUTH: "true"
             # Allow OAuth account creation and linking
             OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
             MEILI_ENV: "production"
@@ -130,6 +131,7 @@ spec:
                                 OAUTH_PROVIDER_NAME: "{{ .Values.hoarder.OAUTH_PROVIDER_NAME }}"
                                 # Enable OAuth user registration
                                 DISABLE_SIGNUPS: "{{ .Values.hoarder.DISABLE_SIGNUPS }}"
+                                DISABLE_PASSWORD_AUTH: "{{ .Values.hoarder.DISABLE_PASSWORD_AUTH }}"
                                 # Allow OAuth account creation and linking
                                 OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "{{ .Values.hoarder.OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING }}"
                                 # OAuth provider type and user creation
