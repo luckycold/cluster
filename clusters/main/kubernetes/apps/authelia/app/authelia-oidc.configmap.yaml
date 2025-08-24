@@ -290,3 +290,22 @@ data:
               - 'profile'
             userinfo_signed_response_alg: 'none'
             token_endpoint_auth_method: 'client_secret_basic'
+          - client_id: 'alist'
+            client_name: 'AList'
+            client_secret: {{ secret "/config/secrets/clients_alist_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            grant_types:
+              - 'authorization_code'
+            response_types:
+              - 'code'
+            redirect_uris:
+              - 'https://files.${DOMAIN_0}/api/auth/sso_callback?method=sso_get_token'
+              - 'https://files.${DOMAIN_0}/api/auth/sso_callback?method=get_sso_id'
+            claims_policy: 'with_email'
+            scopes:
+              - 'openid'
+              - 'email'
+              - 'profile'
+            userinfo_signed_response_alg: 'none'
+            token_endpoint_auth_method: 'client_secret_basic'
