@@ -17,8 +17,6 @@ spec:
     values:
         ingress:
             main:
-                annotations:
-                    traefik.frontend.passHostHeader: "false"
                 enabled: true
                 ingressClassName: external
                 hosts:
@@ -32,11 +30,6 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        allowCors: false
-                        enabled: false
-                        entrypoints:
-                            - websecure
         release_name: truenas
         service:
             main:
@@ -45,6 +38,6 @@ spec:
                 ports:
                     main:
                         enabled: true
-                        port: 444
+                        port: 443
                         protocol: https
                 type: ExternalIP
