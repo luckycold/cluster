@@ -309,3 +309,21 @@ data:
               - 'profile'
             userinfo_signed_response_alg: 'none'
             token_endpoint_auth_method: 'client_secret_basic'
+
+          - client_id: cloudflare-access
+            client_name: Cloudflare
+            client_secret: {{ secret "/config/secrets/clients_cloudflare_access_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            grant_types:
+              - 'authorization_code'
+            response_types:
+              - 'code'
+            redirect_uris:
+              - 'https://${CLOUDFLARE_AUTH_DOMAIN}/cdn-cgi/access/callback'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
+              - 'groups'
+            token_endpoint_auth_method: 'client_secret_post'
