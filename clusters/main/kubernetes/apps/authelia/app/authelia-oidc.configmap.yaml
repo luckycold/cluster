@@ -150,6 +150,7 @@ data:
               - "alt_emails"
               - "preferred_username"
               - "name"
+              - "groups"
         authorization_policies:
           matrix:
             default_policy: 'deny'
