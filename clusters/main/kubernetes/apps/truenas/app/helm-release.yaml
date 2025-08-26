@@ -19,6 +19,11 @@ spec:
             main:
                 enabled: true
                 ingressClassName: external
+                annotations:
+                    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+                    nginx.ingress.kubernetes.io/proxy-ssl-verify: "false"
+                    nginx.ingress.kubernetes.io/upstream-vhost: ${NAS_DOMAIN}
+                    nginx.ingress.kubernetes.io/proxy-ssl-name: ${NAS_DOMAIN}
                 hosts:
                     - host: tr.${DOMAIN_0}
                       paths:
