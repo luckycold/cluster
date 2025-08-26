@@ -39,10 +39,12 @@ spec:
         service:
             main:
                 enabled: true
-                externalIP: ${NAS_DOMAIN}
+                # Use ExternalName to point the Service at the NAS hostname
+                type: ExternalName
+                externalName: ${NAS_DOMAIN}
+                # Port kept for ingress templating; chart handles ExternalName appropriately
                 ports:
                     main:
                         enabled: true
                         port: 443
                         protocol: https
-                type: ExternalIP
