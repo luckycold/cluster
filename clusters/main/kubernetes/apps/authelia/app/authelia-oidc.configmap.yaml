@@ -321,4 +321,3 @@ data:
               - 'openid'
               - 'profile'
               - 'email'
-              - 'groups'
