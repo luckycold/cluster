@@ -84,8 +84,7 @@ spec:
                     # Delay in minutes before rescanning library when filesystem changes
                     RESCAN_ON_FILESYSTEM_CHANGE_DELAY: 5
 
-
-                    # OIDC Authentication Configuration  
+                    # OIDC Authentication Configuration
                     OIDC_ENABLED: "true"
                     OIDC_PROVIDER: "authelia"
                     OIDC_CLIENT_ID: "romm"
@@ -100,4 +99,3 @@ spec:
         mariadb:
             password: ${ROMM_MARIADB_PASSWORD}
             rootPassword: ${ROMM_MARIADB_ROOT_PASSWORD}
-
