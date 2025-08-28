@@ -240,7 +240,7 @@ data:
             client_name: 'RomM'
             client_secret: {{ secret "/config/secrets/clients_romm_client_secret" }}
             public: false
-            authorization_policy: 'two_factor'
+            authorization_policy: 'matrix'
             grant_types:
               - authorization_code
             redirect_uris:
