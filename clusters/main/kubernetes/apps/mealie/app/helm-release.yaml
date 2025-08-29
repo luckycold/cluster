@@ -78,8 +78,8 @@ spec:
                                 OIDC_CONFIGURATION_URL: "https://auth.${DOMAIN_0}/.well-known/openid-configuration"
                                 OIDC_CLIENT_ID: "mealie"
                                 OIDC_CLIENT_SECRET: "${MEALIE_OIDC_CLIENT_SECRET}"
-                                OIDC_USER_CLAIM: "preferred_username"
-                                OIDC_ADMIN_CLAIM: "groups"
-                                OIDC_ADMIN_CLAIM_VALUE: "admin"
-                                OIDC_GROUPS_CLAIM: "groups"
-                                OIDC_REMEMBER_ME: "true"
+                                OIDC_AUTH_ENABLED: 'true'
+                                OIDC_SIGNUP_ENABLED: 'true'
+                                OIDC_AUTO_REDIRECT: 'false'
+                                OIDC_ADMIN_GROUP: 'admin'
+                                OIDC_USER_GROUP: 'users'
