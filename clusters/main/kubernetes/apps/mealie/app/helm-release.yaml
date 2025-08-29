@@ -82,4 +82,4 @@ spec:
                                 OIDC_SIGNUP_ENABLED: 'true'
                                 OIDC_AUTO_REDIRECT: 'false'
                                 OIDC_ADMIN_GROUP: 'admin'
-                                OIDC_USER_GROUP: 'users'
+                                OIDC_USER_GROUP: 'user'
