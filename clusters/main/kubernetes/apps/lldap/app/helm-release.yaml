@@ -32,8 +32,6 @@ spec:
                 enabled: false
             netshoot:
                 enabled: false
-            vpn:
-                type: disabled
         cnpg:
             main:
                 mode: standalone

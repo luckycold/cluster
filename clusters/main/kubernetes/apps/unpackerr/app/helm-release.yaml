@@ -21,8 +21,6 @@ spec:
                 enabled: false
             netshoot:
                 enabled: false
-            vpn:
-                type: disabled
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
