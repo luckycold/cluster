@@ -66,9 +66,12 @@ spec:
             WIREGUARD_ADDRESSES: "${MAIN_WIREGUARD_ADDRESSES}"
             SERVER_COUNTRIES: "${MAIN_VPN_COUNTRIES}"
             SERVER_CITIES: "${MAIN_VPN_CITIES}"
+            # Explicitly clear legacy endpoint variables to allow provider-based selection
+            VPN_ENDPOINT_IP: ""
+            VPN_ENDPOINT_PORT: ""
             PORT_FORWARD_ONLY: "on"
             VPN_PORT_FORWARDING: "on"
-            FIREWALL_VPN_INPUT_PORTS: "10095,8000"
+            FIREWALL_INPUT_PORTS: "10095,8000"
           resources:
             limits:
               truecharts.org/tun: 1
