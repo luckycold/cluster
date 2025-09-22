@@ -47,7 +47,11 @@ spec:
     k8sgateway:
       domains:
       - domain: "${DOMAIN_0}"
+        dnsChallenge:
+          enabled: false
       - domain: "${DOMAIN_1}"
+        dnsChallenge:
+          enabled: false
     defaultUpstreams:
     - "https://1.1.1.1/dns-query"
     bootstrapDns:
