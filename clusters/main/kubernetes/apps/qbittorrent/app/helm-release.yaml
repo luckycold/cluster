@@ -70,7 +70,10 @@ spec:
             SERVER_CITIES: "${MAIN_VPN_CITIES}"
             PORT_FORWARD_ONLY: "on"
             VPN_PORT_FORWARDING: "on"
-            FIREWALL_INPUT_PORTS: "10095,8000"
+            FIREWALL_VPN_INPUT_PORTS: "10095,8000"
+          resources:
+            limits:
+              truecharts.org/tun: 1
         killSwitch: true
     ingress:
       main:
