@@ -46,7 +46,7 @@ data:
             - ^/wl.*$
           subject: []
         - domain:
-            - '*.${DOMAIN_2}'
+            - '*.${DOMAIN_1}'
           domain_regex: []
           networks: []
           policy: bypass
@@ -101,8 +101,8 @@ data:
           subject:
             - group:user
         - domain:
-            - ${DOMAIN_2}
-            - '*.${DOMAIN_2}'
+            - ${DOMAIN_1}
+            - '*.${DOMAIN_1}'
           domain_regex: []
           networks: []
           policy: two_factor
@@ -226,8 +226,8 @@ data:
             pkce_challenge_method: 'S256'
             redirect_uris:
               - 'app.immich:///oauth-callback'
-              - 'https://${DOMAIN_2}/auth/login'
-              - 'https://${DOMAIN_2}/user-settings'
+              - 'https://${DOMAIN_1}/auth/login'
+              - 'https://${DOMAIN_1}/user-settings'
             scopes:
               - 'openid'
               - 'profile'
