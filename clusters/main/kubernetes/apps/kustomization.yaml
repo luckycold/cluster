@@ -38,3 +38,4 @@ resources:
   - truenas/ks.yaml
   - unpackerr/ks.yaml
   - generic-device-plugin/ks.yaml
+  - bw-secrets-manager/ks.yaml
