@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: proxmox
+    namespace: proxmox
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: external-service
+            version: 16.9.1
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: proxmox
+    values:
+        ingress:
+            main:
+                annotations:
+                    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+                    nginx.ingress.kubernetes.io/proxy-ssl-verify: "false"
+                    nginx.ingress.kubernetes.io/upstream-vhost: ${MUSIC_DOMAIN}
+                    nginx.ingress.kubernetes.io/proxy-ssl-name: ${MUSIC_DOMAIN}
+                    nginx.ingress.kubernetes.io/auth-method: 'GET'
+                    nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
+                    nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
+                    nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+                enabled: true
+                ingressClassName: external
+                hosts:
+                    - host: music.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+        release_name: music
+        service:
+            main:
+                enabled: true
+                externalIP: ${MUSIC_DOMAIN}
+                ports:
+                    main:
+                        enabled: true
+                        port: 8095
+                        protocol: http
+                type: ExternalIP
