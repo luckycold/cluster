@@ -19,7 +19,8 @@ spec:
         containers:
             manager:
                 image:
-                    tag: "latest"  # Specify your preferred version
+                    repository: ghcr.io/bitwarden/sm-operator
+                    tag: "1.0.0"
                 resources:
                     limits:
                         cpu: 500m
