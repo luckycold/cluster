@@ -2,6 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: sm-operator-system
 resources:
-  - namespace.yaml
-  - helm-release.yaml
-  - secret.yaml
+    - namespace.yaml
+    - helm-release.yaml
+    - ../../../common/bw-auth-token
