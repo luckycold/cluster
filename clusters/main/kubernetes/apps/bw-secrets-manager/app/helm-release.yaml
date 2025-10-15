@@ -15,7 +15,9 @@ spec:
                 namespace: flux-system
             interval: 15m
     values:
-        # Operator configuration
+        settings:
+          # How often the secrets synchronize in seconds.  Minimum value is 180.
+          bwSecretsManagerRefreshInterval: 300
         containers:
             manager:
                 image:
