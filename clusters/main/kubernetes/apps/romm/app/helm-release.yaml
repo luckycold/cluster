@@ -73,26 +73,29 @@ spec:
                     OIDC_CLIENT_ID: "romm"
                     OIDC_REDIRECT_URI: "https://romm.${DOMAIN_0}/api/oauth/openid"
                     OIDC_SERVER_APPLICATION_URL: "https://auth.${DOMAIN_0}"
-                  envValueFrom:
                     IGDB_CLIENT_ID:
                       secretKeyRef:
-                        name: romm-bitwarden-secrets
+                        expandObjectName: false
                         key: IGDB_CLIENT_ID
+                        name: romm-bitwarden-secrets
                         optional: true
                     IGDB_CLIENT_SECRET:
                       secretKeyRef:
-                        name: romm-bitwarden-secrets
+                        expandObjectName: false
                         key: IGDB_CLIENT_SECRET
-                        optional: true
-                    STEAMGRIDDB_API_KEY:
-                      secretKeyRef:
                         name: romm-bitwarden-secrets
-                        key: STEAMGRIDDB_API_KEY
                         optional: true
                     OIDC_CLIENT_SECRET:
                       secretKeyRef:
-                        name: romm-bitwarden-secrets
+                        expandObjectName: false
                         key: OAUTH_CLIENT_SECRET
+                        name: romm-bitwarden-secrets
+                        optional: true
+                    STEAMGRIDDB_API_KEY:
+                      secretKeyRef:
+                        expandObjectName: false
+                        key: STEAMGRIDDB_API_KEY
+                        name: romm-bitwarden-secrets
                         optional: true
         redis:
             password: ${ROMM_REDIS_PASSWORD}
