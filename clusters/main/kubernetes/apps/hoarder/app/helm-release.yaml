@@ -105,44 +105,48 @@ spec:
                                 - containerPort: 3000
                                   name: main
                             env:
-                                MEILI_ADDR: "{{ .Values.hoarder.MEILI_ADDR }}"
                                 BROWSER_WEB_URL: "{{ .Values.hoarder.BROWSER_WEB_URL }}"
-                                NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
-                                DATA_DIR: "{{ .Values.hoarder.DATA_DIR }}"
-                                HOARDER_VERSION: "{{ .Values.image.tag }}"
                                 CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.hoarder.CRAWLER_VIDEO_DOWNLOAD }}"
-                                OAUTH_CLIENT_ID: "{{ .Values.hoarder.OAUTH_CLIENT_ID }}"
-                                OAUTH_WELLKNOWN_URL: "{{ .Values.hoarder.OAUTH_WELLKNOWN_URL }}"
-                                OAUTH_PROVIDER_NAME: "{{ .Values.hoarder.OAUTH_PROVIDER_NAME }}"
-                                DISABLE_SIGNUPS: "{{ .Values.hoarder.DISABLE_SIGNUPS }}"
+                                DATA_DIR: "{{ .Values.hoarder.DATA_DIR }}"
                                 DISABLE_PASSWORD_AUTH: "{{ .Values.hoarder.DISABLE_PASSWORD_AUTH }}"
-                                OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "{{ .Values.hoarder.OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING }}"
-                                OAUTH_PROVIDER_TYPE: "{{ .Values.hoarder.OAUTH_PROVIDER_TYPE }}"
-                            envValueFrom:
-                                NEXTAUTH_SECRET:
-                                    secretKeyRef:
-                                        name: hoarder-secrets
-                                        key: NEXTAUTH_SECRET
-                                        optional: true
+                                DISABLE_SIGNUPS: "{{ .Values.hoarder.DISABLE_SIGNUPS }}"
+                                HOARDER_VERSION: "{{ .Values.image.tag }}"
+                                MEILI_ADDR: "{{ .Values.hoarder.MEILI_ADDR }}"
                                 MEILI_MASTER_KEY:
                                     secretKeyRef:
-                                        name: hoarder-secrets
+                                        expandObjectName: false
                                         key: MEILI_MASTER_KEY
+                                        name: hoarder-secrets
                                         optional: true
+                                NEXTAUTH_SECRET:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: NEXTAUTH_SECRET
+                                        name: hoarder-secrets
+                                        optional: true
+                                NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
                                 NEXT_PUBLIC_SECRET:
                                     secretKeyRef:
-                                        name: hoarder-secrets
+                                        expandObjectName: false
                                         key: NEXT_PUBLIC_SECRET
-                                        optional: true
-                                OPENAI_API_KEY:
-                                    secretKeyRef:
                                         name: hoarder-secrets
-                                        key: OPENAI_API_KEY
                                         optional: true
+                                OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "{{ .Values.hoarder.OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING }}"
+                                OAUTH_CLIENT_ID: "{{ .Values.hoarder.OAUTH_CLIENT_ID }}"
                                 OAUTH_CLIENT_SECRET:
                                     secretKeyRef:
-                                        name: hoarder-secrets
+                                        expandObjectName: false
                                         key: OAUTH_CLIENT_SECRET
+                                        name: hoarder-secrets
+                                        optional: true
+                                OAUTH_PROVIDER_NAME: "{{ .Values.hoarder.OAUTH_PROVIDER_NAME }}"
+                                OAUTH_PROVIDER_TYPE: "{{ .Values.hoarder.OAUTH_PROVIDER_TYPE }}"
+                                OAUTH_WELLKNOWN_URL: "{{ .Values.hoarder.OAUTH_WELLKNOWN_URL }}"
+                                OPENAI_API_KEY:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: OPENAI_API_KEY
+                                        name: hoarder-secrets
                                         optional: true
                             probes:
                                 liveness:
@@ -192,14 +196,14 @@ spec:
                                 - containerPort: 7700
                                   name: main
                             env:
-                                MEILI_NO_ANALYTICS: "{{ .Values.hoarder.MEILI_NO_ANALYTICS }}"
                                 MEILI_ENV: "{{ .Values.hoarder.MEILI_ENV }}"
-                            envValueFrom:
                                 MEILI_MASTER_KEY:
                                     secretKeyRef:
-                                        name: hoarder-secrets
+                                        expandObjectName: false
                                         key: MEILI_MASTER_KEY
+                                        name: hoarder-secrets
                                         optional: true
+                                MEILI_NO_ANALYTICS: "{{ .Values.hoarder.MEILI_NO_ANALYTICS }}"
                             probes:
                                 liveness:
                                     enabled: true
