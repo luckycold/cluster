@@ -77,25 +77,25 @@ spec:
                       secretKeyRef:
                         expandObjectName: false
                         key: IGDB_CLIENT_ID
-                        name: romm-bitwarden-secrets
+                        name: romm-secrets
                         optional: true
                     IGDB_CLIENT_SECRET:
                       secretKeyRef:
                         expandObjectName: false
                         key: IGDB_CLIENT_SECRET
-                        name: romm-bitwarden-secrets
+                        name: romm-secrets
                         optional: true
                     OIDC_CLIENT_SECRET:
                       secretKeyRef:
                         expandObjectName: false
                         key: OAUTH_CLIENT_SECRET
-                        name: romm-bitwarden-secrets
+                        name: romm-secrets
                         optional: true
                     STEAMGRIDDB_API_KEY:
                       secretKeyRef:
                         expandObjectName: false
                         key: STEAMGRIDDB_API_KEY
-                        name: romm-bitwarden-secrets
+                        name: romm-secrets
                         optional: true
         redis:
             password: ${ROMM_REDIS_PASSWORD}
