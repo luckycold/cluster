@@ -18,41 +18,32 @@ spec:
         TZ: US/Central
         release_name: hoarder
 
-        # Keep hoarder/karakeep environment variables
         hoarder:
             NEXTAUTH_URL: https://h.${DOMAIN_0}
-            NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET}
-            MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY}
-            NEXT_PUBLIC_SECRET: ${HOARDER_NEXT_PUBLIC_SECRET}
             DATA_DIR: "/data"
             MEILI_ADDR: "http://localhost:7700"
             BROWSER_WEB_URL: "http://localhost:9222"
-            OPENAI_API_KEY: ${OPENAI_API_KEY}
             CRAWLER_VIDEO_DOWNLOAD: "true"
-            # OIDC Configuration
             OAUTH_CLIENT_ID: "hoarder"
-            OAUTH_CLIENT_SECRET: ${clients_hoarder_client_secret}
             OAUTH_WELLKNOWN_URL: "https://auth.${DOMAIN_0}/.well-known/openid-configuration"
             OAUTH_PROVIDER_NAME: "Authelia"
-            # Enable OAuth user registration
             DISABLE_SIGNUPS: "false"
             DISABLE_PASSWORD_AUTH: "true"
-            # Allow OAuth account creation and linking
             OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
             MEILI_ENV: "production"
             MEILI_NO_ANALYTICS: "true"
+            OAUTH_PROVIDER_TYPE: "oidc"
 
-        # Use karakeep images and versions
         image:
             repository: ghcr.io/karakeep-app/karakeep
             pullPolicy: IfNotPresent
             tag: "0.27.1"
-            
+
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
             tag: "v1.11.1"
-            
+
         chromeImage:
             repository: gcr.io/zenika-hub/alpine-chrome
             pullPolicy: IfNotPresent
@@ -118,24 +109,41 @@ spec:
                                 BROWSER_WEB_URL: "{{ .Values.hoarder.BROWSER_WEB_URL }}"
                                 NEXTAUTH_URL: "{{ .Values.hoarder.NEXTAUTH_URL }}"
                                 DATA_DIR: "{{ .Values.hoarder.DATA_DIR }}"
-                                OPENAI_API_KEY: "{{ .Values.hoarder.OPENAI_API_KEY }}"
                                 HOARDER_VERSION: "{{ .Values.image.tag }}"
-                                NEXTAUTH_SECRET: "{{ .Values.hoarder.NEXTAUTH_SECRET }}"
-                                MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
-                                NEXT_PUBLIC_SECRET: "{{ .Values.hoarder.NEXT_PUBLIC_SECRET }}"
                                 CRAWLER_VIDEO_DOWNLOAD: "{{ .Values.hoarder.CRAWLER_VIDEO_DOWNLOAD }}"
-                                # OIDC Configuration
                                 OAUTH_CLIENT_ID: "{{ .Values.hoarder.OAUTH_CLIENT_ID }}"
-                                OAUTH_CLIENT_SECRET: "{{ .Values.hoarder.OAUTH_CLIENT_SECRET }}"
                                 OAUTH_WELLKNOWN_URL: "{{ .Values.hoarder.OAUTH_WELLKNOWN_URL }}"
                                 OAUTH_PROVIDER_NAME: "{{ .Values.hoarder.OAUTH_PROVIDER_NAME }}"
-                                # Enable OAuth user registration
                                 DISABLE_SIGNUPS: "{{ .Values.hoarder.DISABLE_SIGNUPS }}"
                                 DISABLE_PASSWORD_AUTH: "{{ .Values.hoarder.DISABLE_PASSWORD_AUTH }}"
-                                # Allow OAuth account creation and linking
                                 OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "{{ .Values.hoarder.OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING }}"
-                                # OAuth provider type and user creation
                                 OAUTH_PROVIDER_TYPE: "{{ .Values.hoarder.OAUTH_PROVIDER_TYPE }}"
+                            envValueFrom:
+                                NEXTAUTH_SECRET:
+                                    secretKeyRef:
+                                        name: hoarder-secrets
+                                        key: NEXTAUTH_SECRET
+                                        optional: true
+                                MEILI_MASTER_KEY:
+                                    secretKeyRef:
+                                        name: hoarder-secrets
+                                        key: MEILI_MASTER_KEY
+                                        optional: true
+                                NEXT_PUBLIC_SECRET:
+                                    secretKeyRef:
+                                        name: hoarder-secrets
+                                        key: NEXT_PUBLIC_SECRET
+                                        optional: true
+                                OPENAI_API_KEY:
+                                    secretKeyRef:
+                                        name: hoarder-secrets
+                                        key: OPENAI_API_KEY
+                                        optional: true
+                                OAUTH_CLIENT_SECRET:
+                                    secretKeyRef:
+                                        name: hoarder-secrets
+                                        key: OAUTH_CLIENT_SECRET
+                                        optional: true
                             probes:
                                 liveness:
                                     enabled: true
@@ -186,7 +194,12 @@ spec:
                             env:
                                 MEILI_NO_ANALYTICS: "{{ .Values.hoarder.MEILI_NO_ANALYTICS }}"
                                 MEILI_ENV: "{{ .Values.hoarder.MEILI_ENV }}"
-                                MEILI_MASTER_KEY: "{{ .Values.hoarder.MEILI_MASTER_KEY }}"
+                            envValueFrom:
+                                MEILI_MASTER_KEY:
+                                    secretKeyRef:
+                                        name: hoarder-secrets
+                                        key: MEILI_MASTER_KEY
+                                        optional: true
                             probes:
                                 liveness:
                                     enabled: true
@@ -201,7 +214,7 @@ spec:
                                     type: tcp
                                     port: 7700
                 replicas: 1
-                
+
         persistence:
             data:
                 enabled: true
