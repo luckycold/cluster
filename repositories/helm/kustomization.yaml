@@ -12,5 +12,6 @@ resources:
   - kustomization.yaml
   - prometheus-community.yaml
   - spegel.yaml
+  - stakater.yaml
   - truecharts.yaml
 # more goes here!

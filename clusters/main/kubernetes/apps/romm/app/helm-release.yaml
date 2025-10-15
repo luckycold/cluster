@@ -59,6 +59,9 @@ spec:
         release_name: romm
         workload:
           main:
+            podAnnotations:
+                reloader.stakater.com/auto: "true"
+                reloader.stakater.com/rollout-strategy: "restart"
             podSpec:
               containers:
                 main:
