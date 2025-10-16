@@ -39,9 +39,8 @@ spec:
               containers:
                 main:
                   env:
-                    # Update the following secrets with your own values
-                    AUTHELIA_SESSION_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                    AUTHELIA_SESSION_SECRET: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     AUTHELIA_STORAGE_ENCRYPTION_KEY: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
                     X_AUTHELIA_CONFIG_FILTERS: template
         cnpg:
