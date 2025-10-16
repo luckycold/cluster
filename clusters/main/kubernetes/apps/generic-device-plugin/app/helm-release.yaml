@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: generic-device-plugin
-      version: "2.10.0" # Specify a version or remove for latest
+      version: "2.10.1" # Specify a version or remove for latest
       sourceRef:
         kind: HelmRepository
         name: truecharts
