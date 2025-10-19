@@ -101,6 +101,15 @@ spec:
                     containers:
                         main:
                             primary: true
+                            command:
+                                - /bin/sh
+                                - -c
+                            args:
+                                - |
+                                    if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
+                                        chmod 600 /etc/gitlab/ssh_host_* || exit 1
+                                    fi
+                                    exec /assets/wrapper
                             ports:
                                 - containerPort: 80
                                   name: http
