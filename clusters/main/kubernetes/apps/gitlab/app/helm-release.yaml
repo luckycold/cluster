@@ -99,12 +99,6 @@ spec:
                                         key: GITLAB_ROOT_PASSWORD
                                         name: gitlab-secrets
                                         optional: false
-                                AUTHELIA_CLIENT_ID:
-                                    secretKeyRef:
-                                        expandObjectName: false
-                                        key: AUTHELIA_CLIENT_ID
-                                        name: gitlab-secrets
-                                        optional: true
                                 AUTHELIA_CLIENT_SECRET:
                                     secretKeyRef:
                                         expandObjectName: false
@@ -117,7 +111,7 @@ spec:
                                     nginx['listen_https'] = false
                                     gitlab_rails['initial_root_password'] = ENV['GITLAB_ROOT_PASSWORD']
                                     gitlab_rails['gitlab_shell_ssh_port'] = 22
-                                    if ENV['AUTHELIA_CLIENT_ID'] && ENV['AUTHELIA_CLIENT_SECRET']
+                                    if ENV['AUTHELIA_CLIENT_SECRET']
                                         gitlab_rails['omniauth_enabled'] = true
                                         gitlab_rails['omniauth_allow_single_sign_on'] = ['openid_connect']
                                         gitlab_rails['omniauth_block_auto_created_users'] = false
@@ -135,7 +129,7 @@ spec:
                                                     uid_field: 'preferred_username',
                                                     client_auth_method: 'basic',
                                                     client_options: {
-                                                        identifier: ENV['AUTHELIA_CLIENT_ID'],
+                                                        identifier: 'gitlab',
                                                         secret: ENV['AUTHELIA_CLIENT_SECRET'],
                                                         redirect_uri: 'https://git.${DOMAIN_0}/users/auth/openid_connect/callback'
                                                     }
