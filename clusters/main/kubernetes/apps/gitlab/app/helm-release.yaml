@@ -106,9 +106,16 @@ spec:
                                 - -c
                             args:
                                 - |
-                                    if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
-                                        chmod 600 /etc/gitlab/ssh_host_* || exit 1
-                                    fi
+                                    fix_keys() {
+                                        if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
+                                            chmod 600 /etc/gitlab/ssh_host_* || return 1
+                                        fi
+                                    }
+                                    fix_keys || true
+                                    (
+                                        sleep 120
+                                        fix_keys && gitlab-ctl restart sshd >/dev/null 2>&1 || true
+                                    ) &
                                     exec /assets/wrapper
                             ports:
                                 - containerPort: 80
