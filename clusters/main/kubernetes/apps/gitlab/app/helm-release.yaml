@@ -102,7 +102,7 @@ spec:
                                 AUTHELIA_CLIENT_SECRET:
                                     secretKeyRef:
                                         expandObjectName: false
-                                        key: AUTHELIA_CLIENT_SECRET
+                                        key: clients_gitlab_client_secret
                                         name: gitlab-secrets
                                         optional: true
                                 GITLAB_OMNIBUS_CONFIG: |
