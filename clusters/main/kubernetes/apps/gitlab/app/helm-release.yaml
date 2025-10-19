@@ -178,13 +178,6 @@ spec:
                                             }
                                         ]
                                     end
-                                    %w[rsa ecdsa ed25519].each do |key_type|
-                                        file "/etc/gitlab/ssh_host_#{key_type}_key" do
-                                            mode '0600'
-                                            sensitive true
-                                            only_if { ::File.exist?("/etc/gitlab/ssh_host_#{key_type}_key") }
-                                        end
-                                    end
                             resources:
                                 limits:
                                     cpu: 4000m
