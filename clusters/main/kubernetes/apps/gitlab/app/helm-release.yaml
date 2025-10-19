@@ -43,6 +43,7 @@ spec:
 
         service:
             main:
+                enabled: true
                 ports:
                     main:
                         port: 80
@@ -52,7 +53,8 @@ spec:
                 type: LoadBalancer
                 externalTrafficPolicy: Local
                 ports:
-                    main:
+                    ssh:
+                        enabled: true
                         port: 22
                         targetPort: 22
 
