@@ -117,6 +117,17 @@ spec:
                                         fix_keys && gitlab-ctl restart sshd >/dev/null 2>&1 || true
                                     ) &
                                     exec /assets/wrapper
+                            lifecycle:
+                                postStart:
+                                    exec:
+                                        command:
+                                            - /bin/sh
+                                            - -c
+                                            - |
+                                                if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
+                                                    chmod 600 /etc/gitlab/ssh_host_* || true
+                                                    gitlab-ctl restart sshd >/dev/null 2>&1 || true
+                                                fi
                             ports:
                                 - containerPort: 80
                                   name: http
