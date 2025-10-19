@@ -198,6 +198,22 @@ data:
               - 'code'
             grant_types:
               - 'authorization_code'
+          - client_id: 'gitlab'
+            client_name: 'GitLab'
+            client_secret: {{ secret "/config/secrets/clients_gitlab_client_secret" }}
+            public: false
+            authorization_policy: 'matrix'
+            token_endpoint_auth_method: 'client_secret_basic'
+            redirect_uris:
+              - 'https://git.${DOMAIN_0}/users/auth/openid_connect/callback'
+            scopes:
+              - 'openid'
+              - 'profile'
+              - 'email'
+            response_types:
+              - 'code'
+            grant_types:
+              - 'authorization_code'
           - client_id: 'audiobookshelf'
             client_name: 'Audiobookshelf'
             client_secret: {{ secret "/config/secrets/clients_audiobookshelf_client_secret" }}
