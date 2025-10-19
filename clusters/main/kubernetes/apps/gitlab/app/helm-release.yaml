@@ -88,6 +88,12 @@ spec:
                                 - containerPort: 22
                                   name: ssh
                             env:
+                                UID: "0"
+                                USER_ID: "0"
+                                PUID: "0"
+                                GID: "0"
+                                GROUP_ID: "0"
+                                PGID: "0"
                                 GITLAB_ROOT_PASSWORD:
                                     secretKeyRef:
                                         expandObjectName: false
@@ -146,4 +152,3 @@ spec:
                       src:
                           enabled: true
                       type: restic
-
