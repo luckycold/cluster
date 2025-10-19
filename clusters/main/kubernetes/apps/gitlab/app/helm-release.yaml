@@ -84,6 +84,20 @@ spec:
                     reloader.stakater.com/auto: "true"
                     reloader.stakater.com/rollout-strategy: "restart"
                 podSpec:
+                    initContainers:
+                        fix-ssh-hostkey-perms:
+                            image: busybox:1.37
+                            imagePullPolicy: IfNotPresent
+                            command:
+                                - sh
+                                - -c
+                                - |
+                                    if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
+                                        chmod 600 /etc/gitlab/ssh_host_* || exit 1
+                                    fi
+                            volumeMounts:
+                                - mountPath: /etc/gitlab
+                                  name: config
                     containers:
                         main:
                             primary: true
