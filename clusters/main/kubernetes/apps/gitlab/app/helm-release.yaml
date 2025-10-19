@@ -44,8 +44,7 @@ spec:
         service:
             main:
                 ports:
-                    http:
-                        enabled: true
+                    main:
                         port: 80
                         targetPort: 80
             ssh:
@@ -53,7 +52,7 @@ spec:
                 type: LoadBalancer
                 externalTrafficPolicy: Local
                 ports:
-                    ssh:
+                    main:
                         port: 22
                         targetPort: 22
 
@@ -62,7 +61,7 @@ spec:
                 enabled: true
                 ingressClassName: external
                 hosts:
-                    - host: git.${DOMAIN_0}
+                    - host: gitlab.${DOMAIN_0}
                       paths:
                           - path: /
                 integrations:
@@ -94,7 +93,7 @@ spec:
                                         name: gitlab-secrets
                                         optional: false
                                 GITLAB_OMNIBUS_CONFIG: |
-                                    external_url 'https://git.${DOMAIN_0}'
+                                    external_url 'https://gitlab.${DOMAIN_0}'
                                     nginx['listen_port'] = 80
                                     nginx['listen_https'] = false
                                     gitlab_rails['initial_root_password'] = ENV['GITLAB_ROOT_PASSWORD']
@@ -145,3 +144,4 @@ spec:
                       src:
                           enabled: true
                       type: restic
+
