@@ -99,7 +99,6 @@ spec:
                                         key: GITLAB_ROOT_PASSWORD
                                         name: gitlab-secrets
                                         optional: false
-                                AUTHELIA_CLIENT_ID: gitlab
                                 AUTHELIA_CLIENT_SECRET:
                                     secretKeyRef:
                                         expandObjectName: false
