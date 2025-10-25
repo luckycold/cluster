@@ -20,6 +20,7 @@ spec:
             credentials:
                 initialAdminUser: ${GENERIC_USER}
             general:
+                accessIP: ${NGINX_EXTERNAL_IP}
                 default_phone_region: US
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
@@ -39,7 +40,7 @@ spec:
                     nginx.ingress.kubernetes.io/configuration-snippet: |
                         rewrite ^/\.well-known/(card|cal)dav$ /remote.php/dav/ permanent;
                 hosts:
-                    - host: nextcloud.${DOMAIN_0}
+                    - host: cloud.${DOMAIN_0}
                       paths:
                         - path: /
                 integrations:
