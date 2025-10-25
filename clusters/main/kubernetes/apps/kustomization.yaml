@@ -5,6 +5,7 @@ resources:
   - alist/ks.yaml
   - audiobookshelf/ks.yaml
   - authelia/ks.yaml
+  - apprise/ks.yaml
   - changedetection-io/ks.yaml
   - cloudflared/ks.yaml
   - flaresolverr/ks.yaml
