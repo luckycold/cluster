@@ -34,13 +34,6 @@ spec:
             pullPolicy: IfNotPresent
             tag: latest
 
-        securityContext:
-            container:
-                readOnlyRootFilesystem: false
-                runAsNonRoot: false
-                runAsUser: 0
-                runAsGroup: 0
-
         service:
             main:
                 ports:
@@ -74,6 +67,9 @@ spec:
                     reloader.stakater.com/auto: "true"
                     reloader.stakater.com/rollout-strategy: "restart"
                 podSpec:
+                    securityContext:
+                        fsGroup: 0
+                        fsGroupChangePolicy: "OnRootMismatch"
                     containers:
                         main:
                             primary: true
@@ -83,6 +79,21 @@ spec:
                             env:
                                 PUID: "1000"
                                 PGID: "1000"
+                            securityContext:
+                                allowPrivilegeEscalation: false
+                                readOnlyRootFilesystem: false
+                                runAsNonRoot: false
+                                runAsUser: 0
+                                runAsGroup: 0
+                                capabilities:
+                                    drop:
+                                        - ALL
+                                    add:
+                                        - CHOWN
+                                        - SETUID
+                                        - SETGID
+                                        - FOWNER
+                                        - DAC_OVERRIDE
         persistence:
             config:
                 enabled: true
