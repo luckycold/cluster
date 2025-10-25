@@ -14,47 +14,6 @@ spec:
                 name: truecharts
                 namespace: flux-system
     releaseName: gitlab
-    postRenderers:
-        - kustomize:
-            patches:
-                - target:
-                      kind: Deployment
-                      name: gitlab-app-template
-                  patch: |
-                      apiVersion: apps/v1
-                      kind: Deployment
-                      metadata:
-                          name: gitlab-app-template
-                      spec:
-                          template:
-                              spec:
-                                  initContainers:
-                                      - name: fix-ssh-hostkey-perms
-                                        image: busybox:1.37
-                                        imagePullPolicy: IfNotPresent
-                                        command:
-                                            - /bin/sh
-                                            - -c
-                                            - |
-                                                if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
-                                                    chmod 600 /etc/gitlab/ssh_host_* || exit 1
-                                                fi
-                                        volumeMounts:
-                                            - mountPath: /etc/gitlab
-                                              name: config
-                                  containers:
-                                      - name: gitlab-app-template
-                                        lifecycle:
-                                            postStart:
-                                                exec:
-                                                    command:
-                                                        - /bin/sh
-                                                        - -c
-                                                        - |
-                                                            if ls /etc/gitlab/ssh_host_* >/dev/null 2>&1; then
-                                                                chmod 600 /etc/gitlab/ssh_host_* || true
-                                                                gitlab-ctl restart sshd >/dev/null 2>&1 || true
-                                                            fi
     values:
         TZ: US/Central
         release_name: gitlab
@@ -152,6 +111,18 @@ spec:
                                     nginx['listen_https'] = false
                                     gitlab_rails['initial_root_password'] = ENV['GITLAB_ROOT_PASSWORD']
                                     gitlab_rails['gitlab_shell_ssh_port'] = 22
+                                    [
+                                        'ssh_host_rsa_key',
+                                        'ssh_host_ecdsa_key',
+                                        'ssh_host_ed25519_key'
+                                    ].each do |key|
+                                        file "/etc/gitlab/#{key}" do
+                                            owner 'root'
+                                            group 'root'
+                                            mode '0600'
+                                            only_if { ::File.exist?("/etc/gitlab/#{key}") }
+                                        end
+                                    end
                                     if ENV['AUTHELIA_CLIENT_SECRET']
                                         gitlab_rails['omniauth_enabled'] = true
                                         gitlab_rails['omniauth_allow_single_sign_on'] = ['openid_connect']
