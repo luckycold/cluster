@@ -4,7 +4,7 @@ metadata:
     name: jellyfin-config-proton
     namespace: jellyfin
 spec:
-    sourcePVC: config
+    sourcePVC: jellyfin-config
     trigger:
         # Daily backup at 04:30 cluster time; adjust as needed
         schedule: "30 4 * * *"
