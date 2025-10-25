@@ -4,4 +4,3 @@ namespace: apprise
 resources:
     - namespace.yaml
     - helm-release.yaml
-    - ../../../common/bw-auth-token

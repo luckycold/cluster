@@ -18,8 +18,19 @@ spec:
         TZ: US/Central
         release_name: apprise
 
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+
         image:
-            repository: lscr.io/linuxserver/apprise-api
+            repository: docker.io/caronc/apprise
             pullPolicy: IfNotPresent
             tag: latest
 
