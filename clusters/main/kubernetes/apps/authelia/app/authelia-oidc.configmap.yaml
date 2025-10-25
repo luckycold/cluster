@@ -152,7 +152,7 @@ data:
               - "name"
               - "groups"
         authorization_policies:
-          matrix:
+          2fa:
             default_policy: 'deny'
             rules:
               - policy: 'two_factor'
@@ -166,7 +166,7 @@ data:
             client_name: 'Matrix Server'
             client_secret: {{ secret "/config/secrets/clients_matrix_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -183,7 +183,7 @@ data:
             client_name: 'Generic Test Client'
             client_secret: {{ secret "/config/secrets/clients_generic_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -202,7 +202,7 @@ data:
             client_name: 'GitLab'
             client_secret: {{ secret "/config/secrets/clients_gitlab_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             token_endpoint_auth_method: 'client_secret_basic'
             redirect_uris:
               - 'https://git.${DOMAIN_0}/users/auth/openid_connect/callback'
@@ -218,7 +218,7 @@ data:
             client_name: 'Audiobookshelf'
             client_secret: {{ secret "/config/secrets/clients_audiobookshelf_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -237,7 +237,7 @@ data:
             client_name: 'Immich'
             client_secret: {{ secret "/config/secrets/clients_immich_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -256,7 +256,7 @@ data:
             client_name: 'RomM'
             client_secret: {{ secret "/config/secrets/clients_romm_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             grant_types:
               - authorization_code
             redirect_uris:
@@ -273,7 +273,7 @@ data:
             client_name: 'Mealie'
             client_secret: {{ secret "/config/secrets/clients_mealie_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             redirect_uris:
               - 'https://m.${DOMAIN_0}/login'
             scopes:
@@ -292,7 +292,7 @@ data:
             client_name: 'Hoarder'
             client_secret: {{ secret "/config/secrets/clients_hoarder_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             grant_types:
               - 'authorization_code'
             response_types:
@@ -310,7 +310,7 @@ data:
             client_name: 'AList'
             client_secret: {{ secret "/config/secrets/clients_alist_client_secret" }}
             public: false
-            authorization_policy: 'matrix'
+            authorization_policy: '2fa'
             grant_types:
               - 'authorization_code'
             response_types:
@@ -339,3 +339,10 @@ data:
               - 'email'
               - 'groups'
             claims_policy: 'with_email'
+          - client_id: nextcloud
+            client_name: Nextcloud
+            client_secret: {{ secret "/config/secrets/clients_nextcloud_client_secret" }}
+            public: false
+            authorization_policy: two_factor
+            redirect_uris:
+              - 'https://cloud.${DOMAIN_0}/apps/user_oidc/code'
