@@ -19,6 +19,7 @@ resources:
   - maintainerr/ks.yaml
   - mealie/ks.yaml
   - minecraft/ks.yaml
+  - nextcloud/ks.yaml
   - notifiarr/ks.yaml
   - ntfy/ks.yaml
   - overseerr/ks.yaml
