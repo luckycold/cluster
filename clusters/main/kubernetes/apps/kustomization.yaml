@@ -19,8 +19,6 @@ resources:
   - lldap/ks.yaml
   - maintainerr/ks.yaml
   - mealie/ks.yaml
-  - ../media/ks.yaml
-  - ../media/readarr/ks.yaml
   - minecraft/ks.yaml
   - nextcloud/ks.yaml
   - notifiarr/ks.yaml
