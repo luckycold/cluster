@@ -6,3 +6,4 @@ resources:
   - speakarr/ks.yaml
   - lidarr/ks.yaml
   - radarr/ks.yaml
+  - sonarr/ks.yaml

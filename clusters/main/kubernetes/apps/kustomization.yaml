@@ -32,7 +32,6 @@ resources:
   - romm/ks.yaml
   - rss-bridge/ks.yaml
   - rsshub/ks.yaml
-  - sonarr/ks.yaml
   - tautulli/ks.yaml
   - truenas/ks.yaml
   - unpackerr/ks.yaml
