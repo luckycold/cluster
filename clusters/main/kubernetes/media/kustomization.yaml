@@ -4,3 +4,4 @@ resources:
   - ks.yaml
   - readarr/ks.yaml
   - speakarr/ks.yaml
+  - lidarr/ks.yaml

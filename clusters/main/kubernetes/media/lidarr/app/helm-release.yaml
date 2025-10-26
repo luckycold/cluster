@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: lidarr
-    namespace: lidarr
+    namespace: media
 spec:
     interval: 15m
     chart:
@@ -51,6 +51,21 @@ spec:
                 prometheusRule:
                     enabled: false
         persistence:
+            config:
+                enabled: true
+                type: pvc
+                existingClaim: lidarr-config
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
+                volsync:
+                    - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                          enabled: true
+                      src:
+                          enabled: true
+                      type: restic
             media:
                 enabled: true
                 type: nfs
