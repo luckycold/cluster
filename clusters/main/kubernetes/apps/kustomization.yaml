@@ -29,7 +29,6 @@ resources:
   - proxmox/ks.yaml
   - qbitmanage/ks.yaml
   - qbittorrent/ks.yaml
-  - radarr/ks.yaml
   - romm/ks.yaml
   - rss-bridge/ks.yaml
   - rsshub/ks.yaml
