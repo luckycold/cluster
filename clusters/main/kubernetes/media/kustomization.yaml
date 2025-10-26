@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ks.yaml
   - readarr/ks.yaml
+  - speakarr/ks.yaml

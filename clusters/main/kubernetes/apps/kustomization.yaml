@@ -35,7 +35,6 @@ resources:
   - rss-bridge/ks.yaml
   - rsshub/ks.yaml
   - sonarr/ks.yaml
-  - speakarr/ks.yaml
   - tautulli/ks.yaml
   - truenas/ks.yaml
   - unpackerr/ks.yaml
