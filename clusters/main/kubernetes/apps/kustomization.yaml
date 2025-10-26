@@ -25,7 +25,6 @@ resources:
   - overseerr/ks.yaml
   - pgadmin/ks.yaml
   - plex-auto-languages/ks.yaml
-  - prowlarr/ks.yaml
   - proxmox/ks.yaml
   - qbitmanage/ks.yaml
   - qbittorrent/ks.yaml

@@ -17,3 +17,42 @@ Match the existing Conventional Commit style (`fix:`, `chore(flux):`, etc.) and 
 
 ## Secrets & Configuration
 Store the Age private key locally as `age.agekey`; never commit raw secrets. Files covered by `.sops.yaml` must remain encrypted—run `sops updatekeys` whenever recipients change. For new services, create separate `.secret.yaml` manifests instead of embedding secrets in `helm-release.yaml`, and reference the chart value that consumes them.
+
+## Media Namespace Migration Playbook
+Use this checklist when relocating “arr” workloads (or any HelmRelease) into the shared `media` namespace:
+
+1. **Pre-work (cluster state)**
+   - `flux suspend hr <app> -n <legacy-ns>` to stop Flux from racing the move.
+   - `kubectl scale deployment <app> -n <legacy-ns> --replicas=0` so the PVC can be detached safely.
+   - Remove ingress conflicts: `kubectl delete ingress <app> -n <legacy-ns>` (or equivalent Traefik routes).
+
+2. **Clone persistent data**
+   - Clone the Longhorn volume that backs `<app>-config` and create a PVC in `media` with the same claim name. (Namespace must already exist—apply `clusters/main/kubernetes/media/app` once per cluster.)
+   - Verify with `kubectl get pvc <app>-config -n media` before touching Git.
+
+3. **Git changes**
+   - `git mv clusters/main/kubernetes/apps/<app> clusters/main/kubernetes/media/<app>`.
+   - Update `helm-release.yaml`:
+     - Set `metadata.namespace: media`.
+     - Add `persistence.config.existingClaim: <app>-config` and keep the existing Volsync block.
+   - Drop the per-app `namespace.yaml` from `app/kustomization.yaml`.
+   - Fix Flux wiring: update `<app>/ks.yaml` path, add `media/<app>/ks.yaml` to `media/kustomization.yaml`, and remove `<app>/ks.yaml` from `apps/kustomization.yaml`.
+   - Run `kustomize build clusters/main/kubernetes` before committing.
+
+4. **Reconcile**
+   - Commit (`chore(media): relocate <app> to shared namespace`), push, then:
+     - `flux reconcile source git cluster`
+     - `flux reconcile ks media`
+     - `flux reconcile ks <app>`
+   - Confirm: `flux get helmreleases -n media`, `kubectl get pods -n media -l app.kubernetes.io/instance=<app>`, and `kubectl exec … -- ls /config`.
+
+5. **Cleanup**
+   - Delete the legacy namespace once satisfied: `kubectl delete namespace <legacy-ns>`.
+   - Re-enable chart-managed ingress if a manual one was applied during debugging.
+
+### Gotchas
+- **Namespace prerequisites:** the shared `media` namespace must exist *before* Flux reconciles a moved app (`kubectl apply -k clusters/main/kubernetes/media/app`).
+- **Ingress conflicts:** remove the old ingress or Flux will fail validation when the hostname is already claimed.
+- **PVC binding:** for statically reattached Longhorn volumes, clear the PV’s `claimRef` if needed before recreating the PVC; otherwise the new claim stays Pending.
+- **Avoid manual HelmRelease apply:** let Flux create the release from Git so `${…}` placeholders resolve correctly.
+- **Don’t forget suspension:** if the legacy HelmRelease isn’t suspended, Flux may immediately recreate resources in the old namespace while you migrate.
