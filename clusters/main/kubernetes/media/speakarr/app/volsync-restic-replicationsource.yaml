@@ -1,0 +1,20 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+    name: speakarr-readarr-config-minio
+    namespace: media
+spec:
+    sourcePVC: speakarr-readarr-config
+    trigger:
+        schedule: "30 4 * * *"
+    restic:
+        repository: speakarr-readarr-config-volsync-minio
+        copyMethod: Snapshot
+        cacheCapacity: 2Gi
+        pruneIntervalDays: 7
+        retain:
+            daily: 7
+            weekly: 4
+            monthly: 3
+            yearly: 1
+        moverSecurityContext: {}
