@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: notifiarr
-    namespace: notifiarr
+    namespace: media
 spec:
     interval: 15m
     chart:
@@ -26,24 +26,6 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
-        persistence:
-            config:
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: true
-                      type: restic
-            media:
-                enabled: true
-                mountPath: /data
-                path: /mnt/Media
-                readOnly: false
-                server: ${NAS_DOMAIN}
-                type: nfs
-        release_name: notifiarr
         ingress:
             main:
                 enabled: true
@@ -51,7 +33,7 @@ spec:
                 hosts:
                     - host: notifiarr.${DOMAIN_0}
                       paths:
-                        - path: /
+                          - path: /
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
@@ -63,5 +45,29 @@ spec:
                         enabled: false
                         entrypoints:
                             - websecure
+        persistence:
+            config:
+                enabled: true
+                type: pvc
+                existingClaim: notifiarr-config
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                          enabled: true
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                          enabled: true
+                      type: restic
+            media:
+                enabled: true
+                type: nfs
+                mountPath: /data
+                path: /mnt/Media
+                readOnly: false
+                server: ${NAS_DOMAIN}
+        release_name: notifiarr
         notifiarr:
             apikey: ${NOTIFIARR_API_KEY}

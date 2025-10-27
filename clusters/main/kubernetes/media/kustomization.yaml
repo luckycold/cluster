@@ -2,15 +2,20 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ks.yaml
-  - jellyfin/ks.yaml
-  - jelly-plex/ks.yaml
-  - readarr/ks.yaml
-  - speakarr/ks.yaml
-  - lidarr/ks.yaml
-  - radarr/ks.yaml
-  - sonarr/ks.yaml
-  - prowlarr/ks.yaml
-  - qbittorrent/ks.yaml
   - generic-device-plugin/ks.yaml
+  - jelly-plex/ks.yaml
+  - jellyfin/ks.yaml
+  - lidarr/ks.yaml
   - maintainerr/ks.yaml
+  - notifiarr/ks.yaml
   - overseerr/ks.yaml
+  - plex-auto-languages/ks.yaml
+  - prowlarr/ks.yaml
+  - qbitmanage/ks.yaml
+  - qbittorrent/ks.yaml
+  - radarr/ks.yaml
+  - readarr/ks.yaml
+  - sonarr/ks.yaml
+  - speakarr/ks.yaml
+  - tautulli/ks.yaml
+  - unpackerr/ks.yaml

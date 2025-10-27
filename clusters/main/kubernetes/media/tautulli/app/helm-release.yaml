@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: tautulli
-    namespace: tautulli
+    namespace: media
 spec:
     interval: 15m
     chart:
@@ -33,7 +33,7 @@ spec:
                 hosts:
                     - host: tautulli.${DOMAIN_0}
                       paths:
-                        - path: /
+                          - path: /
                 integrations:
                     certManager:
                         certificateIssuer: domain-0-le-prod
@@ -47,12 +47,18 @@ spec:
                             - websecure
         persistence:
             config:
+                enabled: true
+                type: pvc
+                existingClaim: tautulli-config
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
-                        enabled: true
+                          enabled: true
                       name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
-                        enabled: true
+                          enabled: true
                       type: restic
         release_name: tautulli

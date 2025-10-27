@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: qbitmanage
-    namespace: qbitmanage
+    namespace: media
 spec:
     interval: 15m
     chart:
@@ -31,20 +31,20 @@ spec:
                 autoPermissions:
                     enabled: false
                 enabled: true
-                mountPath: /config
-                path: /mnt/Apps/config/qbitmanage
-                readOnly: false
-                server: ${NAS_DOMAIN}
                 type: nfs
+                server: ${NAS_DOMAIN}
+                path: /mnt/Apps/config/qbitmanage
+                mountPath: /config
+                readOnly: false
             data:
                 autoPermissions:
                     enabled: false
                 enabled: true
-                mountPath: /data
-                path: /mnt/Media
-                readOnly: false
-                server: ${NAS_DOMAIN}
                 type: nfs
+                server: ${NAS_DOMAIN}
+                path: /mnt/Media
+                mountPath: /data
+                readOnly: false
         release_name: qbitmanage
         workload:
             main:
