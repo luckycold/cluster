@@ -9,3 +9,4 @@ resources:
   - sonarr/ks.yaml
   - prowlarr/ks.yaml
   - qbittorrent/ks.yaml
+  - generic-device-plugin/ks.yaml
