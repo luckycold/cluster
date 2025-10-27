@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: jellyfin
-    namespace: jellyfin
+    namespace: media
 spec:
     interval: 15m
     chart:
@@ -53,13 +53,19 @@ spec:
                 medium: Memory
                 type: emptyDir
             config:
+                enabled: true
+                type: pvc
+                existingClaim: jellyfin-config
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
-                        enabled: true
+                          enabled: true
                       name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
-                        enabled: true
+                          enabled: true
                       type: restic
             transcode:
                 enabled: true

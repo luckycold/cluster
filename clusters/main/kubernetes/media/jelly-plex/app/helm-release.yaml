@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: jelly-plex
-    namespace: jelly-plex
+    namespace: media
 spec:
     interval: 15m
     chart:
@@ -40,7 +40,7 @@ spec:
                         main:
                             env:
                                 DRYRUN: "False"
-                                JELLYFIN_BASEURL: http://jellyfin.jellyfin.svc.cluster.local:8096
+                                JELLYFIN_BASEURL: http://jellyfin.media.svc.cluster.local:8096
                                 JELLYFIN_TOKEN: ${JELLYFIN_TOKEN}
                                 PLEX_BASEURL: http://tr.lan.1al.cc:32400
                                 PLEX_TOKEN: ${PLEX_TOKEN}

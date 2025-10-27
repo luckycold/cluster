@@ -12,8 +12,6 @@ resources:
   - freshrss/ks.yaml
   - gitlab/ks.yaml
   - hoarder/ks.yaml
-  - jelly-plex/ks.yaml
-  - jellyfin/ks.yaml
   - kavita/ks.yaml
   - lldap/ks.yaml
   - mealie/ks.yaml
