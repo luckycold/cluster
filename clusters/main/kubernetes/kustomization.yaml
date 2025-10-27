@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - apps
   - media
+  - external-apps
   - core
   - flux-entry.yaml
   - flux-system
