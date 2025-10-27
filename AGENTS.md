@@ -53,6 +53,9 @@ Use this checklist when relocating “arr” workloads (or any HelmRelease) into
 ### Gotchas
 - **Namespace prerequisites:** the shared `media` namespace must exist *before* Flux reconciles a moved app (`kubectl apply -k clusters/main/kubernetes/media/app`).
 - **Ingress conflicts:** remove the old ingress or Flux will fail validation when the hostname is already claimed.
+- **Nginx admission cache:** if Flux still reports `host "<fqdn>" is already defined`, delete the HelmRelease and let Flux recreate it, or recycle the nginx ingress controllers (`kubectl scale deploy/nginx-{internal,external}-controller -n nginx --replicas=0 && ... --replicas=1`) to flush the webhook cache. Re-run `flux reconcile ks <app>` afterwards.
+- **Ingress webhook recreation:** deleting the HelmRelease may drop the validating webhook; re-run the nginx Helm release (`flux reconcile helmrelease nginx-internal -n nginx`) to restore it once workloads are healthy.
 - **PVC binding:** for statically reattached Longhorn volumes, clear the PV’s `claimRef` if needed before recreating the PVC; otherwise the new claim stays Pending.
 - **Avoid manual HelmRelease apply:** let Flux create the release from Git so `${…}` placeholders resolve correctly.
 - **Don’t forget suspension:** if the legacy HelmRelease isn’t suspended, Flux may immediately recreate resources in the old namespace while you migrate.
+- **LoadBalancer IP drift:** MetalLB may hand out a new IP after reconciliation; update DNS or client configs (e.g., Jellyfin UI) if the VIP changes.
