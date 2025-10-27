@@ -21,7 +21,6 @@ resources:
   - nextcloud/ks.yaml
   - notifiarr/ks.yaml
   - ntfy/ks.yaml
-  - overseerr/ks.yaml
   - pgadmin/ks.yaml
   - plex-auto-languages/ks.yaml
   - qbitmanage/ks.yaml

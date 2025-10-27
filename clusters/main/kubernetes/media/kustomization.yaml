@@ -11,3 +11,4 @@ resources:
   - qbittorrent/ks.yaml
   - generic-device-plugin/ks.yaml
   - maintainerr/ks.yaml
+  - overseerr/ks.yaml
