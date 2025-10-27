@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
     name: maintainerr
-    namespace: maintainerr
+    namespace: media
 spec:
     interval: 15m
     timeout: 15m
@@ -58,12 +58,18 @@ spec:
                             - websecure
         persistence:
             data:
+                enabled: true
+                type: pvc
+                existingClaim: maintainerr-data
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_OLD_NAME}
                       dest:
-                        enabled: true
+                          enabled: true
                       name: ${VOLSYNC_BACKUP_OLD_NAME}
                       src:
-                        enabled: true
+                          enabled: true
                       type: restic
         release_name: maintainerr

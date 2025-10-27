@@ -16,7 +16,6 @@ resources:
   - jellyfin/ks.yaml
   - kavita/ks.yaml
   - lldap/ks.yaml
-  - maintainerr/ks.yaml
   - mealie/ks.yaml
   - minecraft/ks.yaml
   - nextcloud/ks.yaml
