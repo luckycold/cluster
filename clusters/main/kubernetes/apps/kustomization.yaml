@@ -26,7 +26,6 @@ resources:
   - pgadmin/ks.yaml
   - plex-auto-languages/ks.yaml
   - qbitmanage/ks.yaml
-  - qbittorrent/ks.yaml
   - romm/ks.yaml
   - rss-bridge/ks.yaml
   - rsshub/ks.yaml
