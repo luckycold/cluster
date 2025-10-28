@@ -86,7 +86,7 @@ spec:
                 main:
                   envFrom:
                     - secretRef:
-                        name: media-secrets
+                        name: arr-api-keys
                   env:
                     # External | Basic | Forms
                     RADARR__AUTH__METHOD: "External"
@@ -94,4 +94,4 @@ spec:
                       secretKeyRef:
                         expandObjectName: false
                         key: RADARR_API_KEY
-                        name: media-secrets
+                        name: arr-api-keys
