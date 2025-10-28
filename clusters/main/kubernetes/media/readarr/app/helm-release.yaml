@@ -72,7 +72,7 @@ spec:
                 main:
                   envFrom:
                     - secretRef:
-                        name: arr-api-keys
+                        name: media-secrets
                   env:
                     # External | Basic | Forms
                     READARR__AUTH__METHOD: "External"
@@ -80,4 +80,4 @@ spec:
                       secretKeyRef:
                         expandObjectName: false
                         key: READARR_API_KEY
-                        name: arr-api-keys
+                        name: media-secrets
