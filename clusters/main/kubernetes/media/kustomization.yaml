@@ -1,8 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: media
 resources:
   - namespace.yaml
-  - media-secrets
+  - secrets.yaml
+  - ../common/bw-auth-token
   - ks.yaml
   - generic-device-plugin/ks.yaml
   - jelly-plex/ks.yaml
