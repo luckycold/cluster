@@ -27,7 +27,7 @@ Use this checklist when relocating “arr” workloads (or any HelmRelease) into
    - Remove ingress conflicts: `kubectl delete ingress <app> -n <legacy-ns>` (or equivalent Traefik routes).
 
 2. **Clone persistent data**
-   - Clone the Longhorn volume that backs `<app>-config` and create a PVC in `media` with the same claim name. (Namespace must already exist—apply `clusters/main/kubernetes/media/app` once per cluster.)
+   - Clone the Longhorn volume that backs `<app>-config` and create a PVC in `media` with the same claim name. (Namespace must already exist—apply `clusters/main/kubernetes/media` once per cluster.)
    - Verify with `kubectl get pvc <app>-config -n media` before touching Git.
 
 3. **Git changes**
@@ -51,7 +51,7 @@ Use this checklist when relocating “arr” workloads (or any HelmRelease) into
    - Re-enable chart-managed ingress if a manual one was applied during debugging.
 
 ### Gotchas
-- **Namespace prerequisites:** the shared `media` namespace must exist *before* Flux reconciles a moved app (`kubectl apply -k clusters/main/kubernetes/media/app`).
+- **Namespace prerequisites:** the shared `media` namespace must exist *before* Flux reconciles a moved app (`kubectl apply -k clusters/main/kubernetes/media`).
 - **Ingress conflicts:** remove the old ingress or Flux will fail validation when the hostname is already claimed.
 - **Nginx admission cache:** if Flux still reports `host "<fqdn>" is already defined`, delete the HelmRelease and let Flux recreate it, or recycle the nginx ingress controllers (`kubectl scale deploy/nginx-{internal,external}-controller -n nginx --replicas=0 && ... --replicas=1`) to flush the webhook cache. Re-run `flux reconcile ks <app>` afterwards.
 - **Ingress webhook recreation:** deleting the HelmRelease may drop the validating webhook; re-run the nginx Helm release (`flux reconcile helmrelease nginx-internal -n nginx`) to restore it once workloads are healthy.
