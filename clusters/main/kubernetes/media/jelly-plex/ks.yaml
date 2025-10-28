@@ -4,8 +4,18 @@ metadata:
     name: jelly-plex
     namespace: flux-system
 spec:
+    decryption:
+        provider: sops
+        secretRef:
+            name: sops-age
     interval: 10m
     path: clusters/main/kubernetes/media/jelly-plex/app
+    postBuild:
+        substituteFrom:
+            - kind: ConfigMap
+              name: cluster-config
+            - kind: ConfigMap
+              name: upgrade-settings
     prune: true
     sourceRef:
         kind: GitRepository
