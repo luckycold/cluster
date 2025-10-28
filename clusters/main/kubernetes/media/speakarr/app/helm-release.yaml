@@ -85,13 +85,5 @@ spec:
         podSpec:
           containers:
             main:
-              envFrom:
-                - secretRef:
-                    name: arr-api-keys
               env:
                 READARR__AUTH__METHOD: "External" 
-                READARR__AUTH__APIKEY:
-                  secretKeyRef:
-                    expandObjectName: false
-                    key: READARR_API_KEY
-                    name: arr-api-keys

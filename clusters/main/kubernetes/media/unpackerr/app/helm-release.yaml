@@ -63,33 +63,17 @@ spec:
                                 UN_ACTIVITY: false
                                 # Sonarr Config
                                 UN_SONARR_0_URL: http://sonarr.media.svc.cluster.local:8989
-                                UN_SONARR_0_API_KEY:
-                                  secretKeyRef:
-                                    expandObjectName: false
-                                    key: SONARR_API_KEY
-                                    name: arr-api-keys
+                                UN_SONARR_0_API_KEY: ${SONARR_API_KEY}
                                 UN_SONARR_0_PATHS_0: /downloads/sonarr
                                 # Radarr Config
                                 UN_RADARR_0_URL: http://radarr.media.svc.cluster.local:7878
-                                UN_RADARR_0_API_KEY:
-                                  secretKeyRef:
-                                    expandObjectName: false
-                                    key: RADARR_API_KEY
-                                    name: arr-api-keys
+                                UN_RADARR_0_API_KEY: ${RADARR_API_KEY}
                                 UN_RADARR_0_PATHS_0: /downloads/radarr
                                 # Lidarr Config
                                 UN_LIDARR_0_URL: http://lidarr.media.svc.cluster.local:8686
-                                UN_LIDARR_0_API_KEY:
-                                  secretKeyRef:
-                                    expandObjectName: false
-                                    key: LIDARR_API_KEY
-                                    name: arr-api-keys
+                                UN_LIDARR_0_API_KEY: ${LIDARR_API_KEY}
                                 UN_LIDARR_0_PATHS_0: /downloads/lidarr
                                 # Readarr Config
                                 UN_READARR_0_URL: http://readarr.media.svc.cluster.local:8787
-                                UN_READARR_0_API_KEY:
-                                  secretKeyRef:
-                                    expandObjectName: false
-                                    key: READARR_API_KEY
-                                    name: arr-api-keys
+                                UN_READARR_0_API_KEY: ${READARR_API_KEY}
                                 UN_READARR_0_PATHS_0: /downloads/readarr

@@ -84,14 +84,6 @@ spec:
             podSpec:
               containers:
                 main:
-                  envFrom:
-                    - secretRef:
-                        name: arr-api-keys
                   env:
-                    # External | Basic | Forms
+                     # External | Basic | Forms
                     LIDARR__AUTH__METHOD: "External"
-                    LIDARR__AUTH__APIKEY:
-                      secretKeyRef:
-                        expandObjectName: false
-                        key: LIDARR_API_KEY
-                        name: arr-api-keys
