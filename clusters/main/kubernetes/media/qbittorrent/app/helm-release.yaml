@@ -22,9 +22,18 @@ spec:
                       kind: Deployment
                       name: qbittorrent
                   patch: |
-                    - op: add
-                      path: /spec/template/spec/containers/1/resources/limits/truecharts.org~1tun
-                      value: 1
+                    apiVersion: apps/v1
+                    kind: Deployment
+                    metadata:
+                        name: qbittorrent
+                    spec:
+                        template:
+                            spec:
+                                containers:
+                                    - name: gluetun
+                                      resources:
+                                          limits:
+                                              truecharts.org/tun: 1
     timeout: 20m
     maxHistory: 3
     install:
