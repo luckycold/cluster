@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: changedetection-io
-      version: 5.11.16
+      version: 5.11.17
       sourceRef:
         kind: HelmRepository
         name: truecharts
