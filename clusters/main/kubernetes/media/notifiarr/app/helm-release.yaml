@@ -69,5 +69,12 @@ spec:
                 readOnly: false
                 server: ${NAS_DOMAIN}
         release_name: notifiarr
+        workload:
+            main:
+                podSpec:
+                    containers:
+                        main:
+                            env:
+                                HOSTNAME: notifiarr
         notifiarr:
             apikey: ${NOTIFIARR_API_KEY}
