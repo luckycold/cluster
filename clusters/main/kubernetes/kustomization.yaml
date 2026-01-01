@@ -9,5 +9,5 @@ resources:
   - networking
   - system
   - common
-  - external-apps
-  - media
+  - external-apps/ks.yaml
+  - media/ks.yaml
