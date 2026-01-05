@@ -55,13 +55,33 @@ spec:
                     containers:
                         main:
                             env:
-                                ACCESS_KEY: ${RSSHUB_ACCESS_KEY}
+                                ACCESS_KEY:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: ACCESS_KEY
+                                        name: rsshub-secrets
+                                        optional: true
                                 DISALLOW_ROBOT: true
                                 GITHUB_ACCESS_TOKEN: ""
                                 TITLE_LENGTH_LIMIT: 150
-                                TWITTER_USERNAME: ${RSSHUB_TWITTER_USERNAME}
-                                TWITTER_PASSWORD: ${RSSHUB_TWITTER_PASSWORD}
+                                TWITTER_USERNAME:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: TWITTER_USERNAME
+                                        name: rsshub-secrets
+                                        optional: true
+                                TWITTER_PASSWORD:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: TWITTER_PASSWORD
+                                        name: rsshub-secrets
+                                        optional: true
                                 YOUTUBE_KEY: ""
-                                PATREON_SESSION_ID: ${RSSHUB_PATREON_COOKIE}
+                                PATREON_SESSION_ID:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: PATREON_COOKIE
+                                        name: rsshub-secrets
+                                        optional: true
                 replicas: 1
                 type: Deployment
