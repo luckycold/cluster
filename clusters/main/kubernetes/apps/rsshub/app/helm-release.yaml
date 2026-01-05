@@ -76,6 +76,12 @@ spec:
                                         key: TWITTER_PASSWORD
                                         name: rsshub-secrets
                                         optional: true
+                                TWITTER_AUTHENTICATION_SECRET:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: TWITTER_AUTHENTICATION_SECRET
+                                        name: rsshub-secrets
+                                        optional: true
                                 YOUTUBE_KEY: ""
                                 PATREON_SESSION_ID:
                                     secretKeyRef:
