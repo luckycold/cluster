@@ -82,7 +82,12 @@ spec:
                                         key: TWITTER_AUTHENTICATION_SECRET
                                         name: rsshub-secrets
                                         optional: true
-                                YOUTUBE_KEY: ""
+                                YOUTUBE_KEY:
+                                    secretKeyRef:
+                                        expandObjectName: false
+                                        key: YOUTUBE_KEY
+                                        name: rsshub-secrets
+                                        optional: true
                                 PATREON_SESSION_ID:
                                     secretKeyRef:
                                         expandObjectName: false
