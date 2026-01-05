@@ -17,7 +17,9 @@ spec:
     values:
         TZ: US/Central
         image:
+            repository: diygod/rsshub
             tag: latest
+            pullPolicy: Always
         addons:
             codeserver:
                 enabled: false
