@@ -64,22 +64,28 @@ spec:
                                 DISALLOW_ROBOT: true
                                 GITHUB_ACCESS_TOKEN: ""
                                 TITLE_LENGTH_LIMIT: 150
-                                TWITTER_USERNAME:
+                                # TWITTER_USERNAME:
+                                #     secretKeyRef:
+                                #         expandObjectName: false
+                                #         key: TWITTER_USERNAME
+                                #         name: rsshub-secrets
+                                #         optional: true
+                                # TWITTER_PASSWORD:
+                                #     secretKeyRef:
+                                #         expandObjectName: false
+                                #         key: TWITTER_PASSWORD
+                                #         name: rsshub-secrets
+                                #         optional: true
+                                # TWITTER_AUTHENTICATION_SECRET:
+                                #     secretKeyRef:
+                                #         expandObjectName: false
+                                #         key: TWITTER_AUTHENTICATION_SECRET
+                                #         name: rsshub-secrets
+                                #         optional: true
+                                TWITTER_AUTH_TOKEN:
                                     secretKeyRef:
                                         expandObjectName: false
-                                        key: TWITTER_USERNAME
-                                        name: rsshub-secrets
-                                        optional: true
-                                TWITTER_PASSWORD:
-                                    secretKeyRef:
-                                        expandObjectName: false
-                                        key: TWITTER_PASSWORD
-                                        name: rsshub-secrets
-                                        optional: true
-                                TWITTER_AUTHENTICATION_SECRET:
-                                    secretKeyRef:
-                                        expandObjectName: false
-                                        key: TWITTER_AUTHENTICATION_SECRET
+                                        key: TWITTER_AUTH_TOKEN
                                         name: rsshub-secrets
                                         optional: true
                                 YOUTUBE_KEY:
