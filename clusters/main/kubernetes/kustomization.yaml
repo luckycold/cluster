@@ -8,6 +8,5 @@ resources:
   - kube-system
   - networking
   - system
-  - common
   - external-apps/ks.yaml
   - media/ks.yaml
