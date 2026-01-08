@@ -21,7 +21,7 @@ spec:
         image:
             repository: gitlab/gitlab-ce
             pullPolicy: IfNotPresent
-            tag: "18.7.0-ce.0"
+            tag: "18.7.1-ce.0"
 
         securityContext:
             container:
