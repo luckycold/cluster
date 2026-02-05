@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: freshrss
-            version: 21.15.13
+            version: 21.15.14
             sourceRef:
                 kind: HelmRepository
                 name: truecharts

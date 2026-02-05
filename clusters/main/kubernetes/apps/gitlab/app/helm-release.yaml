@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: app-template
-            version: 15.29.82
+            version: 15.29.83
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -21,7 +21,7 @@ spec:
         image:
             repository: gitlab/gitlab-ce
             pullPolicy: IfNotPresent
-            tag: "18.8.2-ce.0"
+            tag: "18.8.3-ce.0"
 
         securityContext:
             container:
