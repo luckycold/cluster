@@ -59,3 +59,6 @@ Use this checklist when relocating “arr” workloads (or any HelmRelease) into
 - **Avoid manual HelmRelease apply:** let Flux create the release from Git so `${…}` placeholders resolve correctly.
 - **Don’t forget suspension:** if the legacy HelmRelease isn’t suspended, Flux may immediately recreate resources in the old namespace while you migrate.
 - **LoadBalancer IP drift:** MetalLB may hand out a new IP after reconciliation; update DNS or client configs (e.g., Jellyfin UI) if the VIP changes.
+
+# Note to AI
+This is a living document that you and I will work together on to help you gain a better understanding of my entire cluster, feel free to ask to add or remove anything to this file for future references to yourself.
