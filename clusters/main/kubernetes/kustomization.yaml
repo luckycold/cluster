@@ -10,3 +10,4 @@ resources:
   - system
   - external-apps/ks.yaml
   - media/ks.yaml
+  - common
