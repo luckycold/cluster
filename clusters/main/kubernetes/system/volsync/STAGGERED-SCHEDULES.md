@@ -38,7 +38,7 @@ Here's a suggested schedule for your applications, spreading them throughout the
 | 09:00      | minecraft-modded |
 | 10:00      | notifiarr    |
 | 11:00      | ntfy         |
-| 12:00      | overseerr    |
+| 12:00      | seerr        |
 | 13:00      | qbittorrent  |
 | 14:00      | romm         |
 | 15:00      | tautulli     |

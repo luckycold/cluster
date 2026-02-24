@@ -20,7 +20,7 @@ resources:
   - rss-bridge/ks.yaml
   - truenas/ks.yaml
   - jellyfin/ks.yaml
-  - overseerr/ks.yaml
+  - seerr/ks.yaml
   - jelly-plex/ks.yaml
   - maintainerr/ks.yaml
   - plex-auto-languages/ks.yaml
