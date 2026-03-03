@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: romm
-          image: rommapp/romm:latest
+          # renovate: datasource=docker depName=rommapp/romm
+          image: rommapp/romm:4.6.0
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
@@ -50,9 +51,9 @@ spec:
                   key: OAUTH_CLIENT_SECRET
                   optional: true
             - name: OIDC_REDIRECT_URI
-              value: https://romm.1al.cc/api/oauth/openid
+              value: "https://romm.${DOMAIN_0}/api/oauth/openid"
             - name: OIDC_SERVER_APPLICATION_URL
-              value: https://auth.1al.cc
+              value: "https://auth.${DOMAIN_0}"
             - name: ENABLE_RESCAN_ON_FILESYSTEM_CHANGE
               value: "true"
             - name: RESCAN_ON_FILESYSTEM_CHANGE_DELAY
@@ -123,7 +124,7 @@ spec:
             claimName: romm-redis-data
         - name: library
           nfs:
-            server: tr.lan.1al.cc
+            server: "${NAS_DOMAIN}"
             path: /mnt/Media/library/games/emulation
 ---
 apiVersion: v1

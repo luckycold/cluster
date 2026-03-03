@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - name: mariadb
+          # renovate: datasource=docker depName=mariadb
           image: mariadb:11.3.2
           imagePullPolicy: IfNotPresent
           env:

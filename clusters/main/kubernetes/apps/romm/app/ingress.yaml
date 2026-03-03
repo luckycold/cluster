@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: romm.1al.cc
+    - host: "romm.${DOMAIN_0}"
       http:
         paths:
           - path: /
@@ -19,5 +19,5 @@ spec:
                   number: 10680
   tls:
     - hosts:
-        - romm.1al.cc
+        - "romm.${DOMAIN_0}"
       secretName: romm-tls-0
