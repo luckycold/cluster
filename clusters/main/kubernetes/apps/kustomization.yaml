@@ -10,7 +10,6 @@ resources:
   - cloudflared/ks.yaml
   - flaresolverr/ks.yaml
   - freshrss/ks.yaml
-  - gitlab/ks.yaml
   - hoarder/ks.yaml
   - kavita/ks.yaml
   - lldap/ks.yaml
