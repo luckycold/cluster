@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: romm
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+spec:
+  ingressClassName: external
+  rules:
+    - host: romm.1al.cc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: romm
+                port:
+                  number: 10680
+  tls:
+    - hosts:
+        - romm.1al.cc
+      secretName: romm-tls-0
