@@ -2,6 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: romm
+  annotations:
+    # Temporary migration aid: force-recreate this Deployment once to avoid
+    # Helm->Kustomize immutable selector/env schema conflicts.
+    # Remove after transition stabilizes.
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   replicas: 1
   selector:
@@ -76,6 +81,11 @@ spec:
                   name: romm-secrets
                   key: STEAMGRIDDB_API_KEY
                   optional: true
+            - name: ROMM_AUTH_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: OAUTH_CLIENT_SECRET
           ports:
             - name: http
               containerPort: 8080

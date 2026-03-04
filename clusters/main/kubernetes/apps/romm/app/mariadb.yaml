@@ -2,6 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: romm-mariadb
+  annotations:
+    # Temporary migration aid: force-recreate this Deployment once to avoid
+    # Helm->Kustomize immutable selector/env schema conflicts.
+    # Remove after transition stabilizes.
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   replicas: 1
   selector:
