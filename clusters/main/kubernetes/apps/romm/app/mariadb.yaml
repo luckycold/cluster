@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm-mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: romm-mariadb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: romm-mariadb
+    spec:
+      containers:
+        - name: mariadb
+          # renovate: datasource=docker depName=mariadb
+          image: mariadb:11.3.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MARIADB_DATABASE
+              value: romm
+            - name: MARIADB_USER
+              value: romm
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: MARIADB_PASSWORD
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: MARIADB_ROOT_PASSWORD
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+          readinessProbe:
+            exec:
+              command: ["/bin/sh", "-c", "mysqladmin ping -h 127.0.0.1 -uroot -p$MARIADB_ROOT_PASSWORD"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["/bin/sh", "-c", "mysqladmin ping -h 127.0.0.1 -uroot -p$MARIADB_ROOT_PASSWORD"]
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            timeoutSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: romm-mariadb-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: romm-mariadb
+spec:
+  selector:
+    app.kubernetes.io/name: romm-mariadb
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: mysql
