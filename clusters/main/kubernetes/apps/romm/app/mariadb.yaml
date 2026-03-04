@@ -45,13 +45,13 @@ spec:
               mountPath: /var/lib/mysql
           readinessProbe:
             exec:
-              command: ["/bin/sh", "-c", "mysqladmin ping -h 127.0.0.1 -uroot -p$MARIADB_ROOT_PASSWORD"]
+              command: ["/bin/sh", "-c", "mariadb-admin ping -h 127.0.0.1 -uroot -p$MARIADB_ROOT_PASSWORD"]
             initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 5
           livenessProbe:
             exec:
-              command: ["/bin/sh", "-c", "mysqladmin ping -h 127.0.0.1 -uroot -p$MARIADB_ROOT_PASSWORD"]
+              command: ["/bin/sh", "-c", "mariadb-admin ping -h 127.0.0.1 -uroot -p$MARIADB_ROOT_PASSWORD"]
             initialDelaySeconds: 60
             periodSeconds: 20
             timeoutSeconds: 5
