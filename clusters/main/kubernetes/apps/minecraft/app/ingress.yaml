@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minecraft-dynmap
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "dynmap.${DOMAIN_0}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minecraft-dynmap
+                port:
+                  number: 8123
+  tls:
+    - hosts:
+        - "dynmap.${DOMAIN_0}"
+      secretName: minecraft-dynmap-tls-0

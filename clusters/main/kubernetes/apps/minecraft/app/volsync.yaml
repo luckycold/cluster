@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minecraft-data-volsync-${VOLSYNC_BACKUP_MAIN_NAME}
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+  AWS_SECRET_ACCESS_KEY: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+  RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+  RESTIC_REPOSITORY: s3:${VOLSYNC_BACKUP_MAIN_URL}/${VOLSYNC_BACKUP_MAIN_BUCKET}/minecraft/volsync/data-volsync-${VOLSYNC_BACKUP_MAIN_NAME}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: minecraft-data-${VOLSYNC_BACKUP_MAIN_NAME}
+spec:
+  sourcePVC: minecraft-data
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    repository: minecraft-data-volsync-${VOLSYNC_BACKUP_MAIN_NAME}
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      hourly: 6
+      daily: 5
+      weekly: 4
+      monthly: 3
+      yearly: 1
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: minecraft-data-${VOLSYNC_BACKUP_MAIN_NAME}-dest
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: minecraft-data-volsync-${VOLSYNC_BACKUP_MAIN_NAME}
+    copyMethod: Snapshot
+    cacheCapacity: 10Gi
+    capacity: 100Gi
+    cleanupCachePVC: false
+    cleanupTempPVC: false
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
