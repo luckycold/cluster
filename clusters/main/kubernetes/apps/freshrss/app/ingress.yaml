@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: freshrss
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+    nginx.ingress.kubernetes.io/auth-method: 'GET'
+    nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local:9091/api/verify'
+    nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
+    nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+spec:
+  ingressClassName: external
+  rules:
+    - host: rss.${DOMAIN_0}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: freshrss
+                port:
+                  number: 10010
+  tls:
+    - hosts:
+        - rss.${DOMAIN_0}
+      secretName: freshrss-tls-0
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: freshrss-codeserver
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+spec:
+  ingressClassName: internal
+  rules:
+    - host: rss-cs.${DOMAIN_0}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: freshrss-codeserver
+                port:
+                  number: 12321
+  tls:
+    - hosts:
+        - rss-cs.${DOMAIN_0}
+      secretName: freshrss-codeserver-tls-0

@@ -4,6 +4,10 @@ metadata:
   name: freshrss
   namespace: flux-system
 spec:
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 10m
   path: clusters/main/kubernetes/apps/freshrss/app
   prune: true
