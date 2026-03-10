@@ -7,13 +7,19 @@ spec:
     interval: 15m
     chart:
         spec:
-            chart: overseerr
-            version: 16.15.0
+            chart: seerr
+            version: 14.0.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
                 namespace: flux-system
     releaseName: overseerr
+    install:
+        remediation:
+            retries: 3
+    upgrade:
+        remediation:
+            retries: 3
     values:
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:

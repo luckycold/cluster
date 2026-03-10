@@ -1,0 +1,25 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: romm-config-minio
+spec:
+  sourcePVC: romm-config
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    repository: romm-config-volsync-minio
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      hourly: 6
+      daily: 5
+      weekly: 4
+      monthly: 3
+      yearly: 1
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568

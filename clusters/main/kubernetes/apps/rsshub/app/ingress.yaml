@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rsshub
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+spec:
+  ingressClassName: external
+  rules:
+    - host: hub.${DOMAIN_0}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rsshub
+                port:
+                  number: 10191
+  tls:
+    - hosts:
+        - hub.${DOMAIN_0}
+      secretName: rsshub-tls-0
