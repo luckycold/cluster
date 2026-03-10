@@ -1,0 +1,160 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: lldap-cnpg-main-provider-backup-s3-creds
+type: Opaque
+stringData:
+  ACCESS_KEY_ID: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+  ACCESS_SECRET_KEY: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: lldap-cnpg-main-user
+type: kubernetes.io/basic-auth
+stringData:
+  username: lldap
+  password: ${LLDAP_CNPG_PASSWORD}
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: lldap-cnpg-main
+  annotations:
+    cnpg.io/hibernation: "off"
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
+  labels:
+    cnpg.io/reload: "on"
+spec:
+  affinity:
+    podAntiAffinityType: preferred
+  backup:
+    barmanObjectStore:
+      data:
+        compression: bzip2
+        jobs: 2
+      destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/lldap/cnpg
+      endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
+      s3Credentials:
+        accessKeyId:
+          key: ACCESS_KEY_ID
+          name: lldap-cnpg-main-provider-backup-s3-creds
+        secretAccessKey:
+          key: ACCESS_SECRET_KEY
+          name: lldap-cnpg-main-provider-backup-s3-creds
+      serverName: lldap-cnpg-main-r1
+      wal:
+        compression: bzip2
+    retentionPolicy: 30d
+    target: prefer-standby
+  bootstrap:
+    initdb:
+      dataChecksums: true
+      database: lldap
+      encoding: UTF8
+      localeCType: C
+      localeCollate: C
+      owner: lldap
+      secret:
+        name: lldap-cnpg-main-user
+  enablePDB: true
+  enableSuperuserAccess: true
+  failoverDelay: 0
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.12@sha256:7fe820e900df4492243a1d4aeff88e1eb2b9706ac30bb1f10565e4a71099023f
+  instances: 1
+  logLevel: info
+  maxSyncReplicas: 0
+  minSyncReplicas: 0
+  monitoring:
+    customQueriesConfigMap:
+      - key: queries
+        name: cnpg-default-monitoring
+    disableDefaultQueries: false
+    enablePodMonitor: false
+  nodeMaintenanceWindow:
+    inProgress: true
+    reusePVC: true
+  postgresGID: 26
+  postgresUID: 26
+  postgresql:
+    parameters:
+      archive_mode: "on"
+      archive_timeout: 5min
+      dynamic_shared_memory_type: posix
+      full_page_writes: "on"
+      log_destination: csvlog
+      log_directory: /controller/log
+      log_filename: postgres
+      log_rotation_age: "0"
+      log_rotation_size: "0"
+      log_truncate_on_rotation: "false"
+      logging_collector: "on"
+      max_parallel_workers: "32"
+      max_replication_slots: "32"
+      max_worker_processes: "32"
+      shared_memory_type: mmap
+      shared_preload_libraries: ""
+      ssl_max_protocol_version: TLSv1.3
+      ssl_min_protocol_version: TLSv1.3
+      wal_keep_size: 512MB
+      wal_level: logical
+      wal_log_hints: "on"
+      wal_receiver_timeout: 5s
+      wal_sender_timeout: 5s
+    syncReplicaElectionConstraint:
+      enabled: false
+  primaryUpdateMethod: switchover
+  primaryUpdateStrategy: unsupervised
+  probes:
+    liveness:
+      isolationCheck:
+        connectionTimeout: 1000
+        enabled: true
+        requestTimeout: 1000
+  replicationSlots:
+    highAvailability:
+      enabled: true
+      slotPrefix: _cnpg_
+    synchronizeReplicas:
+      enabled: true
+    updateInterval: 30
+  resources:
+    limits:
+      cpu: 1500m
+      memory: 2400Mi
+    requests:
+      cpu: 75m
+      memory: 200Mi
+  smartShutdownTimeout: 180
+  startDelay: 3600
+  stopDelay: 1800
+  storage:
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi
+    resizeInUseVolumes: true
+  switchoverDelay: 3600
+  walStorage:
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi
+    resizeInUseVolumes: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: lldap-cnpg-main-sched-backup-daily-backup
+spec:
+  backupOwnerReference: self
+  cluster:
+    name: lldap-cnpg-main
+  immediate: true
+  method: barmanObjectStore
+  schedule: 0 0 0 * * *
+  suspend: false

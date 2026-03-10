@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lldap
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+    cert-manager.io/private-key-rotation-policy: Always
+spec:
+  ingressClassName: internal
+  rules:
+    - host: ldap.${DOMAIN_0}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lldap
+                port:
+                  number: 17170
+  tls:
+    - hosts:
+        - ldap.${DOMAIN_0}
+      secretName: lldap-tls-0
