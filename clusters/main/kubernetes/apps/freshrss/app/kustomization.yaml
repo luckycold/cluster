@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: freshrss
 resources:
   - namespace.yaml
-  - helm-release.yaml
   - pvc.yaml
   - freshrss-config-volsync-minio.secret.yaml
   - volsync.yaml
