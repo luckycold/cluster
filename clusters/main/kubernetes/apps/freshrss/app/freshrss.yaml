@@ -1,0 +1,171 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: freshrss
+      app.kubernetes.io/name: freshrss
+      pod.name: main
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: freshrss
+        app.kubernetes.io/name: freshrss
+        pod.name: main
+    spec:
+      containers:
+        - name: freshrss-codeserver
+          image: oci.trueforge.org/containerforge/code-server:4.109.2@sha256:841cf00f26ed44db1d0be33cf2e9afff96ac298fd655d484d28be5d86b945930
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: UMASK
+              value: "0022"
+            - name: UMASK_SET
+              value: "0022"
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: void
+            - name: PUID
+              value: "568"
+            - name: USER_ID
+              value: "568"
+            - name: UID
+              value: "568"
+            - name: PGID
+              value: "568"
+            - name: GROUP_ID
+              value: "568"
+            - name: GID
+              value: "568"
+            - name: DEFAULT_WORKSPACE
+              value: /
+            - name: PORT
+              value: "12321"
+          startupProbe:
+            httpGet:
+              path: /
+              port: 12321
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 12321
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 12321
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          volumeMounts:
+            - name: config
+              mountPath: /config
+        - name: freshrss
+          # renovate: datasource=docker depName=ghcr.io/linuxserver/freshrss
+          image: ghcr.io/linuxserver/freshrss:1.28.1@sha256:b75efdc71fb365aab41764bfdb00dd097cef52594a0481d2bc91103af6e98588
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: UMASK
+              value: "0022"
+            - name: UMASK_SET
+              value: "0022"
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: void
+            - name: PUID
+              value: "568"
+            - name: USER_ID
+              value: "568"
+            - name: UID
+              value: "568"
+            - name: PGID
+              value: "568"
+            - name: GROUP_ID
+              value: "568"
+            - name: GID
+              value: "568"
+          ports:
+            - name: codeserver
+              containerPort: 12321
+            - name: main
+              containerPort: 80
+          startupProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: freshrss-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: freshrss
+spec:
+  selector:
+    app.kubernetes.io/instance: freshrss
+    app.kubernetes.io/name: freshrss
+    pod.name: main
+  ports:
+    - name: main
+      port: 10010
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: freshrss-codeserver
+spec:
+  selector:
+    app.kubernetes.io/instance: freshrss
+    app.kubernetes.io/name: freshrss
+    pod.name: main
+  ports:
+    - name: codeserver
+      port: 12321
+      targetPort: 12321
