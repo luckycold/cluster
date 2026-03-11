@@ -106,10 +106,7 @@ spec:
             - name: LLDAP_VERBOSE
               value: "false"
             - name: LLDAP_database_url
-              valueFrom:
-                secretKeyRef:
-                  name: lldap-cnpg-main-urls
-                  key: std
+              value: postgres://lldap:${LLDAP_CNPG_PASSWORD}@lldap-cnpg-main-rw:5432/lldap
             - name: LLDAP_key_file
               value: /data/private_key
             - name: smtp
