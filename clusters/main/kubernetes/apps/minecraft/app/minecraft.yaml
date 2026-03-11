@@ -87,9 +87,9 @@ spec:
             - name: ONLINE_MODE
               value: "true"
             - name: MAX_MEMORY
-              value: 8G
+              value: 6G
             - name: INIT_MEMORY
-              value: 1G
+              value: 2G
             - name: RCON_PASSWORD
               value: ${GENERIC_PASSWORD}
             - name: ALLOW_FLIGHT
@@ -125,9 +125,9 @@ spec:
               value: lukeycold
           resources:
             requests:
-              memory: 1Gi
+              memory: 4Gi
             limits:
-              memory: 9Gi
+              memory: 8Gi
           ports:
             - name: minecraft
               containerPort: 25565
