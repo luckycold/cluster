@@ -15,7 +15,7 @@ data:
         implementation: lldap
         address: ldap://lldap-ldap.lldap.svc.cluster.local:3890
         base_dn: ${LLDAP_LDAP_BASE_DN}
-        user: uid=manager,ou=people,${LLDAP_LDAP_BASE_DN}
+        user: uid=admin,ou=people,${LLDAP_LDAP_BASE_DN}
         password: ${LLDAP_LDAP_USER_PASS}
 
     access_control:
