@@ -3,7 +3,11 @@ kind: Kustomization
 namespace: authelia
 resources:
   - namespace.yaml
-  - helm-release.yaml
+  - pvc.yaml
+  - cnpg.yaml
+  - redis.yaml
+  - authelia.yaml
+  - ingress.yaml
   - authelia-oidc.configmap.yaml
   - secrets.yaml
   - ../../../common/bw-auth-token
