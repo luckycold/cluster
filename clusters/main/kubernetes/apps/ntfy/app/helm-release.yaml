@@ -58,7 +58,7 @@ spec:
                 volsync:
                     - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
-                        enabled: true
+                        enabled: false
                       name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
                         enabled: false
