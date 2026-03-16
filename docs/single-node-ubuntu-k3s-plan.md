@@ -108,6 +108,11 @@ Applied host config:
 - If Longhorn is not ready yet but restore testing must proceed, a temporary `longhorn` StorageClass alias can point at the current OpenEBS hostpath provisioner. Treat that as a migration-only workaround, not the final storage design.
 - For Servarr apps, the most reliable restore source was the built-in scheduled backup zip in `/config/Backups/scheduled`, not the older chart-managed VolSync path.
 - After restoring Servarr data from the native backup zips, explicit standalone VolSync `ReplicationSource` objects were added so backup uploads resume from the now-correct PVC data.
+- On a single-node test cluster with limited vCPU, some control-plane-adjacent workloads needed temporary replica reductions to avoid scheduler deadlock while validating apps:
+  - `descheduler` from `2` to `1`
+  - `kubelet-csr-approver` from `3` to `1`
+  - `cloudnative-pg` operator from `2` to `1`
+  - `authelia` from `2` to `1`
 - LLDAP could not be restored from the CNPG object-store backups because the required WAL segments were missing from the archive, even when targeting older backup IDs.
 - The working LLDAP recovery path was:
   1. bootstrap a fresh CNPG cluster with `initdb`
