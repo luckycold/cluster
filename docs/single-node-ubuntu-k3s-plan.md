@@ -122,6 +122,10 @@ Applied host config:
 - Authelia's database restore was not the blocker; Authelia started normally once LLDAP was healthy again.
 - Longhorn did not install cleanly while `recurring-jobs.yaml` was part of the same kustomization, because those custom resources were applied before the Longhorn CRDs existed.
 - For bootstrap, install Longhorn first and apply recurring jobs only after the CRDs are available, or keep recurring jobs out of the initial kustomization.
+- Even after real Longhorn is installed, several chart-managed VolSync restores still leave the live app PVC in `Pending` because the PVC uses `dataSource: ReplicationDestination` and waits for `status.latestImage` on the restore object.
+- In practice, those apps already have restored data in `volsync-*-dest-dest` PVCs, but the live claim never hydrates automatically; they need either:
+  1. a manual copy from the restored destination PVC into a plain live PVC, or
+  2. a different restore path that writes straight into the live claim.
 
 ## Validation Sequence
 
