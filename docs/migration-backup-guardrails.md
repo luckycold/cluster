@@ -31,6 +31,16 @@ Affected apps:
 - `speakarr`
 - `tautulli`
 
+Exception during validation:
+
+- The arr apps now back up again through explicit standalone `ReplicationSource` manifests instead of the chart-managed `volsync.src` path:
+  - `lidarr`
+  - `prowlarr`
+  - `radarr`
+  - `sonarr`
+  - `readarr`
+  - `speakarr`
+
 ### Standalone VolSync manifests
 
 Every explicit `ReplicationSource` manifest has `spec.paused: true` so the object can still exist in Git without scheduling outbound syncs.
@@ -95,3 +105,15 @@ After cutover and validation on the new cluster:
 2. unpause standalone `ReplicationSource` objects
 3. restore CNPG backup configuration and unsuspend scheduled backups
 4. confirm the old cluster is no longer writing to the same backup locations before turning the new writers back on
+
+## Restore Workflow Notes
+
+- Suspend risky apps before restore validation if they can create outside effects or overwhelm a single-node test cluster:
+  - `qbittorrent` to avoid tracker activity
+  - `minecraft` to avoid unnecessary resource pressure during bootstrap
+- Suspend the affected Flux kustomizations before manual restore surgery, or commit the testing changes first, so Flux does not recreate workloads while the restore is still running.
+- Prefer `ReplicationDestination.spec.restic.destinationPVC` when an app can restore directly into its live PVC.
+- If a restore path creates a separate destination PVC instead of writing into the live app claim, copy the restored data into the live PVC before starting the app.
+- Hoarder needed this extra copy step because its restore objects were initially restoring into `volsync-*-dest-dest` PVCs rather than the active app PVCs.
+- The arr apps proved safer to restore from their own scheduled backup zips on `/config/Backups/scheduled` than from the older chart-managed VolSync path.
+- After restoring the arr apps from the native backup zips, explicit standalone VolSync sources were added so fresh backups resume from the corrected PVC contents.

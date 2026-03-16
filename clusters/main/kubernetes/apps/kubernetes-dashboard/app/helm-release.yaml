@@ -32,6 +32,8 @@ spec:
   values:
     service:
       main:
+        annotations:
+          metallb.io/loadBalancerIPs: ${DASHBOARD_IP}
         type: LoadBalancer
         loadBalancerIP: ${DASHBOARD_IP}
         ports:

@@ -4,18 +4,22 @@ metadata:
     name: speakarr-readarr-config-minio
     namespace: media
 spec:
-    paused: true
     sourcePVC: speakarr-readarr-config
     trigger:
         schedule: "30 4 * * *"
     restic:
         repository: speakarr-readarr-config-volsync-minio
-        copyMethod: Snapshot
-        cacheCapacity: 2Gi
+        copyMethod: Direct
+        cacheCapacity: 10Gi
         pruneIntervalDays: 7
         retain:
             daily: 7
             weekly: 4
             monthly: 3
             yearly: 1
-        moverSecurityContext: {}
+        accessModes:
+            - ReadWriteOnce
+        moverSecurityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 568

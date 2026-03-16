@@ -89,6 +89,8 @@ spec:
                         targetPort: 7359
             main:
                 enabled: true
+                annotations:
+                    metallb.io/loadBalancerIPs: ${JELLYFIN_IP}
                 loadBalancerIP: ${JELLYFIN_IP}
                 ports:
                     main:

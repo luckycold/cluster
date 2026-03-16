@@ -6,6 +6,5 @@ metadata:
   name: metallb
   namespace: flux-system
 spec:
-  type: oci
   interval: 2h
-  url: oci://quay.io/metallb/chart
+  url: https://metallb.github.io/metallb

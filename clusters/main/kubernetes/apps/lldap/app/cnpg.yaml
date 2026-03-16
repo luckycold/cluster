@@ -29,8 +29,8 @@ spec:
   affinity:
     podAntiAffinityType: preferred
   bootstrap:
-    recovery:
-      source: lldap-cnpg-main-backup
+    initdb:
+      dataChecksums: true
       database: lldap
       owner: lldap
       secret:
@@ -123,21 +123,6 @@ spec:
         requests:
           storage: 100Gi
     resizeInUseVolumes: true
-  externalClusters:
-    - name: lldap-cnpg-main-backup
-      barmanObjectStore:
-        destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/lldap/cnpg
-        endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
-        s3Credentials:
-          accessKeyId:
-            key: ACCESS_KEY_ID
-            name: lldap-cnpg-main-provider-backup-s3-creds
-          secretAccessKey:
-            key: ACCESS_SECRET_KEY
-            name: lldap-cnpg-main-provider-backup-s3-creds
-        serverName: lldap-cnpg-main-r1
-        wal:
-          maxParallel: 8
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
