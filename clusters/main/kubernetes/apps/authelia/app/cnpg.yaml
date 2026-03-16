@@ -28,32 +28,10 @@ metadata:
 spec:
   affinity:
     podAntiAffinityType: preferred
-  backup:
-    barmanObjectStore:
-      data:
-        compression: bzip2
-        jobs: 2
-      destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/authelia/cnpg
-      endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
-      s3Credentials:
-        accessKeyId:
-          key: ACCESS_KEY_ID
-          name: authelia-cnpg-main-provider-backup-s3-creds
-        secretAccessKey:
-          key: ACCESS_SECRET_KEY
-          name: authelia-cnpg-main-provider-backup-s3-creds
-      serverName: authelia-cnpg-main
-      wal:
-        compression: bzip2
-    retentionPolicy: 30d
-    target: prefer-standby
   bootstrap:
-    initdb:
-      dataChecksums: true
+    recovery:
+      source: authelia-cnpg-main-backup
       database: authelia
-      encoding: UTF8
-      localeCType: C
-      localeCollate: C
       owner: authelia
       secret:
         name: authelia-cnpg-main-user
@@ -145,6 +123,21 @@ spec:
         requests:
           storage: 100Gi
     resizeInUseVolumes: true
+  externalClusters:
+    - name: authelia-cnpg-main-backup
+      barmanObjectStore:
+        destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/authelia/cnpg
+        endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
+        s3Credentials:
+          accessKeyId:
+            key: ACCESS_KEY_ID
+            name: authelia-cnpg-main-provider-backup-s3-creds
+          secretAccessKey:
+            key: ACCESS_SECRET_KEY
+            name: authelia-cnpg-main-provider-backup-s3-creds
+        serverName: authelia-cnpg-main
+        wal:
+          maxParallel: 8
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
@@ -157,4 +150,4 @@ spec:
   immediate: true
   method: barmanObjectStore
   schedule: 0 0 0 * * *
-  suspend: false
+  suspend: true

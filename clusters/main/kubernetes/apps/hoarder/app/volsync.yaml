@@ -25,6 +25,7 @@ kind: ReplicationSource
 metadata:
   name: hoarder-app-template-data-minio
 spec:
+  paused: true
   sourcePVC: hoarder-app-template-data
   trigger:
     schedule: "0 0 * * *"
@@ -51,6 +52,7 @@ kind: ReplicationSource
 metadata:
   name: hoarder-app-template-meili-data-minio
 spec:
+  paused: true
   sourcePVC: hoarder-app-template-meili-data
   trigger:
     schedule: "0 0 * * *"

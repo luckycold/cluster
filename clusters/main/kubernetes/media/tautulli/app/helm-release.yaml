@@ -59,6 +59,6 @@ spec:
                           enabled: true
                       name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       src:
-                          enabled: true
+                          enabled: false
                       type: restic
         release_name: tautulli

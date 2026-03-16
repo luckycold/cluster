@@ -70,6 +70,6 @@ spec:
                           enabled: true
                       name: ${VOLSYNC_BACKUP_OLD_NAME}
                       src:
-                          enabled: true
+                          enabled: false
                       type: restic
         release_name: maintainerr

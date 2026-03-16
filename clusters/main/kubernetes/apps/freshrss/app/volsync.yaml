@@ -3,6 +3,7 @@ kind: ReplicationSource
 metadata:
   name: freshrss-config-minio
 spec:
+  paused: true
   sourcePVC: freshrss-config
   trigger:
     schedule: "0 0 * * *"

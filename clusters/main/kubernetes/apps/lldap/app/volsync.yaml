@@ -14,6 +14,7 @@ kind: ReplicationSource
 metadata:
   name: lldap-data-minio
 spec:
+  paused: true
   sourcePVC: lldap-data
   trigger:
     schedule: "0 0 * * *"
@@ -28,6 +29,26 @@ spec:
       weekly: 4
       monthly: 3
       yearly: 1
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: lldap-data-minio-dest
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: lldap-data-volsync-minio
+    destinationPVC: lldap-data
+    copyMethod: Direct
+    cacheCapacity: 10Gi
+    cleanupCachePVC: false
     accessModes:
       - ReadWriteOnce
     moverSecurityContext:

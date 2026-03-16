@@ -48,7 +48,7 @@ spec:
                       dest:
                         enabled: true
                       src:
-                        enabled: true
+                        enabled: false
                       type: restic
         release_name: mealie
         smtp:
@@ -59,11 +59,14 @@ spec:
             from_email: ${ADMIN_EMAIL}
         cnpg:
             main:
-                mode: standalone
+                mode: recovery
                 password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                    enabled: true
+                    enabled: false
+                    revision: "1"
+                recovery:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     revision: "1"
         workload:
             main:

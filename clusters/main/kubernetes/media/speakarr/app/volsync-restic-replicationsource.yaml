@@ -4,6 +4,7 @@ metadata:
     name: speakarr-readarr-config-minio
     namespace: media
 spec:
+  paused: true
     sourcePVC: speakarr-readarr-config
     trigger:
         schedule: "30 4 * * *"

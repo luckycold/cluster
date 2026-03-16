@@ -68,8 +68,8 @@ spec:
       enabled: true
     ipam:
       mode: kubernetes
-    k8sServiceHost: 127.0.0.1
-    k8sServicePort: 7445
+    k8sServiceHost: home-apps.lan.1al.cc
+    k8sServicePort: 6443
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     localRedirectPolicy: true

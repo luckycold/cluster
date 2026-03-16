@@ -28,32 +28,10 @@ metadata:
 spec:
   affinity:
     podAntiAffinityType: preferred
-  backup:
-    barmanObjectStore:
-      data:
-        compression: bzip2
-        jobs: 2
-      destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/lldap/cnpg
-      endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
-      s3Credentials:
-        accessKeyId:
-          key: ACCESS_KEY_ID
-          name: lldap-cnpg-main-provider-backup-s3-creds
-        secretAccessKey:
-          key: ACCESS_SECRET_KEY
-          name: lldap-cnpg-main-provider-backup-s3-creds
-      serverName: lldap-cnpg-main-r1
-      wal:
-        compression: bzip2
-    retentionPolicy: 30d
-    target: prefer-standby
   bootstrap:
-    initdb:
-      dataChecksums: true
+    recovery:
+      source: lldap-cnpg-main-backup
       database: lldap
-      encoding: UTF8
-      localeCType: C
-      localeCollate: C
       owner: lldap
       secret:
         name: lldap-cnpg-main-user
@@ -145,6 +123,21 @@ spec:
         requests:
           storage: 100Gi
     resizeInUseVolumes: true
+  externalClusters:
+    - name: lldap-cnpg-main-backup
+      barmanObjectStore:
+        destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/lldap/cnpg
+        endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
+        s3Credentials:
+          accessKeyId:
+            key: ACCESS_KEY_ID
+            name: lldap-cnpg-main-provider-backup-s3-creds
+          secretAccessKey:
+            key: ACCESS_SECRET_KEY
+            name: lldap-cnpg-main-provider-backup-s3-creds
+        serverName: lldap-cnpg-main-r1
+        wal:
+          maxParallel: 8
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
@@ -157,4 +150,4 @@ spec:
   immediate: true
   method: barmanObjectStore
   schedule: 0 0 0 * * *
-  suspend: false
+  suspend: true

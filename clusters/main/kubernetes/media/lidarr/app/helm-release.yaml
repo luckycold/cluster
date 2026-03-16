@@ -64,7 +64,7 @@ spec:
                       dest:
                           enabled: true
                       src:
-                          enabled: true
+                          enabled: false
                       type: restic
             media:
                 enabled: true
