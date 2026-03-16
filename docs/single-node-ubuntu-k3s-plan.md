@@ -120,6 +120,8 @@ Applied host config:
   3. restore `/data/private_key` from the LLDAP data tarball
   4. start LLDAP before starting Authelia
 - Authelia's database restore was not the blocker; Authelia started normally once LLDAP was healthy again.
+- Longhorn did not install cleanly while `recurring-jobs.yaml` was part of the same kustomization, because those custom resources were applied before the Longhorn CRDs existed.
+- For bootstrap, install Longhorn first and apply recurring jobs only after the CRDs are available, or keep recurring jobs out of the initial kustomization.
 
 ## Validation Sequence
 
