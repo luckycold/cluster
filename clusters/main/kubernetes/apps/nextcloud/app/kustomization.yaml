@@ -4,5 +4,6 @@ namespace: nextcloud
 resources:
   - namespace.yaml
   - helm-release.yaml
+  - volsync-restore.yaml
   - secrets.yaml
   - ../../../common/bw-auth-token

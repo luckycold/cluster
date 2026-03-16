@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mealie-data-volsync-minio
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+  AWS_SECRET_ACCESS_KEY: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+  RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+  RESTIC_REPOSITORY: s3:${VOLSYNC_BACKUP_MAIN_URL}/${VOLSYNC_BACKUP_MAIN_BUCKET}/mealie/volsync/data-volsync-minio
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: mealie-data-minio-dest
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: mealie-data-volsync-minio
+    destinationPVC: mealie-data
+    copyMethod: Direct
+    cacheCapacity: 10Gi
+    cleanupCachePVC: false
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568

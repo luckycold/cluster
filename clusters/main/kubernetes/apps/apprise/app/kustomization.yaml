@@ -4,3 +4,4 @@ namespace: apprise
 resources:
     - namespace.yaml
     - helm-release.yaml
+    - volsync-restore.yaml
