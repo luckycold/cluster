@@ -4,7 +4,7 @@ metadata:
     name: jellyfin-config-proton
     namespace: media
 spec:
-  paused: true
+    paused: true
     sourcePVC: jellyfin-config
     trigger:
         # Daily backup at 04:30 cluster time; adjust as needed
