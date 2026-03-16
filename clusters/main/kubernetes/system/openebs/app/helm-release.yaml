@@ -6,6 +6,19 @@ metadata:
 spec:
   interval: 5m
   releaseName: openebs
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: StatefulSet
+              name: openebs-loki
+            patch: |
+              - op: replace
+                path: /spec/replicas
+                value: 1
+              - op: replace
+                path: /spec/template/spec/affinity/podAntiAffinity/requiredDuringSchedulingIgnoredDuringExecution
+                value: []
   chart:
     spec:
       chart: openebs

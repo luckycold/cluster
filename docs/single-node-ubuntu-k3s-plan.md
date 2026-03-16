@@ -126,6 +126,24 @@ Applied host config:
 - In practice, those apps already have restored data in `volsync-*-dest-dest` PVCs, but the live claim never hydrates automatically; they need either:
   1. a manual copy from the restored destination PVC into a plain live PVC, or
   2. a different restore path that writes straight into the live claim.
+- A more reliable fallback for these apps was a one-off restic restore job that:
+  1. deletes the stuck live PVC,
+  2. recreates it as a plain `longhorn` claim,
+  3. mounts the claim into a temporary job,
+  4. runs `restic unlock` and `restic restore latest --target /restore`, and
+  5. copies `/restore/.` into the live claim.
+- The restic restore jobs often returned non-zero because of harmless `security.selinux` xattr warnings on the restored files. The restore still produced usable data, so the migration job copied the restored tree and then started the app.
+- For Nextcloud, the restored `data` volume also needed a permission fix (`chmod 0770` on directories, `chmod 0660` on files, then `chown -R 568:568`) before the app would start cleanly.
+- For chart-managed init containers that depended on mirror-specific utilities, the safest migration fix was a post-render patch rather than ad-hoc runtime edits.
+- The official public images are not always compatible with the mirrored `tccr` images one-to-one:
+  - `nextcloud-fpm` needed probe changes because `/healthcheck.sh` was missing in the public image.
+  - `nextcloud` helper/init containers that expected `cgi-fcgi` needed a simpler TCP wait instead.
+  - `nextcloud notify-push` and `imaginary` may need image-specific environment or argument adjustments if the mirrored images are unavailable.
+- `spegel` is Talos/containerd-path sensitive. On k3s, the host paths differ from the defaults and should be patched to:
+  - socket: `/run/k3s/containerd/containerd.sock`
+  - content store: `/var/lib/rancher/k3s/agent/containerd/io.containerd.content.v1.content`
+- `openebs-loki` defaults to multi-replica anti-affinity that cannot schedule on a single node; it needs a single-node replica override for migration testing.
+- `jellyfin` was additionally blocked by expired Proton Drive tokens in the stored rclone/restic secret, which prevented noninteractive backup restore. That path needs refreshed credentials or an alternate local backup source.
 
 ## Validation Sequence
 
