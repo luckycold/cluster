@@ -58,6 +58,12 @@ spec:
             enabled: false
     persistence:
       config:
+        enabled: true
+        type: pvc
+        existingClaim: freshrss-config-longhorn
+        accessMode: ReadWriteOnce
+        size: 100Gi
+        retain: true
         volsync:
           - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
             dest:

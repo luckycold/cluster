@@ -4,7 +4,7 @@ metadata:
   name: romm-config-minio
 spec:
   paused: true
-  sourcePVC: romm-config
+  sourcePVC: romm-config-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:
@@ -18,26 +18,6 @@ spec:
       weekly: 4
       monthly: 3
       yearly: 1
-    accessModes:
-      - ReadWriteOnce
-    moverSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 568
----
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
-metadata:
-  name: romm-config-minio-dest
-spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: romm-config-volsync-minio
-    destinationPVC: romm-config
-    copyMethod: Direct
-    cacheCapacity: 10Gi
-    cleanupCachePVC: false
     accessModes:
       - ReadWriteOnce
     moverSecurityContext:

@@ -26,7 +26,7 @@ metadata:
   name: hoarder-app-template-data-minio
 spec:
   paused: true
-  sourcePVC: hoarder-app-template-data
+  sourcePVC: hoarder-app-template-data-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:
@@ -53,7 +53,7 @@ metadata:
   name: hoarder-app-template-meili-data-minio
 spec:
   paused: true
-  sourcePVC: hoarder-app-template-meili-data
+  sourcePVC: hoarder-app-template-meili-data-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:
@@ -67,48 +67,6 @@ spec:
       weekly: 4
       monthly: 3
       yearly: 1
-    accessModes:
-      - ReadWriteOnce
-    moverSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 568
----
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
-metadata:
-  name: hoarder-app-template-data-minio-dest
-spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: hoarder-app-template-data-volsync-minio
-    copyMethod: Snapshot
-    cacheCapacity: 10Gi
-    capacity: 100Gi
-    cleanupCachePVC: false
-    cleanupTempPVC: false
-    accessModes:
-      - ReadWriteOnce
-    moverSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 568
----
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
-metadata:
-  name: hoarder-app-template-meili-data-minio-dest
-spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: hoarder-app-template-meili-data-volsync-minio
-    copyMethod: Snapshot
-    cacheCapacity: 10Gi
-    capacity: 100Gi
-    cleanupCachePVC: false
-    cleanupTempPVC: false
     accessModes:
       - ReadWriteOnce
     moverSecurityContext:

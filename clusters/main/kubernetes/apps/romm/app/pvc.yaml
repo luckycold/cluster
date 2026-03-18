@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: romm-assets
+  name: romm-assets-longhorn
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: longhorn
@@ -12,7 +12,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: romm-config
+  name: romm-config-longhorn
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: longhorn
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: romm-resources
+  name: romm-resources-longhorn
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: longhorn
@@ -34,7 +34,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: romm-mariadb-data
+  name: romm-mariadb-data-longhorn
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: longhorn
@@ -45,7 +45,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: romm-redis-data
+  name: romm-redis-data-longhorn
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: longhorn

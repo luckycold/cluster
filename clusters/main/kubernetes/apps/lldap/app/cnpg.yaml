@@ -110,6 +110,7 @@ spec:
     pvcTemplate:
       accessModes:
         - ReadWriteOnce
+      storageClassName: longhorn
       resources:
         requests:
           storage: 100Gi
@@ -119,6 +120,7 @@ spec:
     pvcTemplate:
       accessModes:
         - ReadWriteOnce
+      storageClassName: longhorn
       resources:
         requests:
           storage: 100Gi

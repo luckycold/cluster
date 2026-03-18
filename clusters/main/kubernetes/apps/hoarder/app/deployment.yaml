@@ -309,10 +309,10 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: hoarder-app-template-data
+            claimName: hoarder-app-template-data-longhorn
         - name: meili-data
           persistentVolumeClaim:
-            claimName: hoarder-app-template-meili-data
+            claimName: hoarder-app-template-meili-data-longhorn
         - name: devshm
           emptyDir:
             medium: Memory

@@ -58,7 +58,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: romm-mariadb-data
+            claimName: romm-mariadb-data-longhorn
 ---
 apiVersion: v1
 kind: Service

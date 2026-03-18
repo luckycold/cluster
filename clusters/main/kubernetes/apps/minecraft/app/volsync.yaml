@@ -15,7 +15,7 @@ metadata:
   name: minecraft-data-${VOLSYNC_BACKUP_MAIN_NAME}
 spec:
   paused: true
-  sourcePVC: minecraft-data
+  sourcePVC: minecraft-data-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:

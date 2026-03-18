@@ -244,7 +244,7 @@ spec:
             sizeLimit: 2400Mi
         - name: config
           persistentVolumeClaim:
-            claimName: authelia-config
+            claimName: authelia-config-longhorn
         - name: secrets
           secret:
             secretName: authelia-oidc-secret

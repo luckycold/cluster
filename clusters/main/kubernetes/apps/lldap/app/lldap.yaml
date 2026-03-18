@@ -201,7 +201,7 @@ spec:
             sizeLimit: 2400Mi
         - name: data
           persistentVolumeClaim:
-            claimName: lldap-data
+            claimName: lldap-data-longhorn
 ---
 apiVersion: v1
 kind: Service

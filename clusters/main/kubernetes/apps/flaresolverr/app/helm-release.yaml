@@ -16,6 +16,14 @@ spec:
     releaseName: flaresolverr
     values:
         TZ: US/Central
+        persistence:
+            config:
+                enabled: true
+                type: pvc
+                existingClaim: flaresolverr-config-longhorn
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
         ingress:
             main:
                 ingressClassName: internal

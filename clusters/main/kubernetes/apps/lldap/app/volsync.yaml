@@ -15,7 +15,7 @@ metadata:
   name: lldap-data-minio
 spec:
   paused: true
-  sourcePVC: lldap-data
+  sourcePVC: lldap-data-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:

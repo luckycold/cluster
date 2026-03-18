@@ -173,7 +173,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: minecraft-data
+            claimName: minecraft-data-longhorn
 ---
 apiVersion: v1
 kind: Service

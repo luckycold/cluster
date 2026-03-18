@@ -125,16 +125,16 @@ spec:
       volumes:
         - name: assets
           persistentVolumeClaim:
-            claimName: romm-assets
+            claimName: romm-assets-longhorn
         - name: config
           persistentVolumeClaim:
-            claimName: romm-config
+            claimName: romm-config-longhorn
         - name: resources
           persistentVolumeClaim:
-            claimName: romm-resources
+            claimName: romm-resources-longhorn
         - name: redis-data
           persistentVolumeClaim:
-            claimName: romm-redis-data
+            claimName: romm-redis-data-longhorn
         - name: library
           nfs:
             server: "${NAS_DOMAIN}"

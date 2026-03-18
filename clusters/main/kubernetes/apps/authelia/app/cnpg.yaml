@@ -29,8 +29,7 @@ spec:
   affinity:
     podAntiAffinityType: preferred
   bootstrap:
-    recovery:
-      source: authelia-cnpg-main-backup
+    initdb:
       database: authelia
       owner: authelia
       secret:
@@ -110,6 +109,7 @@ spec:
     pvcTemplate:
       accessModes:
         - ReadWriteOnce
+      storageClassName: longhorn
       resources:
         requests:
           storage: 100Gi
@@ -119,6 +119,7 @@ spec:
     pvcTemplate:
       accessModes:
         - ReadWriteOnce
+      storageClassName: longhorn
       resources:
         requests:
           storage: 100Gi

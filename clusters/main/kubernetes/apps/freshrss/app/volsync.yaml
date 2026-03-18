@@ -4,7 +4,7 @@ metadata:
   name: freshrss-config-minio
 spec:
   paused: true
-  sourcePVC: freshrss-config
+  sourcePVC: freshrss-config-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:
