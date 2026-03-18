@@ -4,7 +4,7 @@ metadata:
     name: speakarr-readarr-config-minio
     namespace: media
 spec:
-    sourcePVC: speakarr-readarr-config
+    sourcePVC: speakarr-readarr-config-longhorn
     trigger:
         schedule: "30 4 * * *"
     restic:

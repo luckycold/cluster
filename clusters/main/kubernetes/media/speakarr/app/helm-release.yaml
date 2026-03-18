@@ -5,6 +5,16 @@ metadata:
   namespace: media
 spec:
   interval: 15m
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: speakarr-readarr
+            patch: |
+              - op: replace
+                path: /spec/template/spec/containers/0/image
+                value: docker.io/linuxserver/readarr:0.4.19-nightly
   chart:
     spec:
       chart: readarr
@@ -55,7 +65,7 @@ spec:
       config:
         enabled: true
         type: pvc
-        existingClaim: speakarr-readarr-config
+        existingClaim: speakarr-readarr-config-longhorn
         accessMode: ReadWriteOnce
         size: "1Gi"
         retain: true
