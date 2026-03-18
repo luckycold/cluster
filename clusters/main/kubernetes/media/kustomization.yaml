@@ -15,8 +15,6 @@ resources:
   - qbitmanage/ks.yaml
   - qbittorrent/ks.yaml
   - radarr/ks.yaml
-  - readarr/ks.yaml
   - sonarr/ks.yaml
-  - speakarr/ks.yaml
   - tautulli/ks.yaml
   - unpackerr/ks.yaml
