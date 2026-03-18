@@ -5,6 +5,16 @@ metadata:
     namespace: media
 spec:
     interval: 15m
+    postRenderers:
+        - kustomize:
+            patches:
+                - target:
+                    kind: Deployment
+                    name: readarr
+                  patch: |
+                    - op: replace
+                      path: /spec/template/spec/containers/0/image
+                      value: docker.io/linuxserver/readarr:0.4.19-nightly
     chart:
         spec:
             chart: readarr
@@ -52,6 +62,21 @@ spec:
                 prometheusRule:
                     enabled: false
         persistence:
+            config:
+                enabled: true
+                type: pvc
+                existingClaim: readarr-config-longhorn
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
+                volsync:
+                    - name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                          enabled: true
+                      src:
+                          enabled: false
+                      type: restic
             media:
                 enabled: true
                 type: nfs

@@ -16,7 +16,7 @@ metadata:
   name: readarr-config-minio
   namespace: media
 spec:
-  sourcePVC: readarr-config
+  sourcePVC: readarr-config-longhorn
   trigger:
     schedule: "30 4 * * *"
   restic:
