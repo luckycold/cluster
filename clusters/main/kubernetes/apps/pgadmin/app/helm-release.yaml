@@ -16,6 +16,14 @@ spec:
     releaseName: pgadmin
     values:
         release_name: pgadmin
+        persistence:
+            config:
+                enabled: true
+                type: pvc
+                existingClaim: pgadmin-config-longhorn
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
         ingress:
             main:
                 enabled: true
