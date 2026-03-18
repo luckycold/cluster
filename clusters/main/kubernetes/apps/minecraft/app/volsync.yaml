@@ -35,24 +35,3 @@ spec:
       runAsUser: 0
       runAsGroup: 0
       fsGroup: 568
----
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationDestination
-metadata:
-  name: minecraft-data-${VOLSYNC_BACKUP_MAIN_NAME}-dest
-spec:
-  trigger:
-    manual: restore-once
-  restic:
-    repository: minecraft-data-volsync-${VOLSYNC_BACKUP_MAIN_NAME}
-    copyMethod: Snapshot
-    cacheCapacity: 10Gi
-    capacity: 100Gi
-    cleanupCachePVC: false
-    cleanupTempPVC: false
-    accessModes:
-      - ReadWriteOnce
-    moverSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 568
