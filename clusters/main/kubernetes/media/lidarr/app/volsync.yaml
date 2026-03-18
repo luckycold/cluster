@@ -16,7 +16,7 @@ metadata:
   name: lidarr-config-minio
   namespace: media
 spec:
-  sourcePVC: lidarr-config
+  sourcePVC: lidarr-config-longhorn
   trigger:
     schedule: "30 4 * * *"
   restic:

@@ -54,7 +54,7 @@ spec:
             config:
                 enabled: true
                 type: pvc
-                existingClaim: lidarr-config
+                existingClaim: lidarr-config-longhorn
                 accessMode: ReadWriteOnce
                 size: "100Gi"
                 retain: true
