@@ -16,7 +16,7 @@ metadata:
   name: radarr-config-minio
   namespace: media
 spec:
-  sourcePVC: radarr-config
+  sourcePVC: radarr-config-longhorn
   trigger:
     schedule: "30 4 * * *"
   restic:

@@ -16,7 +16,7 @@ metadata:
   name: sonarr-config-minio
   namespace: media
 spec:
-  sourcePVC: sonarr-config
+  sourcePVC: sonarr-config-longhorn
   trigger:
     schedule: "30 4 * * *"
   restic:

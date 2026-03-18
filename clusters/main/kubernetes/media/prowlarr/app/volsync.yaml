@@ -16,7 +16,7 @@ metadata:
   name: prowlarr-config-minio
   namespace: media
 spec:
-  sourcePVC: prowlarr-config
+  sourcePVC: prowlarr-config-longhorn
   trigger:
     schedule: "30 4 * * *"
   restic:
