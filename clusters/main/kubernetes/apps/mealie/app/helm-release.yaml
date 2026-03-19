@@ -74,6 +74,11 @@ spec:
                         enabled: false
         persistence:
             data:
+                enabled: true
+                type: pvc
+                accessMode: ReadWriteOnce
+                size: 100Gi
+                retain: true
         release_name: mealie
         smtp:
             enabled: true
