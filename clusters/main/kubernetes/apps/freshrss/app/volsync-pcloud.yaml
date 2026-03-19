@@ -3,7 +3,7 @@ kind: ReplicationSource
 metadata:
   name: freshrss-config-pcloud
 spec:
-  sourcePVC: freshrss-config-longhorn
+  sourcePVC: freshrss-config-longhorn-v2
   trigger:
     manual: pcloud-test-20260319
   restic:

@@ -5,6 +5,16 @@ metadata:
   namespace: freshrss
 spec:
   interval: 15m
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: freshrss
+            patch: |
+              - op: replace
+                path: /spec/template/spec/volumes/5/persistentVolumeClaim/claimName
+                value: freshrss-config-longhorn-v2
   chart:
     spec:
       chart: freshrss
@@ -59,7 +69,7 @@ spec:
       config:
         enabled: true
         type: pvc
-        existingClaim: freshrss-config-longhorn
+        existingClaim: freshrss-config-longhorn-v2
         accessMode: ReadWriteOnce
         size: 100Gi
         retain: true
