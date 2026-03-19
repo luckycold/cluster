@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: freshrss-config-longhorn-v2
+  name: freshrss-config-longhorn
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: longhorn

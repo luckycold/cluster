@@ -14,7 +14,7 @@ spec:
             patch: |
               - op: replace
                 path: /spec/template/spec/volumes/5/persistentVolumeClaim/claimName
-                value: freshrss-config-longhorn-v2
+                value: freshrss-config-longhorn
   chart:
     spec:
       chart: freshrss
@@ -69,7 +69,7 @@ spec:
       config:
         enabled: true
         type: pvc
-        existingClaim: freshrss-config-longhorn-v2
+        existingClaim: freshrss-config-longhorn
         accessMode: ReadWriteOnce
         size: 100Gi
         retain: true
