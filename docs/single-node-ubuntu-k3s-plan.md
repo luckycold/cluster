@@ -81,7 +81,7 @@ Applied host config:
 - The initial server certificate only covered `home-apps`, `home-apps.lan.1al.cc`, and `192.168.1.28`. Even after reaching the node directly, clients that expect the VIP name/IP will still fail TLS validation unless the cert is regenerated with that VIP SAN.
 - Break-glass access during bootstrap was `ssh home-apps.lan.1al.cc 'sudo k3s kubectl ...'`. This was necessary when the workstation kubeconfig still targeted a dead VIP but the cluster itself was healthy.
 - Flux source manifests must use `source.toolkit.fluxcd.io/v1`, not `v1beta2`, on this cluster.
-- `repositories/git/this-repo.yaml` must point at the migration branch during parity testing.
+- `repositories/git/this-repo.yaml` should point at `main` once the migration branch becomes canonical.
 - `clusters/main/kubernetes/kustomization.yaml` should not include `common` at the root during bootstrap, because namespace-less shared secrets like `bw-auth-token` are meant to be included by app kustomizations.
 - `repositories/helm/kustomization.yaml` must include `repositories/helm/metallb.yaml`, otherwise the dedicated MetalLB chart source never exists in-cluster.
 - `clusters/main/kubernetes/system/metallb/app/helm-release.yaml` must use the dedicated `metallb` HelmRepository. The old `home-ops-mirror` source returned `403 denied` for the mirrored MetalLB chart.

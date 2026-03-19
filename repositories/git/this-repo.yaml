@@ -9,7 +9,7 @@ spec:
   interval: 30m
   url: ssh://git@github.com/luckycold/cluster.git
   ref:
-    branch: migration/talos-to-ubuntu-k3s
+    branch: main
   secretRef:
     name: deploy-key
   ignore: |
