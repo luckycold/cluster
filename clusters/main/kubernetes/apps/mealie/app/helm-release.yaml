@@ -5,6 +5,29 @@ metadata:
     namespace: mealie
 spec:
     interval: 5m
+    postRenderers:
+        - kustomize:
+            patches:
+                - target:
+                    kind: Deployment
+                    name: mealie
+                  patch: |
+                    - op: add
+                      path: /spec/template/spec/initContainers/-
+                      value:
+                        name: mealie-fix-data-perms
+                        image: busybox:1.36
+                        command:
+                          - /bin/sh
+                          - -c
+                        args:
+                          - mkdir -p /app/data && chmod 0770 /app/data && chgrp 568 /app/data
+                        securityContext:
+                          runAsUser: 0
+                          runAsGroup: 0
+                        volumeMounts:
+                          - name: data
+                            mountPath: /app/data
     chart:
         spec:
             chart: mealie
