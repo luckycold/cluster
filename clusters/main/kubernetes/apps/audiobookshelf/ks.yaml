@@ -7,7 +7,7 @@ spec:
   interval: 10m
   path: clusters/main/kubernetes/apps/audiobookshelf/app
   prune: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: cluster
-

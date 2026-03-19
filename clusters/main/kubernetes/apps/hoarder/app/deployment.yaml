@@ -1,0 +1,323 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karakeep
+  annotations:
+    # Helm -> Kustomize migration safety: allow replace if immutable fields differ.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: karakeep
+      app.kubernetes.io/instance: hoarder
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: karakeep
+        app.kubernetes.io/instance: hoarder
+      annotations:
+        reloader.stakater.com/auto: "true"
+        reloader.stakater.com/rollout-strategy: restart
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 568
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: karakeep
+          # renovate: datasource=docker depName=ghcr.io/karakeep-app/karakeep
+          image: ghcr.io/karakeep-app/karakeep:0.28.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: BROWSER_WEB_URL
+              value: http://localhost:9222
+            - name: CRAWLER_VIDEO_DOWNLOAD
+              value: "true"
+            - name: DATA_DIR
+              value: /data
+            - name: DISABLE_PASSWORD_AUTH
+              value: "true"
+            - name: DISABLE_SIGNUPS
+              value: "false"
+            - name: HOARDER_VERSION
+              value: "0.28.0"
+            - name: MEILI_ADDR
+              value: http://localhost:7700
+            - name: MEILI_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hoarder-secrets
+                  key: MEILI_MASTER_KEY
+                  optional: true
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hoarder-secrets
+                  key: NEXTAUTH_SECRET
+                  optional: true
+            - name: NEXTAUTH_URL
+              value: https://h.${DOMAIN_0}
+            - name: NEXT_PUBLIC_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hoarder-secrets
+                  key: NEXT_PUBLIC_SECRET
+                  optional: true
+            - name: OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING
+              value: "true"
+            - name: OAUTH_CLIENT_ID
+              value: hoarder
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hoarder-secrets
+                  key: OAUTH_CLIENT_SECRET
+                  optional: true
+            - name: OAUTH_PROVIDER_NAME
+              value: Authelia
+            - name: OAUTH_PROVIDER_TYPE
+              value: oidc
+            - name: OAUTH_WELLKNOWN_URL
+              value: https://auth.${DOMAIN_0}/.well-known/openid-configuration
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hoarder-secrets
+                  key: OPENAI_API_KEY
+                  optional: true
+          ports:
+            - name: main
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: main
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: main
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: main
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          resources:
+            requests:
+              cpu: 75m
+              memory: 200Mi
+            limits:
+              cpu: 1500m
+              memory: 2400Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - CHOWN
+                - SETUID
+                - SETGID
+                - FOWNER
+                - DAC_OVERRIDE
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: devshm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+        - name: chrome
+          # renovate: datasource=docker depName=gcr.io/zenika-hub/alpine-chrome
+          image: gcr.io/zenika-hub/alpine-chrome:124
+          imagePullPolicy: IfNotPresent
+          command:
+            - chromium-browser
+            - --headless
+            - --no-sandbox
+            - --disable-gpu
+            - --disable-dev-shm-usage
+            - --remote-debugging-address=0.0.0.0
+            - --remote-debugging-port=9222
+            - --hide-scrollbars
+          env:
+            - name: TZ
+              value: US/Central
+          ports:
+            - name: chrome
+              containerPort: 9222
+          readinessProbe:
+            tcpSocket:
+              port: chrome
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            tcpSocket:
+              port: chrome
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          startupProbe:
+            tcpSocket:
+              port: chrome
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          resources:
+            requests:
+              cpu: 75m
+              memory: 200Mi
+            limits:
+              cpu: 1500m
+              memory: 2400Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - CHOWN
+                - SETUID
+                - SETGID
+                - FOWNER
+                - DAC_OVERRIDE
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: devshm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+        - name: meilisearch
+          # renovate: datasource=docker depName=getmeili/meilisearch
+          image: getmeili/meilisearch:v1.11.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: MEILI_ENV
+              value: production
+            - name: MEILI_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hoarder-secrets
+                  key: MEILI_MASTER_KEY
+                  optional: true
+            - name: MEILI_NO_ANALYTICS
+              value: "true"
+          ports:
+            - name: meili
+              containerPort: 7700
+          readinessProbe:
+            tcpSocket:
+              port: meili
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            tcpSocket:
+              port: meili
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          startupProbe:
+            tcpSocket:
+              port: meili
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          resources:
+            requests:
+              cpu: 75m
+              memory: 200Mi
+            limits:
+              cpu: 1500m
+              memory: 2400Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - CHOWN
+                - SETUID
+                - SETGID
+                - FOWNER
+                - DAC_OVERRIDE
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: meili-data
+              mountPath: /meili_data
+            - name: devshm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: hoarder-app-template-data-longhorn
+        - name: meili-data
+          persistentVolumeClaim:
+            claimName: hoarder-app-template-meili-data-longhorn
+        - name: devshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2400Mi
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2400Mi

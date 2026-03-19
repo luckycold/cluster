@@ -3,39 +3,22 @@ kind: Kustomization
 resources:
   - kubernetes-dashboard/ks.yaml
   - alist/ks.yaml
-  - rsshub/ks.yaml
-  - lldap/ks.yaml
-  - authelia/ks.yaml
-  - qbitmanage/ks.yaml
-  - qbittorrent/ks.yaml
-  - readarr/ks.yaml
-  - freshrss/ks.yaml
-  - lidarr/ks.yaml
-  - prowlarr/ks.yaml
-  - radarr/ks.yaml
-  - sonarr/ks.yaml
-  - flaresolverr/ks.yaml
-  - ntfy/ks.yaml
-  - proxmox/ks.yaml
-  - rss-bridge/ks.yaml
-  - truenas/ks.yaml
-  - jellyfin/ks.yaml
-  - overseerr/ks.yaml
-  - jelly-plex/ks.yaml
-  - maintainerr/ks.yaml
-  - plex-auto-languages/ks.yaml
-  - tautulli/ks.yaml
-  - mealie/ks.yaml
-  - pgadmin/ks.yaml
-  - cloudflared/ks.yaml
   - audiobookshelf/ks.yaml
-  - notifiarr/ks.yaml
-  - unpackerr/ks.yaml
-  - kavita/ks.yaml
-  - romm/ks.yaml
-  - minecraft/ks.yaml
-  - hoarder/ks.yaml
-  - matrix-synapse/ks.yaml
-  - speakarr/ks.yaml
-  - authentik/ks.yaml
+  - authelia/ks.yaml
+  - apprise/ks.yaml
   - changedetection-io/ks.yaml
+  - cloudflared/ks.yaml
+  - flaresolverr/ks.yaml
+  - freshrss/ks.yaml
+  - hoarder/ks.yaml
+  - kavita/ks.yaml
+  - lldap/ks.yaml
+  - mealie/ks.yaml
+  - minecraft/ks.yaml
+  - nextcloud/ks.yaml
+  - ntfy/ks.yaml
+  - pgadmin/ks.yaml
+  - romm/ks.yaml
+  - rss-bridge/ks.yaml
+  - rsshub/ks.yaml
+  - bw-secrets-manager/ks.yaml

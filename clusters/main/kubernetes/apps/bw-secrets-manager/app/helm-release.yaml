@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: sm-operator
+    namespace: sm-operator-system
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: sm-operator
+            version: "*"
+            sourceRef:
+                kind: HelmRepository
+                name: bitwarden
+                namespace: flux-system
+            interval: 15m
+    values:
+        settings:
+          # How often the secrets synchronize in seconds.  Minimum value is 180.
+          bwSecretsManagerRefreshInterval: 300
+        containers:
+            manager:
+                image:
+                    repository: ghcr.io/bitwarden/sm-operator
+                    tag:
+                resources:
+                    limits:
+                        cpu: 500m
+                        memory: 128Mi
+                    requests:
+                        cpu: 10m
+                        memory: 64Mi
+
+        # Security context
+        securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+                drop:
+                    - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+
+        # Service account
+        serviceAccount:
+            create: true
+            annotations: {}
+
+        # RBAC
+        rbac:
+            create: true

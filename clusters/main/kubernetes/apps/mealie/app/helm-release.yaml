@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: mealie
-            version: 24.9.0
+            version: 26.28.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -29,6 +29,7 @@ spec:
         ingress:
             main:
                 enabled: true
+                ingressClassName: external
                 hosts:
                     - host: m.${DOMAIN_0}
                       paths:
@@ -39,20 +40,15 @@ spec:
                         enabled: true
                     homepage:
                         enabled: false
-                    traefik:
-                        enabled: true
-                        entrypoints:
-                            - websecure
         persistence:
             data:
                 volsync:
                     - name: ${VOLSYNC_BACKUP_MAIN_NAME}
                       credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                       dest:
-                        enabled: true
+                        enabled: false
                       src:
-                        enabled: true
-                        schedule: "45 2 * * *"  # 2:45 AM Central Time
+                        enabled: false
                       type: restic
         release_name: mealie
         smtp:
@@ -63,17 +59,14 @@ spec:
             from_email: ${ADMIN_EMAIL}
         cnpg:
             main:
-                mode: recovery
-                database: mealie
-                user: mealie
                 password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                    enabled: true
+                    enabled: false
                     revision: "1"
-                recovery:
-                    method: object_store
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                cluster:
+                    instances: 1
+                    singleNode: true
         workload:
             main:
                 podSpec:
@@ -81,3 +74,13 @@ spec:
                         main:
                             env:
                                 OPENAI_API_KEY: ${OPENAI_API_KEY}
+
+                                # OIDC Authentication Configuration
+                                OIDC_AUTH_ENABLED: "true"
+                                OIDC_CONFIGURATION_URL: "https://auth.${DOMAIN_0}/.well-known/openid-configuration"
+                                OIDC_CLIENT_ID: "mealie"
+                                OIDC_CLIENT_SECRET: "${MEALIE_OIDC_CLIENT_SECRET}"
+                                OIDC_SIGNUP_ENABLED: 'true'
+                                OIDC_AUTO_REDIRECT: 'false'
+                                OIDC_ADMIN_GROUP: 'admin'
+                                OIDC_USER_GROUP: 'user'

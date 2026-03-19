@@ -6,4 +6,7 @@ resources:
   - flux-entry.yaml
   - flux-system
   - kube-system
+  - networking
   - system
+  - external-apps/ks.yaml
+  - media/ks.yaml

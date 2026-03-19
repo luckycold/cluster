@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: pgadmin
-            version: 17.12.1
+            version: 19.25.0
             sourceRef:
                 kind: HelmRepository
                 name: truecharts
@@ -16,9 +16,18 @@ spec:
     releaseName: pgadmin
     values:
         release_name: pgadmin
+        persistence:
+            config:
+                enabled: true
+                type: pvc
+                existingClaim: pgadmin-config-longhorn
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
         ingress:
             main:
                 enabled: true
+                ingressClassName: internal
                 hosts:
                     - host: pgadmin.${DOMAIN_0}
                       paths:
@@ -31,7 +40,7 @@ spec:
                         enabled: false
                     traefik:
                         allowCors: false
-                        enabled: true
+                        enabled: false
                         entrypoints:
                             - websecure
         workload:

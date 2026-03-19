@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hoarder-app-template-data-volsync-minio
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+  AWS_SECRET_ACCESS_KEY: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+  RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+  RESTIC_REPOSITORY: s3:${VOLSYNC_BACKUP_MAIN_URL}/${VOLSYNC_BACKUP_MAIN_BUCKET}/hoarder/volsync/data-volsync-minio
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hoarder-app-template-meili-data-volsync-minio
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+  AWS_SECRET_ACCESS_KEY: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+  RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+  RESTIC_REPOSITORY: s3:${VOLSYNC_BACKUP_MAIN_URL}/${VOLSYNC_BACKUP_MAIN_BUCKET}/hoarder/volsync/meili-data-volsync-minio
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: hoarder-app-template-data-minio
+spec:
+  paused: true
+  sourcePVC: hoarder-app-template-data-longhorn
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    repository: hoarder-app-template-data-volsync-minio
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      hourly: 6
+      daily: 5
+      weekly: 4
+      monthly: 3
+      yearly: 1
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: hoarder-app-template-meili-data-minio
+spec:
+  paused: true
+  sourcePVC: hoarder-app-template-meili-data-longhorn
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    repository: hoarder-app-template-meili-data-volsync-minio
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      hourly: 6
+      daily: 5
+      weekly: 4
+      monthly: 3
+      yearly: 1
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568

@@ -1,0 +1,244 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: nextcloud
+    namespace: nextcloud
+spec:
+    interval: 15m
+    postRenderers:
+        - kustomize:
+            patches:
+                - target:
+                    kind: Deployment
+                    name: nextcloud
+                  patch: |
+                    - op: replace
+                      path: /spec/template/spec/containers/0/image
+                      value: docker.io/library/nextcloud:32.0.0-fpm
+                    - op: add
+                      path: /spec/template/spec/initContainers/-
+                      value:
+                        name: nextcloud-fix-data-perms
+                        image: busybox:1.36
+                        command:
+                          - /bin/sh
+                          - -c
+                        args:
+                          - chmod 0770 /var/www/html/data && chgrp 568 /var/www/html/data
+                        securityContext:
+                          runAsUser: 0
+                          runAsGroup: 0
+                        volumeMounts:
+                          - name: data
+                            mountPath: /var/www/html/data
+                    - op: add
+                      path: /spec/template/spec/initContainers/-
+                      value:
+                        name: nextcloud-trusted-domains
+                        image: busybox:1.36
+                        command:
+                          - /bin/sh
+                          - -c
+                        args:
+                          - |
+                            cat > /var/www/html/config/zz-trusted-domains.config.php <<'PHP'
+                            <?php
+                            $CONFIG = array (
+                              'trusted_domains' =>
+                              array (
+                                0 => 'localhost',
+                                1 => 'cloud.${DOMAIN_0}',
+                              ),
+                              'overwrite.cli.url' => 'https://cloud.${DOMAIN_0}',
+                              'overwritehost' => 'cloud.${DOMAIN_0}',
+                              'overwriteprotocol' => 'https',
+                            );
+                            PHP
+                        securityContext:
+                          runAsUser: 0
+                          runAsGroup: 0
+                        volumeMounts:
+                          - name: config
+                            mountPath: /var/www/html/config
+                    - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/cpu
+                      value: 75m
+                    - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/memory
+                      value: 256Mi
+                    - op: replace
+                      path: /spec/template/spec/containers/0/livenessProbe
+                      value:
+                        tcpSocket:
+                          port: 9000
+                        initialDelaySeconds: 12
+                        timeoutSeconds: 5
+                        periodSeconds: 15
+                        failureThreshold: 5
+                        successThreshold: 1
+                    - op: replace
+                      path: /spec/template/spec/containers/0/readinessProbe
+                      value:
+                        tcpSocket:
+                          port: 9000
+                        initialDelaySeconds: 10
+                        timeoutSeconds: 5
+                        periodSeconds: 12
+                        failureThreshold: 4
+                        successThreshold: 2
+                    - op: replace
+                      path: /spec/template/spec/containers/0/startupProbe
+                      value:
+                        tcpSocket:
+                          port: 9000
+                        initialDelaySeconds: 10
+                        timeoutSeconds: 3
+                        periodSeconds: 5
+                        failureThreshold: 60
+                        successThreshold: 1
+                - target:
+                    kind: Deployment
+                    name: nextcloud-nginx
+                  patch: |
+                    - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/cpu
+                      value: 25m
+                    - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/memory
+                      value: 128Mi
+                    - op: replace
+                      path: /spec/template/spec/initContainers/2/image
+                      value: busybox:1.36
+                    - op: replace
+                      path: /spec/template/spec/initContainers/2/command
+                      value:
+                        - /bin/sh
+                        - -c
+                    - op: replace
+                      path: /spec/template/spec/initContainers/2/args
+                      value:
+                        - until nc -z nextcloud-nextcloud 9000; do echo Waiting Nextcloud; sleep 3; done; echo Nextcloud reachable
+                - target:
+                    kind: Deployment
+                    name: nextcloud-imaginary
+                  patch: |
+                    - op: replace
+                      path: /spec/replicas
+                      value: 0
+                - target:
+                    kind: Deployment
+                    name: nextcloud-notify
+                  patch: |
+                    - op: replace
+                      path: /spec/replicas
+                      value: 0
+                - target:
+                    kind: CronJob
+                    name: nextcloud-nextcloud-cron
+                  patch: |
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/image
+                      value: docker.io/library/nextcloud:32.0.0-fpm
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu
+                      value: 25m
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/memory
+                      value: 128Mi
+                - target:
+                    kind: CronJob
+                    name: nextcloud-preview-cron
+                  patch: |
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/image
+                      value: docker.io/library/nextcloud:32.0.0-fpm
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu
+                      value: 25m
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/memory
+                      value: 128Mi
+    chart:
+        spec:
+            chart: nextcloud
+            version: 38.9.16
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: nextcloud
+    values:
+        TZ: America/Chicago
+        nextcloud:
+            credentials:
+                initialAdminUser: ${GENERIC_USER}
+            general:
+                accessIP: ${NGINX_EXTERNAL_IP}
+                default_phone_region: US
+        credentials:
+            ${VOLSYNC_BACKUP_MAIN_NAME}:
+                accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
+                bucket: ${VOLSYNC_BACKUP_MAIN_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                path: ""
+                secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+                type: s3
+                url: ${VOLSYNC_BACKUP_MAIN_URL}
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: external
+                annotations:
+                    nginx.ingress.kubernetes.io/configuration-snippet: |
+                        rewrite ^/\.well-known/(card|cal)dav$ /remote.php/dav/ permanent;
+                hosts:
+                    - host: cloud.${DOMAIN_0}
+                      paths:
+                        - path: /
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+                    traefik:
+                        enabled: false
+        persistence:
+            config:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: false
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: false
+                      type: restic
+            data:
+                volsync:
+                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      dest:
+                        enabled: false
+                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
+                      src:
+                        enabled: false
+                      type: restic
+        cnpg:
+            main:
+                backups:
+                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    enabled: false
+                    revision: "1"
+                cluster:
+                    instances: 1
+                    singleNode: true
+        release_name: nextcloud
+    valuesFrom:
+        - kind: Secret
+          name: nextcloud-secrets
+          targetPath: nextcloud.credentials.initialAdminPassword
+          valuesKey: admin-password
+        - kind: Secret
+          name: nextcloud-secrets
+          targetPath: cnpg.main.password
+          valuesKey: cnpg-password

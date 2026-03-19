@@ -1,0 +1,153 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm
+  annotations:
+    # Temporary migration aid: force-recreate this Deployment once to avoid
+    # Helm->Kustomize immutable selector/env schema conflicts.
+    # Remove after transition stabilizes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: romm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: romm
+      annotations:
+        reloader.stakater.com/auto: "true"
+        reloader.stakater.com/rollout-strategy: restart
+    spec:
+      containers:
+        - name: romm
+          # renovate: datasource=docker depName=rommapp/romm
+          image: rommapp/romm:4.6.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: ROMM_BASE_PATH
+              value: /romm
+            # Avoid collision with Kubernetes service env var ROMM_PORT=tcp://...
+            - name: ROMM_PORT
+              value: "8080"
+            - name: DB_HOST
+              value: romm-mariadb
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: romm
+            - name: DB_USER
+              value: romm
+            - name: DB_PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: MARIADB_PASSWORD
+            - name: OIDC_ENABLED
+              value: "true"
+            - name: OIDC_PROVIDER
+              value: authelia
+            - name: OIDC_CLIENT_ID
+              value: romm
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: OAUTH_CLIENT_SECRET
+                  optional: true
+            - name: OIDC_REDIRECT_URI
+              value: "https://romm.${DOMAIN_0}/api/oauth/openid"
+            - name: OIDC_SERVER_APPLICATION_URL
+              value: "https://auth.${DOMAIN_0}"
+            - name: ENABLE_RESCAN_ON_FILESYSTEM_CHANGE
+              value: "true"
+            - name: RESCAN_ON_FILESYSTEM_CHANGE_DELAY
+              value: "5"
+            - name: IGDB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: IGDB_CLIENT_ID
+                  optional: true
+            - name: IGDB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: IGDB_CLIENT_SECRET
+                  optional: true
+            - name: STEAMGRIDDB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: STEAMGRIDDB_API_KEY
+                  optional: true
+            - name: ROMM_AUTH_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: romm-secrets
+                  key: OAUTH_CLIENT_SECRET
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 12
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 60
+          volumeMounts:
+            - name: assets
+              mountPath: /romm/assets
+            - name: config
+              mountPath: /romm/config
+            - name: resources
+              mountPath: /romm/resources
+            - name: redis-data
+              mountPath: /redis-data
+            - name: library
+              mountPath: /romm/library
+      volumes:
+        - name: assets
+          persistentVolumeClaim:
+            claimName: romm-assets-longhorn
+        - name: config
+          persistentVolumeClaim:
+            claimName: romm-config-longhorn
+        - name: resources
+          persistentVolumeClaim:
+            claimName: romm-resources-longhorn
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: romm-redis-data-longhorn
+        - name: library
+          nfs:
+            server: "${NAS_DOMAIN}"
+            path: /mnt/Media/library/games/emulation
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: romm
+spec:
+  selector:
+    app.kubernetes.io/name: romm
+  ports:
+    - name: http
+      port: 10680
+      targetPort: http

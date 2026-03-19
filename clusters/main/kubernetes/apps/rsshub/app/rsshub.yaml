@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsshub
+  annotations:
+    # Temporary migration aid while moving from HelmRelease -> raw manifests.
+    # Remove once transition is stable.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: rsshub
+      app.kubernetes.io/name: rsshub
+      pod.name: main
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: rsshub
+        app.kubernetes.io/name: rsshub
+        pod.name: main
+    spec:
+      containers:
+        - name: rsshub
+          # renovate: datasource=docker depName=diygod/rsshub
+          image: diygod/rsshub:latest@sha256:9eb79bbb1e6ed1575bb39c11c07e6f2a4d33c7231396ef370909de278c4e5dbf
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "10191"
+            - name: CACHE_TYPE
+              value: redis
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rsshub-rediscreds
+                  key: url
+            - name: DISALLOW_ROBOT
+              value: "true"
+            - name: TITLE_LENGTH_LIMIT
+              value: "150"
+            - name: GITHUB_ACCESS_TOKEN
+              value: ""
+            - name: PUPPETEER_WS_ENDPOINT
+              value: ws://localhost:3000
+            - name: ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rsshub-secrets
+                  key: ACCESS_KEY
+                  optional: true
+            - name: TWITTER_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: rsshub-secrets
+                  key: TWITTER_AUTH_TOKEN
+                  optional: true
+            - name: YOUTUBE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rsshub-secrets
+                  key: YOUTUBE_KEY
+                  optional: true
+            - name: PATREON_SESSION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: rsshub-secrets
+                  key: PATREON_COOKIE
+                  optional: true
+          ports:
+            - name: http
+              containerPort: 10191
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsshub
+spec:
+  selector:
+    app.kubernetes.io/instance: rsshub
+    app.kubernetes.io/name: rsshub
+    pod.name: main
+  ports:
+    - name: http
+      port: 10191
+      targetPort: http

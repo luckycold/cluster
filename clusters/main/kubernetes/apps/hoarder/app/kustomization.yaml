@@ -1,5 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: hoarder
 resources:
   - namespace.yaml
-  - helm-release.yaml
+  - secrets.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - pvc.yaml
+  - volsync.yaml
+  - hoarder-app-template-data-volsync-pcloud.secret.yaml
+  - hoarder-app-template-meili-data-volsync-pcloud.secret.yaml
+  - volsync-pcloud.yaml
+  - ../../../common/bw-auth-token

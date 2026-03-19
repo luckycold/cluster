@@ -1,5 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: rsshub
 resources:
-  - helm-release.yaml
   - namespace.yaml
+  - secrets.yaml
+  - redis-secret.yaml
+  - redis.yaml
+  - rsshub.yaml
+  - ingress.yaml
+  - ../../../common/bw-auth-token

@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+    name: truenas
+    namespace: external-apps
+spec:
+    interval: 15m
+    chart:
+        spec:
+            chart: external-service
+            version: 16.18.0
+            sourceRef:
+                kind: HelmRepository
+                name: truecharts
+                namespace: flux-system
+    releaseName: truenas
+    values:
+        ingress:
+            main:
+                enabled: true
+                ingressClassName: external
+                annotations:
+                    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+                    nginx.ingress.kubernetes.io/proxy-ssl-verify: "false"
+                    nginx.ingress.kubernetes.io/upstream-vhost: ${NAS_DOMAIN}
+                    nginx.ingress.kubernetes.io/proxy-ssl-name: ${NAS_DOMAIN}
+                hosts:
+                    - host: tr.${DOMAIN_0}
+                      paths:
+                        - path: /
+                          pathType: Prefix
+                integrations:
+                    certManager:
+                        certificateIssuer: domain-0-le-prod
+                        enabled: true
+                    homepage:
+                        enabled: false
+        release_name: truenas
+        service:
+            main:
+                enabled: true
+                # Use ExternalName to point the Service at the NAS hostname
+                type: ExternalName
+                externalName: ${NAS_DOMAIN}
+                # Port kept for ingress templating; chart handles ExternalName appropriately
+                ports:
+                    main:
+                        enabled: true
+                        port: 443
+                        protocol: https

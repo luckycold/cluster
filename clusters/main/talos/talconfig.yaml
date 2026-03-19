@@ -1,8 +1,8 @@
 clusterName: ${CLUSTERNAME}
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.9.1
+talosVersion: v1.12.0
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.4
+kubernetesVersion: v1.35.0
 endpoint: https://${VIP}:6443
 allowSchedulingOnControlPlanes: true
 additionalMachineCertSans:
@@ -26,6 +26,7 @@ nodes:
       ipAddress: ${MASTER1IP_IP}
       controlPlane: true
       nameservers:
+        - 192.168.0.1
         - 1.1.1.1
         - 8.8.8.8
       installDiskSelector:
@@ -58,12 +59,7 @@ controlPlane:
                     - siderolabs/qemu-guest-agent
     machineFiles:
     - content: |
-        [plugins."io.containerd.grpc.v1.cri"]
-          enable_unprivileged_ports = true
-          enable_unprivileged_icmp = true
-        [plugins."io.containerd.grpc.v1.cri".containerd]
-          discard_unpacked_layers = false
-        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+        [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
       permissions: 0
       path: /etc/cri/conf.d/20-customization.part
@@ -72,11 +68,8 @@ controlPlane:
         [ NFSMount_Global_Options ]
         nfsvers=4.2
         hard=True
+        nconnect=16
         noatime=True
-        nodiratime=True
-        rsize=131072
-        wsize=131072
-        nconnect=8
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite
@@ -97,12 +90,7 @@ worker:
                     - siderolabs/qemu-guest-agent
     machineFiles:
     - content: |
-        [plugins."io.containerd.grpc.v1.cri"]
-          enable_unprivileged_ports = true
-          enable_unprivileged_icmp = true
-        [plugins."io.containerd.grpc.v1.cri".containerd]
-          discard_unpacked_layers = false
-        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+        [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
       permissions: 0
       path: /etc/cri/conf.d/20-customization.part
@@ -111,11 +99,8 @@ worker:
         [ NFSMount_Global_Options ]
         nfsvers=4.2
         hard=True
+        nconnect=16
         noatime=True
-        nodiratime=True
-        rsize=131072
-        wsize=131072
-        nconnect=8
       permissions: 420
       path: /etc/nfsmount.conf
       op: overwrite

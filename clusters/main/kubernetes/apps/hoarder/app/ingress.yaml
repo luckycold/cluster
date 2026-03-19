@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hoarder-app-template
+  annotations:
+    cert-manager.io/cluster-issuer: domain-0-le-prod
+    cert-manager.io/private-key-rotation-policy: Always
+spec:
+  ingressClassName: external
+  rules:
+    - host: h.${DOMAIN_0}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hoarder-app-template
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - h.${DOMAIN_0}
+      secretName: hoarder-app-template-tls-0
