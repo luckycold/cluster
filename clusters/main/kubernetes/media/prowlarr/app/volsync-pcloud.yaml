@@ -2,6 +2,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: prowlarr-config-pcloud
+  namespace: media
 spec:
   sourcePVC: prowlarr-config-longhorn
   trigger:
