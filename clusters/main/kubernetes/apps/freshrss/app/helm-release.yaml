@@ -5,7 +5,6 @@ metadata:
   namespace: freshrss
 spec:
   interval: 15m
-  suspend: true
   chart:
     spec:
       chart: freshrss
@@ -19,7 +18,7 @@ spec:
     TZ: US/Central
     addons:
       codeserver:
-        enabled: true
+        enabled: false
         ingress:
           enabled: true
           integrations:

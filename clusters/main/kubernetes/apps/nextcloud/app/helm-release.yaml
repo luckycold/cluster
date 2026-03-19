@@ -125,6 +125,36 @@ spec:
                     - op: replace
                       path: /spec/replicas
                       value: 0
+                    - op: replace
+                      path: /spec/template/spec/containers/0/livenessProbe
+                      value:
+                        tcpSocket:
+                          port: 9090
+                        initialDelaySeconds: 12
+                        timeoutSeconds: 5
+                        periodSeconds: 15
+                        failureThreshold: 5
+                        successThreshold: 1
+                    - op: replace
+                      path: /spec/template/spec/containers/0/readinessProbe
+                      value:
+                        tcpSocket:
+                          port: 9090
+                        initialDelaySeconds: 10
+                        timeoutSeconds: 5
+                        periodSeconds: 12
+                        failureThreshold: 4
+                        successThreshold: 2
+                    - op: replace
+                      path: /spec/template/spec/containers/0/startupProbe
+                      value:
+                        tcpSocket:
+                          port: 9090
+                        initialDelaySeconds: 10
+                        timeoutSeconds: 3
+                        periodSeconds: 5
+                        failureThreshold: 60
+                        successThreshold: 1
                 - target:
                     kind: Deployment
                     name: nextcloud-notify
