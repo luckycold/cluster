@@ -58,12 +58,4 @@ spec:
                 accessMode: ReadWriteOnce
                 size: "100Gi"
                 retain: true
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                          enabled: true
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                          enabled: false
-                      type: restic
         release_name: overseerr

@@ -58,11 +58,3 @@ spec:
       datastore:
         enabled: true
         mountPath: "/datastore"
-        volsync:
-          - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-            dest:
-              enabled: false
-            name: ${VOLSYNC_BACKUP_MAIN_NAME}
-            src:
-              enabled: false
-            type: restic

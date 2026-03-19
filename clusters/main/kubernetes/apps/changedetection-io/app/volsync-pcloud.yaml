@@ -1,0 +1,25 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: changedetection-io-datastore-pcloud
+  namespace: changedetection-io
+spec:
+  sourcePVC: changedetection-io-datastore
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    repository: changedetection-io-datastore-volsync-pcloud
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      daily: 3
+      weekly: 4
+      monthly: 2
+      within: 30d
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568

@@ -55,14 +55,6 @@ spec:
                 medium: Memory
                 type: emptyDir
             config:
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: false
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: false
-                      type: restic
         release_name: ntfy
         workload:
             main:

@@ -53,12 +53,4 @@ spec:
                 path: /mnt
                 server: ${NAS_DOMAIN}
             data:
-                volsync:
-                    - name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: false
-                      src:
-                        enabled: false
-                      type: restic
         release_name: alist

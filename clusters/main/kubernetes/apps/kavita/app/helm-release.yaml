@@ -52,14 +52,6 @@ spec:
                             - websecure
         persistence:
             config:
-                volsync:
-                    - credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                        enabled: false
-                      name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      src:
-                        enabled: false
-                      type: restic
             books:
                 enabled: true
                 path: /mnt/Media/library/books

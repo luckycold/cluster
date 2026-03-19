@@ -1,0 +1,25 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: qbittorrent-config-pcloud
+  namespace: media
+spec:
+  sourcePVC: qbittorrent-config
+  trigger:
+    schedule: "30 4 * * *"
+  restic:
+    repository: qbittorrent-config-volsync-pcloud
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      daily: 3
+      weekly: 4
+      monthly: 2
+      within: 30d
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568

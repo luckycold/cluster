@@ -107,14 +107,6 @@ spec:
                 accessMode: ReadWriteOnce
                 size: "100Gi"
                 retain: true
-                volsync:
-                    - name: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                      dest:
-                          enabled: true
-                      src:
-                          enabled: false
-                      type: restic
             media:
                 enabled: true
                 type: nfs
