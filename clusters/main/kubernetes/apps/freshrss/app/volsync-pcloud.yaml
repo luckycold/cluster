@@ -12,10 +12,10 @@ spec:
     pruneIntervalDays: 7
     cacheCapacity: 10Gi
     retain:
-      daily: ${VOLSYNC_BACKUP_RETENTION_DAILY}
-      weekly: ${VOLSYNC_BACKUP_RETENTION_WEEKLY}
-      monthly: ${VOLSYNC_BACKUP_RETENTION_MONTHLY}
-      within: ${VOLSYNC_BACKUP_RETENTION_WITHIN}
+      daily: 3
+      weekly: 4
+      monthly: 2
+      within: 30d
     accessModes:
       - ReadWriteOnce
     moverSecurityContext:
