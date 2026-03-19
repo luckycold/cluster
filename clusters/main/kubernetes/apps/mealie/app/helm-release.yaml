@@ -26,6 +26,15 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
+            cnpg-b2:
+                accessKey: ${CNPG_BACKUP_B2_ACCESSKEY}
+                bucket: ${CNPG_BACKUP_B2_BUCKET}
+                encrKey: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+                name: cnpg-b2
+                path: ""
+                secretKey: ${CNPG_BACKUP_B2_SECRETKEY}
+                type: s3
+                url: ${CNPG_BACKUP_B2_ENDPOINT}
         ingress:
             main:
                 enabled: true
@@ -53,7 +62,7 @@ spec:
             main:
                 password: ${MEALIE_CNPG_PASSWORD}
                 backups:
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
+                    credentials: cnpg-b2
                     enabled: false
                     revision: "1"
                 cluster:

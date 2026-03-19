@@ -4,8 +4,8 @@ metadata:
   name: authelia-cnpg-main-provider-backup-s3-creds
 type: Opaque
 stringData:
-  ACCESS_KEY_ID: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
-  ACCESS_SECRET_KEY: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
+  ACCESS_KEY_ID: ${CNPG_BACKUP_B2_ACCESSKEY}
+  ACCESS_SECRET_KEY: ${CNPG_BACKUP_B2_SECRETKEY}
 ---
 apiVersion: v1
 kind: Secret
@@ -127,8 +127,8 @@ spec:
   externalClusters:
     - name: authelia-cnpg-main-backup
       barmanObjectStore:
-        destinationPath: s3://${VOLSYNC_BACKUP_MAIN_BUCKET}/authelia/cnpg
-        endpointURL: ${VOLSYNC_BACKUP_MAIN_URL}
+        destinationPath: s3://${CNPG_BACKUP_B2_BUCKET}/authelia/cnpg
+        endpointURL: ${CNPG_BACKUP_B2_ENDPOINT}
         s3Credentials:
           accessKeyId:
             key: ACCESS_KEY_ID
