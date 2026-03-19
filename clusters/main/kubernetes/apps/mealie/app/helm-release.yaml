@@ -91,7 +91,7 @@ spec:
                 password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: cnpg-b2
-                    enabled: false
+                    enabled: true
                     revision: "1"
                 cluster:
                     instances: 1

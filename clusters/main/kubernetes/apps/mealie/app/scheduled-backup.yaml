@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: mealie-cnpg-main-sched-backup-daily-backup
+  namespace: mealie
+spec:
+  backupOwnerReference: self
+  cluster:
+    name: mealie-cnpg-main
+  immediate: true
+  method: barmanObjectStore
+  schedule: 0 0 0 * * *
+  suspend: false

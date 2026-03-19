@@ -89,6 +89,24 @@ spec:
         connectionTimeout: 1000
         enabled: true
         requestTimeout: 1000
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://${CNPG_BACKUP_B2_BUCKET}/lldap/cnpg
+      endpointURL: ${CNPG_BACKUP_B2_ENDPOINT}
+      s3Credentials:
+        accessKeyId:
+          key: ACCESS_KEY_ID
+          name: lldap-cnpg-main-provider-backup-s3-creds
+        secretAccessKey:
+          key: ACCESS_SECRET_KEY
+          name: lldap-cnpg-main-provider-backup-s3-creds
+      serverName: lldap-cnpg-main
+      data:
+        compression: gzip
+      wal:
+        compression: gzip
+        maxParallel: 8
+    retentionPolicy: 30d
   replicationSlots:
     highAvailability:
       enabled: true
@@ -152,4 +170,4 @@ spec:
   immediate: true
   method: barmanObjectStore
   schedule: 0 0 0 * * *
-  suspend: true
+  suspend: false

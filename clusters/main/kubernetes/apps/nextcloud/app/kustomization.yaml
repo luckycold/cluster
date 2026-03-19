@@ -4,5 +4,6 @@ namespace: nextcloud
 resources:
   - namespace.yaml
   - helm-release.yaml
+  - scheduled-backup.yaml
   - secrets.yaml
   - ../../../common/bw-auth-token

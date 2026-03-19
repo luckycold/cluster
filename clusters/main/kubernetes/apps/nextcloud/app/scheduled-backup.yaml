@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: nextcloud-cnpg-main-sched-backup-daily-backup
+  namespace: nextcloud
+spec:
+  backupOwnerReference: self
+  cluster:
+    name: nextcloud-cnpg-main
+  immediate: true
+  method: barmanObjectStore
+  schedule: 0 0 0 * * *
+  suspend: false
