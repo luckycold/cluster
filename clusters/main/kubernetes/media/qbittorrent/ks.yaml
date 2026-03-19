@@ -17,7 +17,7 @@ spec:
             - kind: ConfigMap
               name: upgrade-settings
     prune: true
-    suspend: true
+    suspend: false
     sourceRef:
         kind: GitRepository
         name: cluster

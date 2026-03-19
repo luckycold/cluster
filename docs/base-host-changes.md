@@ -162,6 +162,7 @@ Key config choices:
   - `home-apps`
   - `home-apps.lan.1al.cc`
   - `192.168.1.28`
+- the old cluster VIP `192.168.0.10` was not included in the initial TLS SAN set
 
 Follow-up fix applied:
 
@@ -174,6 +175,7 @@ Result:
 - `k3s` installed and running on `home-apps`
 - Node registered as `home-apps`
 - Cluster is currently waiting on Cilium, so the node is expected to remain `NotReady` until CNI bootstrap finishes
+- Any kubeconfig that still points at `https://192.168.0.10:6443` will need either a VIP route plus matching server certificate SAN or a temporary rewrite to `home-apps.lan.1al.cc` / `192.168.1.28`
 
 ## Current Validation Notes
 

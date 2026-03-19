@@ -47,6 +47,7 @@ Applied host config:
   - `home-apps`
   - `home-apps.lan.1al.cc`
   - `192.168.1.28`
+- the old control-plane VIP `192.168.0.10` was not in the initial SAN set
 
 ## Repo Changes Needed Before Full Flux Reconcile
 
@@ -76,6 +77,9 @@ Applied host config:
 - The chart version used was `1.18.6`, matching `clusters/main/kubernetes/kube-system/cilium/app/helm-release.yaml:1`.
 - The bootstrap values matched the repo values, except the Kubernetes API endpoint was set to `home-apps.lan.1al.cc:6443`.
 - The fresh host was missing `/etc/cni/net.d`, so that directory had to be created before Cilium could write `05-cilium.conflist` and make the node schedulable.
+- If any admin kubeconfig still points at `https://192.168.0.10:6443`, local `kubectl` and `flux` commands will fail until that VIP is actually routed to the new node. Either add the VIP to `tls-san` from day one or plan to rewrite kubeconfigs to `home-apps.lan.1al.cc` or `192.168.1.28` during bootstrap.
+- The initial server certificate only covered `home-apps`, `home-apps.lan.1al.cc`, and `192.168.1.28`. Even after reaching the node directly, clients that expect the VIP name/IP will still fail TLS validation unless the cert is regenerated with that VIP SAN.
+- Break-glass access during bootstrap was `ssh home-apps.lan.1al.cc 'sudo k3s kubectl ...'`. This was necessary when the workstation kubeconfig still targeted a dead VIP but the cluster itself was healthy.
 - Flux source manifests must use `source.toolkit.fluxcd.io/v1`, not `v1beta2`, on this cluster.
 - `repositories/git/this-repo.yaml` must point at the migration branch during parity testing.
 - `clusters/main/kubernetes/kustomization.yaml` should not include `common` at the root during bootstrap, because namespace-less shared secrets like `bw-auth-token` are meant to be included by app kustomizations.
@@ -133,6 +137,9 @@ Applied host config:
   4. runs `restic unlock` and `restic restore latest --target /restore`, and
   5. copies `/restore/.` into the live claim.
 - The restic restore jobs often returned non-zero because of harmless `security.selinux` xattr warnings on the restored files. The restore still produced usable data, so the migration job copied the restored tree and then started the app.
+- For SQLite-backed apps, back up the live database first and scale the workload to zero before starting the restore. Otherwise the app can rewrite or hold the database while the restore is running.
+- Maintainerr was a special case: its active backup location was already on MinIO at `maintainerr/volsync/data-volsync-minio`, but the repository still used its older restic password. That required a dedicated secret value (`VOLSYNC_BACKUP_MAINTAINERR_ENCRKEY`) and an explicit restore `Secret` plus `ReplicationDestination` instead of reusing the global MinIO restic password.
+- A manual `ReplicationDestination` restore can finish successfully and then immediately report `Synchronizing=False` with `reason: WaitingForManual`. Check `status.lastSyncTime`, `status.latestMoverStatus.result`, and mover logs before assuming the restore never ran.
 - For Nextcloud, the restored `data` volume also needed a permission fix (`chmod 0770` on directories, `chmod 0660` on files, then `chown -R 568:568`) before the app would start cleanly.
 - For chart-managed init containers that depended on mirror-specific utilities, the safest migration fix was a post-render patch rather than ad-hoc runtime edits.
 - The official public images are not always compatible with the mirrored `tccr` images one-to-one:

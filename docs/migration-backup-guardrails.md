@@ -52,7 +52,6 @@ Affected manifests:
 - `clusters/main/kubernetes/apps/lldap/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/minecraft/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/romm/app/volsync.yaml`
-- `clusters/main/kubernetes/media/jellyfin/app/volsync-proton-replicationsource.yaml`
 - `clusters/main/kubernetes/media/speakarr/app/volsync-restic-replicationsource.yaml`
 
 `ReplicationDestination` restore objects were left intact.
@@ -61,6 +60,12 @@ Additional restore destinations were added where a standalone app had a backup s
 
 - `clusters/main/kubernetes/apps/lldap/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/romm/app/volsync.yaml`
+- `clusters/main/kubernetes/media/maintainerr/app/volsync-restore.yaml`
+
+Maintainerr restores from the existing MinIO repository path but uses its historical repository password through `VOLSYNC_BACKUP_MAINTAINERR_ENCRKEY`.
+
+This is a real migration exception: the object-store location moved to MinIO, but the repository password did not rotate with `VOLSYNC_BACKUP_MAIN_ENCRKEY`.
+
 
 Standalone sources that already had a chart-managed restore path were left as-is:
 
@@ -112,8 +117,11 @@ After cutover and validation on the new cluster:
   - `qbittorrent` to avoid tracker activity
   - `minecraft` to avoid unnecessary resource pressure during bootstrap
 - Suspend the affected Flux kustomizations before manual restore surgery, or commit the testing changes first, so Flux does not recreate workloads while the restore is still running.
+- If the workstation kubeconfig still points at a dead or not-yet-routed VIP, use `ssh home-apps.lan.1al.cc 'sudo k3s kubectl ...'` as break-glass access until kubeconfig and networking catch up.
 - Prefer `ReplicationDestination.spec.restic.destinationPVC` when an app can restore directly into its live PVC.
+- For SQLite-backed apps, copy out the pre-restore database and scale the workload down before triggering the restore.
 - If a restore path creates a separate destination PVC instead of writing into the live app claim, copy the restored data into the live PVC before starting the app.
 - Hoarder needed this extra copy step because its restore objects were initially restoring into `volsync-*-dest-dest` PVCs rather than the active app PVCs.
 - The arr apps proved safer to restore from their own scheduled backup zips on `/config/Backups/scheduled` than from the older chart-managed VolSync path.
 - After restoring the arr apps from the native backup zips, explicit standalone VolSync sources were added so fresh backups resume from the corrected PVC contents.
+- After a manual `ReplicationDestination` run, success is recorded on `status.lastSyncTime` and `status.latestMoverStatus.result`; the object may already be back in `WaitingForManual` by the time you inspect it.

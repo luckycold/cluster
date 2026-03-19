@@ -27,6 +27,10 @@ spec:
     defaultSettings:
       # Increase to 3 for a multi-node cluster
       defaultReplicaCount: 1
+      # Keep the instance manager schedulable on a CPU-tight single node
+      guaranteedInstanceManagerCPU:
+        v1: 5
+        v2: 5
       # Keep Longhorn schedulable on single-node setups with high PVC density
       storageMinimalAvailablePercentage: 20
       # Overprovisioning might be needed when using volsync
