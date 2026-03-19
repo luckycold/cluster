@@ -142,6 +142,10 @@ VOLSYNC_BACKUP_PCLOUD_HOSTNAME: ENC[AES256_GCM,data:KPExhoDeabNGyhKUxxo=,iv:24df
 VOLSYNC_BACKUP_PCLOUD_TOKEN_JSON: ENC[AES256_GCM,data:bsF2pMwTC94BtrE5jfSFnwVfq3sTqUR1admKkLDgUP5VcC+sJ+5OgT7hdp1mGlZjE/C8NBBkPIP5kczS1aVnqFC5NjQtBmSPwhpvmdIqAauWbcz8jdhSs9cFKuS6NStFNocqM0Q3BSlvk/DXbgThqcAsWklSQRM4B6dmg/vU,iv:+WHveA0y5a1z5P/rq1K89zAoBhHaQuyYaX7IOx7+ys4=,tag:sNjIB7qdd4Upt4wR1L8k2g==,type:str]
 VOLSYNC_BACKUP_PCLOUD_REMOTE_PATH: ENC[AES256_GCM,data:8tJA1AdDrCd0JDoHrth2hgTzLzs9M84=,iv:K45CPHSeC1p1qxIEuv7cABPKrBbpflYHjjvr6LLlHDE=,tag:a71BhTrlo87DlhsHsajHuQ==,type:str]
 VOLSYNC_BACKUP_PCLOUD_REPO_SUBPATH: ENC[AES256_GCM,data:gCbt2UmI,iv:9LL6bmiQtV7Nc5U0ImvBSmzeLbqrxHvU/6aHByt4D+o=,tag:czi7bw0HmAaxecOyuxSJig==,type:str]
+VOLSYNC_BACKUP_RETENTION_DAILY: ENC[AES256_GCM,data:lQ==,iv:8fzqZ7tvPXoDymzNXn2+TNG7KpOkhItLZeANOpl5rHo=,tag:5OjdXYVRAtKLITR8EXcHMw==,type:str]
+VOLSYNC_BACKUP_RETENTION_WEEKLY: ENC[AES256_GCM,data:fA==,iv:Wft9WHJss2VylR7kgXyRkQxNrNOBjKz7zVW1eMAG+Lo=,tag:Cx9BeI7yVKbops2atPPokw==,type:str]
+VOLSYNC_BACKUP_RETENTION_MONTHLY: ENC[AES256_GCM,data:JQ==,iv:WHHCJPkyDIy6a5+9YH7wsepBM8/pa5Hzoyo4iwgEhsQ=,tag:dI1cdwd1oOvHsFSHcR0g4w==,type:str]
+VOLSYNC_BACKUP_RETENTION_WITHIN: ENC[AES256_GCM,data:cAgd,iv:Ccfh35fL30R7zSvVjy0Ctqfx68MoJ6XmR6leUeemf9Y=,tag:bW/pJ6gAgZ7KPGz06fmmsA==,type:str]
 sops:
     age:
         - recipient: age198qlalug6g4kvmp3xypzzsr5lvw36wexemc2jn220t29l7nak33qft2q7y
@@ -153,7 +157,7 @@ sops:
             RWFUTzFPbkNDRXF0SEc4N2w4RUN4RGMKBTDOkIRSwYlDaYJbaox8bgFAjIaQZvro
             HrMpdpg/R2gcAwFkhZJijyjz6Jy/chlLtHgtDN2SuhQ5fSZwZkllCg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-19T00:27:57Z"
-    mac: ENC[AES256_GCM,data:Dnakd83q1K+riPIyh5lRyJ3U5Mn+fDo/Z6o8Zj3Dt3glvG+0dsXlmeJP38n1UF6AkvMsf+8r7Q6gEB7YWr/L0HBfJcV6ZETH0zE18K8xdNwauGuCydQt2LEi1wG7+3/JowKXYaJ8EbpN8PsE7vw5G86tXjKWabKb5vIthFJ70sQ=,iv:rNpuHkxgNWjGqGhl+60eN33PpKJcwOydyCjU+U7Gat8=,tag:nxazOduUsJYKyQeSDqj9eA==,type:str]
+    lastmodified: "2026-03-19T01:34:12Z"
+    mac: ENC[AES256_GCM,data:2M5qSdFCPHOF1uX0YbtBOw6uSBCE1oMo5ZHEyY9sQ790wueI2nKHBvU7i8VGzO7szM0nI/NrzQNkchxf5DDrk8eBTU5NracsrpZ5iABiuL9/oYSA1uP52ZAqg2Ox3UIq9teYCDUvHd1AUFDjB9qv5duVUvzBFwNUnt6z8JBXf9M=,iv:2FB709n/9yikPVLr9sg7fMipk/lIB+zJzvDTvIzC7Yk=,tag:/epeU8iSSrDkEI2UB0AxpA==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
