@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - pvc.yaml
-  - maintainerr-data-volsync-pcloud.secret.yaml
-  - volsync-pcloud.yaml
+  - volsync.yaml

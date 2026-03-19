@@ -5,7 +5,6 @@ resources:
   - namespace.yaml
   - helm-release.yaml
   - pvc.yaml
-  - freshrss-config-volsync-pcloud.secret.yaml
-  - volsync-pcloud.yaml
   - freshrss.yaml
   - ingress.yaml
+  - volsync.yaml

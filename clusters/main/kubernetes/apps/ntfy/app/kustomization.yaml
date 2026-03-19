@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - helm-release.yaml
-  - ntfy-config-volsync-pcloud.secret.yaml
-  - volsync-pcloud.yaml
+  - volsync.yaml

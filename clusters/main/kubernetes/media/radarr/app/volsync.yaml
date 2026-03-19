@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: radarr-config-volsync-pcloud
+  namespace: media
+type: Opaque
+stringData:
+  RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
+  RESTIC_REPOSITORY: rclone:pcloud:${VOLSYNC_BACKUP_PCLOUD_REMOTE_PATH}/${VOLSYNC_BACKUP_PCLOUD_REPO_SUBPATH}/radarr-config-volsync-pcloud
+  RCLONE_CONFIG_PCLOUD_TYPE: pcloud
+  RCLONE_CONFIG_PCLOUD_HOSTNAME: ${VOLSYNC_BACKUP_PCLOUD_HOSTNAME}
+  RCLONE_CONFIG_PCLOUD_TOKEN: ${VOLSYNC_BACKUP_PCLOUD_TOKEN_JSON}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: radarr-config-pcloud
+  namespace: media
+spec:
+  sourcePVC: radarr-config-longhorn
+  trigger:
+    schedule: "30 4 * * *"
+  restic:
+    repository: radarr-config-volsync-pcloud
+    copyMethod: Direct
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      daily: ${VOLSYNC_BACKUP_RETENTION_DAILY}
+      weekly: ${VOLSYNC_BACKUP_RETENTION_WEEKLY}
+      monthly: ${VOLSYNC_BACKUP_RETENTION_MONTHLY}
+      within: ${VOLSYNC_BACKUP_RETENTION_WITHIN}
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568

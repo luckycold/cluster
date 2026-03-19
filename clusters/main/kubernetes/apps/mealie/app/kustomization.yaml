@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - helm-release.yaml
-  - mealie-data-volsync-pcloud.secret.yaml
-  - volsync-pcloud.yaml
+  - volsync.yaml
