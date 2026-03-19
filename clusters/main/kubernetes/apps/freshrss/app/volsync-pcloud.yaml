@@ -1,0 +1,24 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: freshrss-config-pcloud
+spec:
+  sourcePVC: freshrss-config-longhorn
+  trigger:
+    manual: pcloud-test-20260319
+  restic:
+    repository: freshrss-config-volsync-pcloud
+    copyMethod: Snapshot
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      daily: ${VOLSYNC_BACKUP_RETENTION_DAILY}
+      weekly: ${VOLSYNC_BACKUP_RETENTION_WEEKLY}
+      monthly: ${VOLSYNC_BACKUP_RETENTION_MONTHLY}
+      within: ${VOLSYNC_BACKUP_RETENTION_WITHIN}
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
