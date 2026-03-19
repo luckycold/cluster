@@ -59,15 +59,14 @@ spec:
             from_email: ${ADMIN_EMAIL}
         cnpg:
             main:
-                mode: recovery
                 password: ${MEALIE_CNPG_PASSWORD}
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: false
                     revision: "1"
-                recovery:
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
-                    revision: "1"
+                cluster:
+                    instances: 1
+                    singleNode: true
         workload:
             main:
                 podSpec:

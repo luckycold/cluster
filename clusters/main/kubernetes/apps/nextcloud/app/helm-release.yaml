@@ -16,6 +16,12 @@ spec:
                       path: /spec/template/spec/containers/0/image
                       value: docker.io/library/nextcloud:32.0.0-fpm
                     - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/cpu
+                      value: 75m
+                    - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/memory
+                      value: 256Mi
+                    - op: replace
                       path: /spec/template/spec/containers/0/livenessProbe
                       value:
                         tcpSocket:
@@ -50,6 +56,12 @@ spec:
                     name: nextcloud-nginx
                   patch: |
                     - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/cpu
+                      value: 25m
+                    - op: replace
+                      path: /spec/template/spec/containers/0/resources/requests/memory
+                      value: 128Mi
+                    - op: replace
                       path: /spec/template/spec/initContainers/2/image
                       value: busybox:1.36
                     - op: replace
@@ -75,6 +87,32 @@ spec:
                     - op: replace
                       path: /spec/replicas
                       value: 0
+                - target:
+                    kind: CronJob
+                    name: nextcloud-nextcloud-cron
+                  patch: |
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/image
+                      value: docker.io/library/nextcloud:32.0.0-fpm
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu
+                      value: 25m
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/memory
+                      value: 128Mi
+                - target:
+                    kind: CronJob
+                    name: nextcloud-preview-cron
+                  patch: |
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/image
+                      value: docker.io/library/nextcloud:32.0.0-fpm
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu
+                      value: 25m
+                    - op: replace
+                      path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/memory
+                      value: 128Mi
     chart:
         spec:
             chart: nextcloud
@@ -85,7 +123,7 @@ spec:
                 namespace: flux-system
     releaseName: nextcloud
     values:
-        TZ: US/Central
+        TZ: America/Chicago
         nextcloud:
             credentials:
                 initialAdminUser: ${GENERIC_USER}
@@ -142,13 +180,9 @@ spec:
                       type: restic
         cnpg:
             main:
-                mode: recovery
                 backups:
                     credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     enabled: false
-                    revision: "1"
-                recovery:
-                    credentials: ${VOLSYNC_BACKUP_MAIN_NAME}
                     revision: "1"
                 cluster:
                     instances: 1

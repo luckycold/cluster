@@ -138,11 +138,9 @@ bitwarden_secrets_auth_token: ENC[AES256_GCM,data:D1oX9roCNEYsyBiWE0EAQzSu7DpioU
 bitwarden_secrets_org_id: ENC[AES256_GCM,data:6NnxHXqa/pv+KR/rCQOfZog+luu1jnxTvh5cxKN4k/wgrbyc,iv:wPLS7HVvRxQwHdtVJ5BQ//yXcaKx1Nk2soBO/mzHl6k=,tag:pLhsxkqa8+U+GhmGanLEPA==,type:str]
 MUSIC_DOMAIN: ENC[AES256_GCM,data:9vOUSa9YvbmbJrgr,iv:9ks9fF0at9vykUgEdeZFu4k4USTts1GdirbWQmeO3N8=,tag:z6Y2ZEufMglYkP6vSUCfmw==,type:str]
 VOLSYNC_BACKUP_PCLOUD_NAME: ENC[AES256_GCM,data:XDvVMXU9,iv:OMfp2Wnc5zkSRGuIBIkRG2duPKCSq3bq9YTbMD9sP6k=,tag:lLTLZAXVHVGTb9TjbKU0/A==,type:str]
-VOLSYNC_BACKUP_PCLOUD_HOSTNAME: ENC[AES256_GCM,data:VGj7Zw1okWcK+eWaJ8x2,iv:e6DUbtOlk4DEgKY1SCahrUTPfMiJY8CRjkKSvs4iyD4=,tag:9OzSy61yhPV3+gbGxM14KQ==,type:str]
-VOLSYNC_BACKUP_PCLOUD_CLIENT_ID: ENC[AES256_GCM,data:M63fdYs2Tt6ipHEnnp3fymfpROYmkhCptXYX,iv:5/qQP04Iv+MsghPHG9FOPq4wAnRNk1ppGUS8Q2ydoBs=,tag:Mg2ftEnb5pX/i+G3y0fsTA==,type:str]
-VOLSYNC_BACKUP_PCLOUD_CLIENT_SECRET: ENC[AES256_GCM,data:Sf+IHVvLbfv3vZ4D8lKAKwja9Dwar3uM+y+NAaZcgw==,iv:VRPc0yzB6ZVG2RHz8VE/rX+AKTCxTkL/9oEniRJROio=,tag:d5XUzzREO6MsqplwdOxbwA==,type:str]
-VOLSYNC_BACKUP_PCLOUD_TOKEN_JSON: ENC[AES256_GCM,data:pVyNvqDmJGnTMCZ1qaqANtfVTSI4pCW0Ye7fXw==,iv:63VZ+HMyZHrwAQk7eF8Jc81r5c4DWXyleelo/pyPgtg=,tag:PPqUjsnd1yCxq07Yr5MCvw==,type:str]
-VOLSYNC_BACKUP_PCLOUD_REMOTE_PATH: ENC[AES256_GCM,data:9+bTBpiAqHk6z/mpMsZYRw==,iv:G7kVpTzdiwU+R+RzBhzcRi2GeNhbnZNKnC5reVGRBl0=,tag:C8ZCCQhXIk7+k4rOhsHbmw==,type:str]
+VOLSYNC_BACKUP_PCLOUD_HOSTNAME: ENC[AES256_GCM,data:KPExhoDeabNGyhKUxxo=,iv:24dftvnIsmApDlOi2ZJ3zoPWTPXHUYRLc5ce7vmJssQ=,tag:t5sRZTBHDrMD5d2odpniWA==,type:str]
+VOLSYNC_BACKUP_PCLOUD_TOKEN_JSON: ENC[AES256_GCM,data:bsF2pMwTC94BtrE5jfSFnwVfq3sTqUR1admKkLDgUP5VcC+sJ+5OgT7hdp1mGlZjE/C8NBBkPIP5kczS1aVnqFC5NjQtBmSPwhpvmdIqAauWbcz8jdhSs9cFKuS6NStFNocqM0Q3BSlvk/DXbgThqcAsWklSQRM4B6dmg/vU,iv:+WHveA0y5a1z5P/rq1K89zAoBhHaQuyYaX7IOx7+ys4=,tag:sNjIB7qdd4Upt4wR1L8k2g==,type:str]
+VOLSYNC_BACKUP_PCLOUD_REMOTE_PATH: ENC[AES256_GCM,data:8tJA1AdDrCd0JDoHrth2hgTzLzs9M84=,iv:K45CPHSeC1p1qxIEuv7cABPKrBbpflYHjjvr6LLlHDE=,tag:a71BhTrlo87DlhsHsajHuQ==,type:str]
 VOLSYNC_BACKUP_PCLOUD_REPO_SUBPATH: ENC[AES256_GCM,data:gCbt2UmI,iv:9LL6bmiQtV7Nc5U0ImvBSmzeLbqrxHvU/6aHByt4D+o=,tag:czi7bw0HmAaxecOyuxSJig==,type:str]
 sops:
     age:
@@ -155,7 +153,7 @@ sops:
             RWFUTzFPbkNDRXF0SEc4N2w4RUN4RGMKBTDOkIRSwYlDaYJbaox8bgFAjIaQZvro
             HrMpdpg/R2gcAwFkhZJijyjz6Jy/chlLtHgtDN2SuhQ5fSZwZkllCg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-18T22:42:38Z"
-    mac: ENC[AES256_GCM,data:ZVXYJx4xdlUBd9DztNqzKuOxGMT1nY7XO//72tMAVBugM6IfeWNBaBcrvmsEpo4dHCoe8izGM8Ss4qQq3zez+52rHAQy8+jtM8Vy/Z1eHsLa6TDij0rZPMdx1+xyAUIag3Ol103R3qdHEd93CyFc44huFCkNGiym95rc/UlcoYs=,iv:ogaRPbUFnlh1sImGuMeu9kotOqmS0Ja3tV19bNTBdTY=,tag:AKkXI6oLc7CVh+jSI/4jXw==,type:str]
+    lastmodified: "2026-03-19T00:27:57Z"
+    mac: ENC[AES256_GCM,data:Dnakd83q1K+riPIyh5lRyJ3U5Mn+fDo/Z6o8Zj3Dt3glvG+0dsXlmeJP38n1UF6AkvMsf+8r7Q6gEB7YWr/L0HBfJcV6ZETH0zE18K8xdNwauGuCydQt2LEi1wG7+3/JowKXYaJ8EbpN8PsE7vw5G86tXjKWabKb5vIthFJ70sQ=,iv:rNpuHkxgNWjGqGhl+60eN33PpKJcwOydyCjU+U7Gat8=,tag:nxazOduUsJYKyQeSDqj9eA==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
