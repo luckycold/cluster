@@ -1,0 +1,24 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: sonarr-config-pcloud
+spec:
+  sourcePVC: sonarr-config-longhorn
+  trigger:
+    schedule: "30 4 * * *"
+  restic:
+    repository: sonarr-config-volsync-pcloud
+    copyMethod: Direct
+    pruneIntervalDays: 7
+    cacheCapacity: 10Gi
+    retain:
+      daily: 3
+      weekly: 4
+      monthly: 2
+      within: 30d
+    accessModes:
+      - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568

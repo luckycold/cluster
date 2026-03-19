@@ -8,5 +8,6 @@ resources:
   - mariadb.yaml
   - romm.yaml
   - ingress.yaml
-  - volsync.yaml
+  - romm-config-volsync-pcloud.secret.yaml
+  - volsync-pcloud.yaml
   - ../../../common/bw-auth-token

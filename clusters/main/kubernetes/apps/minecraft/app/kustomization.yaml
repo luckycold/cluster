@@ -6,4 +6,5 @@ resources:
   - pvc.yaml
   - minecraft.yaml
   - ingress.yaml
-  - volsync.yaml
+  - minecraft-data-volsync-pcloud.secret.yaml
+  - volsync-pcloud.yaml

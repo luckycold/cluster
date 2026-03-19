@@ -8,7 +8,6 @@ resources:
   - service.yaml
   - ingress.yaml
   - pvc.yaml
-  - volsync.yaml
   - hoarder-app-template-data-volsync-pcloud.secret.yaml
   - hoarder-app-template-meili-data-volsync-pcloud.secret.yaml
   - volsync-pcloud.yaml

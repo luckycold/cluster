@@ -6,6 +6,7 @@ resources:
   - pvc.yaml
   - lldap-secret.secret.yaml
   - cnpg.yaml
-  - volsync.yaml
+  - lldap-data-volsync-pcloud.secret.yaml
+  - volsync-pcloud.yaml
   - lldap.yaml
   - ingress.yaml
