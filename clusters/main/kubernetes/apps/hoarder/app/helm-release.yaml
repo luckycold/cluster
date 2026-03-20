@@ -38,7 +38,7 @@ spec:
         image:
             repository: ghcr.io/hoarder-app/hoarder
             pullPolicy: IfNotPresent
-            tag: "release@sha256:e72341d7626b7f92ea9b4d5e1a671ae1b8b2f6d85873a5f482e836978b650f99"
+            tag: "release@sha256:20754dbdafb11dfe288bbb1c2342a7855081b08ea069e86fcf2d4a2d945d3653"
         meilisearchImage:
             repository: getmeili/meilisearch
             pullPolicy: IfNotPresent
