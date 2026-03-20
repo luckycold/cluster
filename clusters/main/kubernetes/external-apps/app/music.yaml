@@ -41,8 +41,8 @@ spec:
         service:
             main:
                 enabled: true
-                type: ExternalName
-                externalName: homeassistant.local
+                type: ExternalIP
+                externalIP: ${MUSIC_DOMAIN}
                 ports:
                     main:
                         enabled: true
