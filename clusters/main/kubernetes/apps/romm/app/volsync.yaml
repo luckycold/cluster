@@ -17,7 +17,6 @@ metadata:
   name: romm-config-pcloud
   namespace: romm
 spec:
-  paused: true
   sourcePVC: romm-config-longhorn
   trigger:
     schedule: "0 0 * * *"

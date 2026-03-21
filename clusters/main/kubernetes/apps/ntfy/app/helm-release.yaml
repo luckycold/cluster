@@ -55,6 +55,13 @@ spec:
                 medium: Memory
                 type: emptyDir
             config:
+                enabled: true
+                type: pvc
+                existingClaim: ntfy-config
+                accessMode: ReadWriteOnce
+                size: "10Gi"
+                retain: true
+                mountPath: /etc/ntfy
         release_name: ntfy
         workload:
             main:

@@ -17,7 +17,6 @@ metadata:
   name: minecraft-data-pcloud
   namespace: minecraft
 spec:
-  paused: true
   sourcePVC: minecraft-data-longhorn
   trigger:
     schedule: "0 0 * * *"

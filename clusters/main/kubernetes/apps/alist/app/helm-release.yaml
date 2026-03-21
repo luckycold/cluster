@@ -53,4 +53,11 @@ spec:
                 path: /mnt
                 server: ${NAS_DOMAIN}
             data:
+                enabled: true
+                type: pvc
+                existingClaim: alist-data
+                accessMode: ReadWriteOnce
+                size: "100Gi"
+                retain: true
+                mountPath: /opt/alist/data
         release_name: alist
