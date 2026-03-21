@@ -243,6 +243,7 @@ data:
             redirect_uris:
               - 'app.immich:///oauth-callback'
               - 'https://${DOMAIN_1}/auth/login'
+              - 'http://${NAS_DOMAIN}:30041/auth/login'
               - 'https://${DOMAIN_1}/user-settings'
             scopes:
               - 'openid'
