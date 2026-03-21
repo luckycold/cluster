@@ -17,7 +17,7 @@ metadata:
   name: freshrss-config-pcloud
   namespace: freshrss
 spec:
-  sourcePVC: freshrss-config-longhorn
+  sourcePVC: freshrss-config
   trigger:
     schedule: "0 0 * * *"
   restic:
