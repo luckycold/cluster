@@ -36,3 +36,21 @@ spec:
       runAsUser: 0
       runAsGroup: 0
       fsGroup: 568
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: freshrss-config-pcloud-dest
+  namespace: freshrss
+spec:
+  trigger:
+    manual: restore
+  restic:
+    repository: freshrss-config-volsync-pcloud
+    destinationPVC: freshrss-config
+    copyMethod: Direct
+    cacheCapacity: 10Gi
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
