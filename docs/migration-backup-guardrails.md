@@ -58,6 +58,7 @@ Affected manifests:
 
 Additional restore destinations were added where a standalone app had a backup source but no pull target yet:
 
+- `clusters/main/kubernetes/apps/freshrss/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/lldap/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/romm/app/volsync.yaml`
 - `clusters/main/kubernetes/media/maintainerr/app/volsync-restore.yaml`
@@ -69,7 +70,6 @@ This is a real migration exception: the object-store location moved to MinIO, bu
 
 Standalone sources that already had a chart-managed restore path were left as-is:
 
-- `clusters/main/kubernetes/apps/freshrss/app/helm-release.yaml`
 - `clusters/main/kubernetes/media/jellyfin/app/helm-release.yaml`
 - `clusters/main/kubernetes/media/speakarr/app/helm-release.yaml`
 
