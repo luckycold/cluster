@@ -14,6 +14,10 @@ spec:
         reloader.stakater.com/rollout-strategy: restart
     spec:
       automountServiceAccountToken: false
+      hostAliases:
+        - ip: 192.168.0.11
+          hostnames:
+            - auth.${DOMAIN_0}
       nodeSelector:
         kubernetes.io/arch: amd64
       securityContext:

@@ -6,6 +6,7 @@ resources:
   - secrets.yaml
   - configuration.yaml
   - pvc.yaml
+  # renovate: datasource=github-tags depName=karakeep-app/karakeep versioning=semver
   - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/web-deployment.yaml
   - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/web-service.yaml
   - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/chrome-deployment.yaml

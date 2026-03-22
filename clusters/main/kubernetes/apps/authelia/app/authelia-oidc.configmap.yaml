@@ -289,8 +289,8 @@ data:
             access_token_signed_response_alg: 'none'
             userinfo_signed_response_alg: 'none'
             token_endpoint_auth_method: 'client_secret_post'
-          - client_id: 'hoarder'
-            client_name: 'Hoarder'
+          - client_id: 'karakeep'
+            client_name: 'Karakeep'
             client_secret: {{ secret "/config/secrets/clients_hoarder_client_secret" }}
             public: false
             authorization_policy: '2fa'

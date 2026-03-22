@@ -15,11 +15,17 @@
         "/clusters/main/kubernetes/apps/karakeep/app/kustomization\\.yaml$/"
       ],
       "matchStrings": [
-        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/"
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/web-deployment\\.yaml",
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/web-service\\.yaml",
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/chrome-deployment\\.yaml",
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/chrome-service\\.yaml",
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/meilisearch-deployment\\.yaml",
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/meilisearch-service\\.yaml"
       ],
       "depNameTemplate": "karakeep-app/karakeep",
       "datasourceTemplate": "github-tags",
-      "versioningTemplate": "semver"
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
     },
     {
       "customType": "regex",
@@ -27,8 +33,12 @@
         "/clusters/main/kubernetes/apps/karakeep/app/configuration\\.yaml$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\n\\s*KARAKEEP_VERSION: \"?(?<currentValue>[^\"\\n]+)\"?"
-      ]
+        "\\s*KARAKEEP_VERSION: \"?(?<currentValue>[^\"\\n]+)\"?"
+      ],
+      "depNameTemplate": "karakeep-app/karakeep",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
     }
   ],
   "packageRules": [
