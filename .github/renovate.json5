@@ -24,8 +24,7 @@
       ],
       "depNameTemplate": "karakeep-app/karakeep",
       "datasourceTemplate": "github-tags",
-      "versioningTemplate": "semver",
-      "extractVersionTemplate": "^v?(?<version>.*)$"
+      "versioningTemplate": "semver"
     },
     {
       "customType": "regex",
@@ -73,7 +72,8 @@
         "karakeep-app/karakeep"
       ],
       "groupName": "Karakeep upstream manifests",
-      "description": "Track the Karakeep release tag used by the upstream Kubernetes manifest overlay"
+      "dependencyDashboardApproval": true,
+      "description": "Track the Karakeep release tag used by the upstream Kubernetes manifest overlay and require approval because upstream is still in 0.x"
     },
     {
       "matchDatasources": [
