@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karakeep-chrome
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: karakeep
+      app.kubernetes.io/instance: karakeep
+      app.kubernetes.io/component: chrome
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: karakeep
+        app.kubernetes.io/instance: karakeep
+        app.kubernetes.io/component: chrome
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: chrome
+          # renovate: datasource=docker depName=gcr.io/zenika-hub/alpine-chrome
+          image: gcr.io/zenika-hub/alpine-chrome:124
+          imagePullPolicy: IfNotPresent
+          command:
+            - chromium-browser
+            - --headless
+            - --no-sandbox
+            - --disable-gpu
+            - --disable-dev-shm-usage
+            - --remote-debugging-address=0.0.0.0
+            - --remote-debugging-port=9222
+            - --hide-scrollbars
+          env:
+            - name: TZ
+              value: US/Central
+          ports:
+            - name: chrome
+              containerPort: 9222
+          readinessProbe:
+            tcpSocket:
+              port: chrome
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            tcpSocket:
+              port: chrome
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          startupProbe:
+            tcpSocket:
+              port: chrome
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          resources:
+            requests:
+              cpu: 75m
+              memory: 200Mi
+            limits:
+              cpu: 1500m
+              memory: 2400Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - CHOWN
+                - SETUID
+                - SETGID
+                - FOWNER
+                - DAC_OVERRIDE
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: devshm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: devshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2400Mi
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2400Mi

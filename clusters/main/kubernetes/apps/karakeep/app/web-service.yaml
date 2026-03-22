@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hoarder-app-template
+  name: karakeep-web
 spec:
   selector:
     app.kubernetes.io/name: karakeep
-    app.kubernetes.io/instance: hoarder
+    app.kubernetes.io/instance: karakeep
+    app.kubernetes.io/component: web
   ports:
-    - name: main
+    - name: http
       port: 3000
-      targetPort: 3000
+      targetPort: http
       protocol: TCP
   type: ClusterIP

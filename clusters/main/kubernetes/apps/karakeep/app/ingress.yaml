@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hoarder-app-template
+  name: karakeep
   annotations:
     cert-manager.io/cluster-issuer: domain-0-le-prod
     cert-manager.io/private-key-rotation-policy: Always
@@ -15,10 +15,10 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: hoarder-app-template
+                name: karakeep-web
                 port:
                   number: 3000
   tls:
     - hosts:
         - h.${DOMAIN_0}
-      secretName: hoarder-app-template-tls-0
+      secretName: karakeep-tls-0

@@ -1,0 +1,170 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karakeep-web
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: karakeep
+      app.kubernetes.io/instance: karakeep
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: karakeep
+        app.kubernetes.io/instance: karakeep
+        app.kubernetes.io/component: web
+      annotations:
+        reloader.stakater.com/auto: "true"
+        reloader.stakater.com/rollout-strategy: restart
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 568
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: web
+          # renovate: datasource=docker depName=ghcr.io/karakeep-app/karakeep
+          image: ghcr.io/karakeep-app/karakeep:0.28.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: US/Central
+            - name: BROWSER_WEB_URL
+              value: http://karakeep-chrome:9222
+            - name: CRAWLER_VIDEO_DOWNLOAD
+              value: "true"
+            - name: DATA_DIR
+              value: /data
+            - name: DISABLE_PASSWORD_AUTH
+              value: "true"
+            - name: DISABLE_SIGNUPS
+              value: "false"
+            - name: KARAKEEP_VERSION
+              value: "0.28.0"
+            - name: MEILI_ADDR
+              value: http://karakeep-meilisearch:7700
+            - name: MEILI_MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: karakeep-secrets
+                  key: MEILI_MASTER_KEY
+                  optional: true
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: karakeep-secrets
+                  key: NEXTAUTH_SECRET
+                  optional: true
+            - name: NEXTAUTH_URL
+              value: https://h.${DOMAIN_0}
+            - name: NEXT_PUBLIC_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: karakeep-secrets
+                  key: NEXT_PUBLIC_SECRET
+                  optional: true
+            - name: OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING
+              value: "true"
+            - name: OAUTH_CLIENT_ID
+              value: hoarder
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: karakeep-secrets
+                  key: OAUTH_CLIENT_SECRET
+                  optional: true
+            - name: OAUTH_PROVIDER_NAME
+              value: Authelia
+            - name: OAUTH_WELLKNOWN_URL
+              value: https://auth.${DOMAIN_0}/.well-known/openid-configuration
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: karakeep-secrets
+                  key: OPENAI_API_KEY
+                  optional: true
+          ports:
+            - name: http
+              containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 12
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 4
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 12
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 60
+          resources:
+            requests:
+              cpu: 75m
+              memory: 200Mi
+            limits:
+              cpu: 1500m
+              memory: 2400Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - CHOWN
+                - SETUID
+                - SETGID
+                - FOWNER
+                - DAC_OVERRIDE
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: devshm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: hoarder-app-template-data-longhorn
+        - name: devshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2400Mi
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2400Mi

@@ -48,7 +48,7 @@ Every explicit `ReplicationSource` manifest has `spec.paused: true` so the objec
 Affected manifests:
 
 - `clusters/main/kubernetes/apps/freshrss/app/volsync.yaml`
-- `clusters/main/kubernetes/apps/hoarder/app/volsync.yaml`
+- `clusters/main/kubernetes/apps/karakeep/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/lldap/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/minecraft/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/romm/app/volsync.yaml`
@@ -58,6 +58,7 @@ Affected manifests:
 
 Additional restore destinations were added where a standalone app had a backup source but no pull target yet:
 
+- `clusters/main/kubernetes/apps/karakeep/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/lldap/app/volsync.yaml`
 - `clusters/main/kubernetes/apps/romm/app/volsync.yaml`
 - `clusters/main/kubernetes/media/maintainerr/app/volsync-restore.yaml`
@@ -121,7 +122,7 @@ After cutover and validation on the new cluster:
 - Prefer `ReplicationDestination.spec.restic.destinationPVC` when an app can restore directly into its live PVC.
 - For SQLite-backed apps, copy out the pre-restore database and scale the workload down before triggering the restore.
 - If a restore path creates a separate destination PVC instead of writing into the live app claim, copy the restored data into the live PVC before starting the app.
-- Hoarder needed this extra copy step because its restore objects were initially restoring into `volsync-*-dest-dest` PVCs rather than the active app PVCs.
+- Karakeep needed this extra copy step when it still lived under the Hoarder app path, because its restore objects were initially restoring into `volsync-*-dest-dest` PVCs rather than the active app PVCs.
 - The arr apps proved safer to restore from their own scheduled backup zips on `/config/Backups/scheduled` than from the older chart-managed VolSync path.
 - After restoring the arr apps from the native backup zips, explicit standalone VolSync sources were added so fresh backups resume from the corrected PVC contents.
 - After a manual `ReplicationDestination` run, success is recorded on `status.lastSyncTime` and `status.latestMoverStatus.result`; the object may already be back in `WaitingForManual` by the time you inspect it.
