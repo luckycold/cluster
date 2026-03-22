@@ -84,7 +84,7 @@ spec:
       volumes:
         - name: meilisearch
           persistentVolumeClaim:
-            claimName: hoarder-app-template-meili-data-longhorn
+            claimName: karakeep-meilisearch-data
         - name: devshm
           emptyDir:
             medium: Memory

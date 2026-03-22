@@ -17,7 +17,7 @@ metadata:
   name: karakeep-data-pcloud
   namespace: karakeep
 spec:
-  sourcePVC: hoarder-app-template-data-longhorn
+  sourcePVC: karakeep-data
   trigger:
     schedule: "0 0 * * *"
   restic:
@@ -47,7 +47,7 @@ spec:
     manual: restore
   restic:
     repository: karakeep-data-volsync-pcloud
-    destinationPVC: hoarder-app-template-data-longhorn
+    destinationPVC: karakeep-data
     copyMethod: Direct
     cacheCapacity: 10Gi
     moverSecurityContext:
@@ -74,7 +74,7 @@ metadata:
   name: karakeep-meili-data-pcloud
   namespace: karakeep
 spec:
-  sourcePVC: hoarder-app-template-meili-data-longhorn
+  sourcePVC: karakeep-meilisearch-data
   trigger:
     schedule: "0 0 * * *"
   restic:
@@ -104,7 +104,7 @@ spec:
     manual: restore
   restic:
     repository: karakeep-meili-data-volsync-pcloud
-    destinationPVC: hoarder-app-template-meili-data-longhorn
+    destinationPVC: karakeep-meilisearch-data
     copyMethod: Direct
     cacheCapacity: 10Gi
     moverSecurityContext:

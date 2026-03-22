@@ -84,4 +84,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: hoarder-app-template-data-longhorn
+            claimName: karakeep-data

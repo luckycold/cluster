@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: hoarder-app-template-data-longhorn
+  name: karakeep-data
   namespace: karakeep
 spec:
   accessModes:
@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: hoarder-app-template-meili-data-longhorn
+  name: karakeep-meilisearch-data
   namespace: karakeep
 spec:
   accessModes:
