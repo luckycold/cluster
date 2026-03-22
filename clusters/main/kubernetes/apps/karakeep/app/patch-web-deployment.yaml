@@ -1,22 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: karakeep-meilisearch
+  name: web
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
-  replicas: 1
   strategy:
     type: Recreate
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: karakeep
-      app.kubernetes.io/instance: karakeep
-      app.kubernetes.io/component: meilisearch
   template:
     metadata:
-      labels:
-        app.kubernetes.io/name: karakeep
-        app.kubernetes.io/instance: karakeep
-        app.kubernetes.io/component: meilisearch
       annotations:
         reloader.stakater.com/auto: "true"
         reloader.stakater.com/rollout-strategy: restart
@@ -31,45 +23,29 @@ spec:
           - 568
       terminationGracePeriodSeconds: 60
       containers:
-        - name: meilisearch
-          # renovate: datasource=docker depName=getmeili/meilisearch
-          image: getmeili/meilisearch:v1.11.1
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: TZ
-              value: US/Central
-            - name: MEILI_ENV
-              value: production
-            - name: MEILI_MASTER_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: karakeep-secrets
-                  key: MEILI_MASTER_KEY
-                  optional: true
-            - name: MEILI_NO_ANALYTICS
-              value: "true"
-          ports:
-            - name: meili
-              containerPort: 7700
+        - name: web
           readinessProbe:
-            tcpSocket:
-              port: meili
+            httpGet:
+              path: /api/health
+              port: 3000
             initialDelaySeconds: 10
             periodSeconds: 12
             timeoutSeconds: 5
             successThreshold: 2
             failureThreshold: 4
           livenessProbe:
-            tcpSocket:
-              port: meili
+            httpGet:
+              path: /api/health
+              port: 3000
             initialDelaySeconds: 12
             periodSeconds: 15
             timeoutSeconds: 5
             successThreshold: 1
             failureThreshold: 5
           startupProbe:
-            tcpSocket:
-              port: meili
+            httpGet:
+              path: /api/health
+              port: 3000
             initialDelaySeconds: 10
             periodSeconds: 5
             timeoutSeconds: 3
@@ -100,22 +76,7 @@ spec:
             runAsGroup: 0
             seccompProfile:
               type: RuntimeDefault
-          volumeMounts:
-            - name: meili-data
-              mountPath: /meili_data
-            - name: devshm
-              mountPath: /dev/shm
-            - name: tmp
-              mountPath: /tmp
       volumes:
-        - name: meili-data
+        - name: data
           persistentVolumeClaim:
-            claimName: hoarder-app-template-meili-data-longhorn
-        - name: devshm
-          emptyDir:
-            medium: Memory
-            sizeLimit: 2400Mi
-        - name: tmp
-          emptyDir:
-            medium: Memory
-            sizeLimit: 2400Mi
+            claimName: hoarder-app-template-data-longhorn

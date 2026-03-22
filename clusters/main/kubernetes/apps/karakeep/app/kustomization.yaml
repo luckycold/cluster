@@ -4,13 +4,48 @@ namespace: karakeep
 resources:
   - namespace.yaml
   - secrets.yaml
+  - configuration.yaml
   - pvc.yaml
-  - web-deployment.yaml
-  - web-service.yaml
-  - chrome-deployment.yaml
-  - chrome-service.yaml
-  - meilisearch-deployment.yaml
-  - meilisearch-service.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/web-deployment.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/web-service.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/chrome-deployment.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/chrome-service.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/meilisearch-deployment.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/meilisearch-service.yaml
   - ingress.yaml
   - ../../../common/bw-auth-token
   - volsync.yaml
+patches:
+  - path: patch-web-deployment.yaml
+    target:
+      kind: Deployment
+      name: web
+  - path: patch-web-service.yaml
+    target:
+      kind: Service
+      name: web
+  - path: patch-chrome-deployment.yaml
+    target:
+      kind: Deployment
+      name: chrome
+  - path: patch-meilisearch-deployment.yaml
+    target:
+      kind: Deployment
+      name: meilisearch
+replacements:
+  - source:
+      fieldPath: data.KARAKEEP_VERSION
+      kind: ConfigMap
+      name: karakeep-configuration
+      version: v1
+    targets:
+      - select:
+          group: apps
+          kind: Deployment
+          name: web
+          version: v1
+        fieldPaths:
+          - spec.template.spec.containers.0.image
+        options:
+          delimiter: ':'
+          index: 1

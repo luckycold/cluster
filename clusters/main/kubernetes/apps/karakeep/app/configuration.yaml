@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: karakeep-configuration
+data:
+  # renovate: datasource=github-tags depName=karakeep-app/karakeep versioning=semver
+  KARAKEEP_VERSION: "0.28.0"
+  NEXTAUTH_URL: https://keep.${DOMAIN_0}
+  CRAWLER_VIDEO_DOWNLOAD: "true"
+  DISABLE_PASSWORD_AUTH: "true"
+  DISABLE_SIGNUPS: "false"
+  OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
+  OAUTH_CLIENT_ID: hoarder
+  OAUTH_PROVIDER_NAME: Authelia
+  OAUTH_WELLKNOWN_URL: https://auth.${DOMAIN_0}/.well-known/openid-configuration
+  TZ: US/Central
