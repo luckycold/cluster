@@ -7,12 +7,12 @@ resources:
   - configuration.yaml
   - pvc.yaml
   # renovate: datasource=github-tags depName=karakeep-app/karakeep versioning=semver
-  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/web-deployment.yaml
-  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/web-service.yaml
-  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/chrome-deployment.yaml
-  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/chrome-service.yaml
-  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/meilisearch-deployment.yaml
-  - https://raw.githubusercontent.com/karakeep-app/karakeep/v0.28.0/kubernetes/meilisearch-service.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/0.31.0/kubernetes/web-deployment.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/0.31.0/kubernetes/web-service.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/0.31.0/kubernetes/chrome-deployment.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/0.31.0/kubernetes/chrome-service.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/0.31.0/kubernetes/meilisearch-deployment.yaml
+  - https://raw.githubusercontent.com/karakeep-app/karakeep/0.31.0/kubernetes/meilisearch-service.yaml
   - ingress.yaml
   - ../../../common/bw-auth-token
   - volsync.yaml

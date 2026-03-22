@@ -4,7 +4,7 @@ metadata:
   name: karakeep-configuration
 data:
   # renovate: datasource=github-tags depName=karakeep-app/karakeep versioning=semver
-  KARAKEEP_VERSION: "0.28.0"
+  KARAKEEP_VERSION: "0.31.0"
   NEXTAUTH_URL: https://keep.${DOMAIN_0}
   CRAWLER_VIDEO_DOWNLOAD: "true"
   DISABLE_PASSWORD_AUTH: "true"
