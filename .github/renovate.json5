@@ -8,6 +8,29 @@
   "schedule": [
     "* 22-23,0-5 * * *"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/clusters/main/kubernetes/apps/karakeep/app/kustomization\\.yaml$/"
+      ],
+      "matchStrings": [
+        "raw\\.githubusercontent\\.com/karakeep-app/karakeep/(?<currentValue>v?[0-9][^/\\s]*)/kubernetes/"
+      ],
+      "depNameTemplate": "karakeep-app/karakeep",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/clusters/main/kubernetes/apps/karakeep/app/configuration\\.yaml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+) versioning=(?<versioning>[^\\s]+)\\n\\s*KARAKEEP_VERSION: \"?(?<currentValue>[^\"\\n]+)\"?"
+      ]
+    }
+  ],
   "packageRules": [
     {
       "matchPackageNames": [
@@ -34,13 +57,13 @@
     },
     {
       "matchDatasources": [
-        "docker"
+        "github-tags"
       ],
       "matchPackageNames": [
-        "ghcr.io/karakeep-app/karakeep"
+        "karakeep-app/karakeep"
       ],
-      "enabled": false,
-      "description": "Disable updates for Karakeep - always use the 'release' tag"
+      "groupName": "Karakeep upstream manifests",
+      "description": "Track the Karakeep release tag used by the upstream Kubernetes manifest overlay"
     },
     {
       "matchDatasources": [
@@ -71,7 +94,6 @@
         "!ghcr.io/siderolabs/kubelet",
         "!ghcr.io/siderolabs/installer",
         "!getmeili/meilisearch",
-        "!ghcr.io/karakeep-app/karakeep",
         "!rss-bridge",
         "!rsshub"
       ]

@@ -76,7 +76,7 @@ spec:
 Current reference apps:
 
 - `clusters/main/kubernetes/apps/freshrss/app/`
-- `clusters/main/kubernetes/apps/hoarder/app/`
+- `clusters/main/kubernetes/apps/karakeep/app/`
 
 Rollout checklist:
 

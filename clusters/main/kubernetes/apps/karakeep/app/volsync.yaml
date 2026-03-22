@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: hoarder-app-template-data-volsync-pcloud
-  namespace: hoarder
+  name: karakeep-data-volsync-pcloud
+  namespace: karakeep
 type: Opaque
 stringData:
   RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
@@ -14,14 +14,14 @@ stringData:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: hoarder-app-template-data-pcloud
-  namespace: hoarder
+  name: karakeep-data-pcloud
+  namespace: karakeep
 spec:
   sourcePVC: hoarder-app-template-data-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:
-    repository: hoarder-app-template-data-volsync-pcloud
+    repository: karakeep-data-volsync-pcloud
     copyMethod: Snapshot
     pruneIntervalDays: 7
     cacheCapacity: 10Gi
@@ -37,11 +37,29 @@ spec:
       runAsGroup: 0
       fsGroup: 568
 ---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: karakeep-data-pcloud-dest
+  namespace: karakeep
+spec:
+  trigger:
+    manual: restore
+  restic:
+    repository: karakeep-data-volsync-pcloud
+    destinationPVC: hoarder-app-template-data-longhorn
+    copyMethod: Direct
+    cacheCapacity: 10Gi
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
+---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: hoarder-app-template-meili-data-volsync-pcloud
-  namespace: hoarder
+  name: karakeep-meili-data-volsync-pcloud
+  namespace: karakeep
 type: Opaque
 stringData:
   RESTIC_PASSWORD: ${VOLSYNC_BACKUP_MAIN_ENCRKEY}
@@ -53,14 +71,14 @@ stringData:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: hoarder-app-template-meili-data-pcloud
-  namespace: hoarder
+  name: karakeep-meili-data-pcloud
+  namespace: karakeep
 spec:
   sourcePVC: hoarder-app-template-meili-data-longhorn
   trigger:
     schedule: "0 0 * * *"
   restic:
-    repository: hoarder-app-template-meili-data-volsync-pcloud
+    repository: karakeep-meili-data-volsync-pcloud
     copyMethod: Snapshot
     pruneIntervalDays: 7
     cacheCapacity: 10Gi
@@ -71,6 +89,24 @@ spec:
       within: ${VOLSYNC_BACKUP_RETENTION_WITHIN}
     accessModes:
       - ReadWriteOnce
+    moverSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 568
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: karakeep-meili-data-pcloud-dest
+  namespace: karakeep
+spec:
+  trigger:
+    manual: restore
+  restic:
+    repository: karakeep-meili-data-volsync-pcloud
+    destinationPVC: hoarder-app-template-meili-data-longhorn
+    copyMethod: Direct
+    cacheCapacity: 10Gi
     moverSecurityContext:
       runAsUser: 0
       runAsGroup: 0
