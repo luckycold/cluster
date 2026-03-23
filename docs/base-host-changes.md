@@ -177,6 +177,22 @@ Result:
 - Cluster is currently waiting on Cilium, so the node is expected to remain `NotReady` until CNI bootstrap finishes
 - Any kubeconfig that still points at `https://192.168.0.10:6443` will need either a VIP route plus matching server certificate SAN or a temporary rewrite to `home-apps.lan.1al.cc` / `192.168.1.28`
 
+### 2026-03-22 - Disable multipathd for Longhorn
+
+Commands used:
+
+```bash
+sudo systemctl disable --now multipathd.service multipathd.socket
+sudo systemctl mask multipathd.service multipathd.socket
+sudo multipath -F
+```
+
+Result:
+
+- `multipathd` no longer claims Longhorn block devices as `/dev/mapper/mpath*`
+- Prevents kubelet / Longhorn mount failures that show up as `already mounted or mount point busy`
+- This host does not need device-mapper multipath, so disabling it is the simplest safe default
+
 ## Current Validation Notes
 
 - `qemu-guest-agent`, `open-iscsi`, `iscsid`, and `k3s` are active

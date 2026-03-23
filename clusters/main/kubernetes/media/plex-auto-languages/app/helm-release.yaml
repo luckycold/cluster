@@ -39,6 +39,10 @@ spec:
                 podSpec:
                     containers:
                         main:
+                            resources:
+                                requests:
+                                    cpu: 25m
+                                    memory: 128Mi
                             env:
                                 PLEX_TOKEN: ${PLEX_TOKEN}
                                 PLEX_URL: http://tr.lan.1al.cc:32400

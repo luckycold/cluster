@@ -122,7 +122,7 @@ After cutover and validation on the new cluster:
 - Prefer `ReplicationDestination.spec.restic.destinationPVC` when an app can restore directly into its live PVC.
 - For SQLite-backed apps, copy out the pre-restore database and scale the workload down before triggering the restore.
 - If a restore path creates a separate destination PVC instead of writing into the live app claim, copy the restored data into the live PVC before starting the app.
-- For filesystem PVCs restored or cloned at the block level, watch for ext4 UUID reuse. A cloned volume keeps the source filesystem UUID, which can trip kubelet/Longhorn mount checks with `already mounted or mount point busy` if that UUID is already present on the host. Prefer a fresh blank PVC plus file-level copy, or run `e2fsck` and `tune2fs -U random` on the clone before mounting it alongside the source.
+- If Longhorn volumes start failing with `already mounted or mount point busy` on Ubuntu, check whether `multipathd` is claiming the block devices as `/dev/mapper/mpath*`. Disable `multipathd` on the host before doing PVC surgery, then use a fresh blank PVC plus file-level copy only when a mounted volume already needs to be rebuilt.
 - Karakeep needed this extra copy step when it still lived under the Hoarder app path, because its restore objects were initially restoring into `volsync-*-dest-dest` PVCs rather than the active app PVCs.
 - The arr apps proved safer to restore from their own scheduled backup zips on `/config/Backups/scheduled` than from the older chart-managed VolSync path.
 - After restoring the arr apps from the native backup zips, explicit standalone VolSync sources were added so fresh backups resume from the corrected PVC contents.

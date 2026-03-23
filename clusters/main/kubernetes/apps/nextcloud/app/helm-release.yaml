@@ -62,7 +62,7 @@ spec:
                             mountPath: /var/www/html/config
                     - op: replace
                       path: /spec/template/spec/containers/0/resources/requests/cpu
-                      value: 75m
+                      value: 25m
                     - op: replace
                       path: /spec/template/spec/containers/0/resources/requests/memory
                       value: 256Mi
@@ -102,7 +102,7 @@ spec:
                   patch: |
                     - op: replace
                       path: /spec/template/spec/containers/0/resources/requests/cpu
-                      value: 25m
+                      value: 15m
                     - op: replace
                       path: /spec/template/spec/containers/0/resources/requests/memory
                       value: 128Mi
@@ -171,7 +171,7 @@ spec:
                       value: docker.io/library/nextcloud:32.0.0-fpm
                     - op: replace
                       path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu
-                      value: 25m
+                      value: 10m
                     - op: replace
                       path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/memory
                       value: 128Mi
@@ -184,7 +184,7 @@ spec:
                       value: docker.io/library/nextcloud:32.0.0-fpm
                     - op: replace
                       path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu
-                      value: 25m
+                      value: 10m
                     - op: replace
                       path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests/memory
                       value: 128Mi
