@@ -100,6 +100,70 @@ spec:
                     kind: Deployment
                     name: nextcloud-nginx
                   patch: |
+                    apiVersion: apps/v1
+                    kind: Deployment
+                    metadata:
+                      name: not-used
+                    spec:
+                      template:
+                        spec:
+                          volumes:
+                            - name: config
+                              persistentVolumeClaim:
+                                claimName: nextcloud-config-fresh
+                - target:
+                    kind: Deployment
+                    name: nextcloud
+                  patch: |
+                    apiVersion: apps/v1
+                    kind: Deployment
+                    metadata:
+                      name: not-used
+                    spec:
+                      template:
+                        spec:
+                          volumes:
+                            - name: config
+                              persistentVolumeClaim:
+                                claimName: nextcloud-config-fresh
+                - target:
+                    kind: CronJob
+                    name: nextcloud-nextcloud-cron
+                  patch: |
+                    apiVersion: batch/v1
+                    kind: CronJob
+                    metadata:
+                      name: not-used
+                    spec:
+                      jobTemplate:
+                        spec:
+                          template:
+                            spec:
+                              volumes:
+                                - name: config
+                                  persistentVolumeClaim:
+                                    claimName: nextcloud-config-fresh
+                - target:
+                    kind: CronJob
+                    name: nextcloud-preview-cron
+                  patch: |
+                    apiVersion: batch/v1
+                    kind: CronJob
+                    metadata:
+                      name: not-used
+                    spec:
+                      jobTemplate:
+                        spec:
+                          template:
+                            spec:
+                              volumes:
+                                - name: config
+                                  persistentVolumeClaim:
+                                    claimName: nextcloud-config-fresh
+                - target:
+                    kind: Deployment
+                    name: nextcloud-nginx
+                  patch: |
                     - op: replace
                       path: /spec/template/spec/containers/0/resources/requests/cpu
                       value: 25m
