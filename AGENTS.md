@@ -5,7 +5,6 @@ CI is intentionally minimal (placeholder workflow), so local validation is requi
 - `kustomize build clusters/main/kubernetes`
 - `flux diff ks <name> --path <path>`
 - `kubectl apply --server-side --dry-run=client -k <path>` when a target cluster/context is available
-- `talosctl validate --file clusters/main/talos/talconfig.yaml` for Talos changes
 
 ## Secrets Invariants
 - Keep the Age private key local as `age.agekey`; never commit raw secrets.

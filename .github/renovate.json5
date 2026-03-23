@@ -43,16 +43,6 @@
   "packageRules": [
     {
       "matchPackageNames": [
-        "ghcr.io/siderolabs/kubelet",
-        "ghcr.io/siderolabs/installer",
-        "registry.k8s.io/kubectl"
-      ],
-      "groupName": "Sidero Labs updates",
-      "dependencyDashboardApproval": true,
-      "automerge": false
-    },
-    {
-      "matchPackageNames": [
         "getmeili/meilisearch"
       ],
       "groupName": "Meilisearch updates",
@@ -101,8 +91,6 @@
       ],
       "matchPackageNames": [
         "/.*/",
-        "!ghcr.io/siderolabs/kubelet",
-        "!ghcr.io/siderolabs/installer",
         "!getmeili/meilisearch",
         "!rss-bridge",
         "!rsshub"

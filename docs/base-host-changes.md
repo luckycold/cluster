@@ -1,6 +1,6 @@
 # Base Host Changes
 
-This file records every manual base-host change made during the Talos to Ubuntu + k3s migration prep so it can be turned into automation later.
+This file records the manual base-host changes made for the current Ubuntu + k3s node so they can be turned into automation later.
 
 ## Host
 
@@ -121,7 +121,7 @@ fs.inotify.max_user_watches = 524288
 
 Result:
 
-- NFS mounts on the Ubuntu host now follow the same global client defaults used on the old Talos node
+- NFS mounts on the Ubuntu host now follow the intended global client defaults for the cluster
 - Inotify limits were raised to safer values for container-heavy workloads
 
 ### 2026-03-15 - Create CNI config directory for Cilium
