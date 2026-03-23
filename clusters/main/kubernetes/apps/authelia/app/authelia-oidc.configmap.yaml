@@ -101,6 +101,14 @@ data:
           subject:
             - group:user
         - domain:
+            - change.${DOMAIN_0}
+          domain_regex: []
+          networks: []
+          policy: bypass
+          resources:
+            - ^/rss([/?].*)?$
+          subject: []
+        - domain:
             - ${DOMAIN_1}
             - '*.${DOMAIN_1}'
           domain_regex: []
