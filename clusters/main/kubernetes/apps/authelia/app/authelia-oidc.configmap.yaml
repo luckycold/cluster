@@ -363,7 +363,14 @@ data:
             public: false
             authorization_policy: one_factor
             redirect_uris:
+              - 'http://jf.${DOMAIN_0}/sso/OID/redirect/Authelia'
+              - 'https://jf.${DOMAIN_0}/sso/OID/redirect/Authelia'
+              - 'http://jf.${DOMAIN_0}/sso/OID/r/Authelia'
+              - 'https://jf.${DOMAIN_0}/sso/OID/r/Authelia'
+              - 'http://jf.${DOMAIN_0}/sso/OID/redirect/authelia'
               - 'https://jf.${DOMAIN_0}/sso/OID/redirect/authelia'
+              - 'http://jf.${DOMAIN_0}/sso/OID/r/authelia'
+              - 'https://jf.${DOMAIN_0}/sso/OID/r/authelia'
             scopes:
               - 'openid'
               - 'profile'
@@ -374,4 +381,4 @@ data:
             grant_types:
               - 'authorization_code'
             claims_policy: 'with_email'
-            token_endpoint_auth_method: 'client_secret_post'
+            token_endpoint_auth_method: 'client_secret_basic'
