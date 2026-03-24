@@ -138,7 +138,7 @@ HOARDER_MEILI_MASTER_KEY: ENC[AES256_GCM,data:jp/p1VmTVpEJvCvF9142g6dsj9dSbBg6F7
 HOARDER_NEXT_PUBLIC_SECRET: ENC[AES256_GCM,data:sl7YqNgb5LbU6uM8ayULo8JlvKn7FxSe40XtXghp9NZp9KBvXZAXOK0y90y7j4EF,iv:zCLh7G2MuuoMi95/xUEkLJcsx2D1SBY4weEUfd1GYtg=,tag:XJaxlFErY3s8/YVUA8IDFA==,type:str]
 clients_hoarder_client_secret: ENC[AES256_GCM,data:WFoEW7KO+GRwEFKrOguqN2FwS8JdgO5k5oMPi5TeisodHSPvMmSz60Xcws8mRb1UK9o3K2rpvPS0SrRqGo40tGifajJaNycHp70n/tMUbv/NM/ICRZ1Obw==,iv:M4xAbM1Nk/Z/IzSufBXCYCIaJdbstNR9q8gBacLG11A=,tag:YoNawDceenk9rP1UYUXJOw==,type:str]
 #ENC[AES256_GCM,data:zW6lgdg=,iv:8FAU4v2R42ypRmSQ9WBGDG85Gv4kiMqO6/rVaFpRcCU=,tag:xokZypQFR45JgGUg9Wk9ag==,type:comment]
-MAIN_MAM_COOKIE: ENC[AES256_GCM,data:MhBvn7Fjkp+U3l67D23dbqzp9337t3qyUKLeGevEEQL1JiAzroEJr7Se8VL0T6aJQMm/DP1HvFcTr3nPRPHvazjZklbNUAANW1cDnq4mOLV+XU5Z5uAyq8rvNbdglsGyppbXZBVtYygadgi5JtjCoMCNCe9zYNVr36f5utcfckWnNPvv05eBkYQxMZw+45R7R7SSPwNgUVczwDJBd4SyscWUmrHfYJTTJ8Jk6LQjmxm3e/dxC5bykr9VMvMgrHp9ZUybHg+YuLmh9uPq3Kt8FcgZZ1sExzeeERPl/e1iec5LYHFtHHJwJ5oNflRDTY/tka9Mzo6nUIwCWoC/KxRgZth1K8p29zmwBmLpZz4xTz1eI1/tzMObqTQcbuxuO2oJ4s/XNQ==,iv:hD/79pvw0eaY3NgxNdZL2JzzIlWAI90lnCVBaYF5NxE=,tag:rDlKni/wdxKFUnIxCTMi0w==,type:str]
+MAIN_MAM_COOKIE: ENC[AES256_GCM,data:0/fAt8Dae5Z0jl3DoeQay/naLdU5QFuXzihmeANlCMTKLXs8SsgxA/X2fxHTBBPkG2XaqLeGhCaAHmJNFDtGvso6f5f0lbTX5AdI3C/pyn9Lx2JafH72vvuhiHB/eNE9uBpWJ2WlGidiXTaJZwp6PYjF2eBtbsWRZry0Gu47A483aHP5dlURprCude5MnFSpjyOGDrL/l/rfKvm9R45pdyPIyr2oaockqVrp5GWZeoFMsNs7OsJazkdW+KuLopMYTGy20y7hc3OD0sUqWJZ953+FE3pcXhJK2RPWM1/9/dE8zzE/9XU1YPaDs9qEYZY8WNQYkJudyHwff21Zvyyh0JDi3GbaZIzNqJcPIsP2khx7e6qP20mNSmAhgU8ut59oIz66sg==,iv:JgFicY6XgSFgJhO1GGCnLRxqWr3xqMbktk7xbZVEF5A=,tag:uYrIWsqcoOu2pzW58EchZg==,type:str]
 #ENC[AES256_GCM,data:t69oB2652WBH+Q==,iv:CY6nh1ZTISmqmTiJzh0v/Bc/c50RAHZEeyVMhd3LCNc=,tag:/IRnzRTs9Q3kI/mOkWOMeg==,type:comment]
 bitwarden_secrets_auth_token: ENC[AES256_GCM,data:DRTRfayJ1CSGOvQYGN1niV5iFAM+lu7jL/aeSJBxdy10Evz1atbNiBfJjcr5wMLyqbHoIvO4WP6ZyWXagE1YJK2yyWIc1lXIdFm06aMBtWpRpETg/qivXAeVW/8oRg==,iv:Vd6DoQyuCSNcYpDsrxVmhgpEh7qqva9/QUO3qblJXEs=,tag:egcFvq4Lo7Kb/QWkQo3VrQ==,type:str]
 bitwarden_secrets_org_id: ENC[AES256_GCM,data:mNVVsp4RQd3tPLE0+LNTSUtzrIZl83S8VTbO3h9ikU59gn4W,iv:zRN/gBwZXkWxNrBIao42rriIOVXEPfQ6sI92hCNNfkw=,tag:+wveiiZeazh7o930H7ZCkg==,type:str]
@@ -165,7 +165,7 @@ sops:
             MFdaQ2VDME1RRWlzV2tTVC80MEhDdlkKcMveMq3z2ZfZ2s+sYmPwdL6vdy1GMEmD
             2P+8hRkoG8HmlA5MEndvuwNuLA+nLd7/Yub+rU5rbxwGe2QLR8/J4w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-24T17:31:33Z"
-    mac: ENC[AES256_GCM,data:iwmNRXAMCuhYQi3MiK6EbBs4HohFr7WYzDo1+91igBdEcmReYWfalcc6LL8fmIwJPgnVqiR587vIclo857u/Ete7vq/g092MaPYaqZBUMlzywGeZ6oKIrxYUAWGbw2ge2mGFYxW7SjThzgEcjQG5Dk3kcyk8I5uZYdkAErb/xFQ=,iv:X3jrR7dpbe2EXgs8+NptQKmuZb7bDBsXO0JSDH88bTo=,tag:RLMp1UFpswPCiCZkTZ6wvQ==,type:str]
+    lastmodified: "2026-03-24T19:51:01Z"
+    mac: ENC[AES256_GCM,data:C0tVRYmdGbm7r6d7aq8q8QNl/jLjD1Zmpr1+L1m2NNRkT4pNltjlIinNYc/7ZVRcsajXRT79FNBfNU3AmKVEjgNkcpdhju74W1jedc6x6TDNEff8zB45AUy0Z5IP51PpfAaLcsEq31JfjROlUb6dawAJddfjNp5djaWBMcxDdCU=,iv:6jhj9C0M1ub8if8uMyr90Ra7fYDZgVubzoA9KJXcxn0=,tag:35ZxY60PpA2O4e9LZhzBrg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
