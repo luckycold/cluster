@@ -34,8 +34,8 @@ spec:
           - 568
       containers:
         - name: maintainerr
-          # renovate: datasource=docker depName=docker.io/jorenn92/maintainerr
-          image: docker.io/jorenn92/maintainerr:2.27.0@sha256:4d07ffaf673f7703bcead8e67f2a9f4fbd5e6bb4d43e4c7c8f81bb45844c8e1b
+          # renovate: datasource=docker depName=ghcr.io/maintainerr/maintainerr
+          image: ghcr.io/maintainerr/maintainerr:2.27.0@sha256:c332e4cd1bb9af5ad35ce3e5fd5c4de7b8d3c52c99ee2a2e50f52ac226510911
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
