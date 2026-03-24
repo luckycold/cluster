@@ -211,7 +211,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_gitlab_client_secret" }}
             public: false
             authorization_policy: '2fa'
-            token_endpoint_auth_method: 'client_secret_basic'
+            token_endpoint_auth_method: 'client_secret_post'
             redirect_uris:
               - 'https://git.${DOMAIN_0}/users/auth/openid_connect/callback'
             scopes:
