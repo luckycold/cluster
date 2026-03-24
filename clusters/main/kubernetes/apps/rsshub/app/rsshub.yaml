@@ -71,6 +71,10 @@ spec:
                   name: rsshub-secrets
                   key: PATREON_COOKIE
                   optional: true
+            - name: SPOTIFY_CLIENT_ID
+              value: ${RSSHUB_SPOTIFY_CLIENT_ID}
+            - name: SPOTIFY_CLIENT_SECRET
+              value: ${RSSHUB_SPOTIFY_CLIENT_SECRET}
             - name: FOLLOW_OWNER_USER_ID
               value: luckycold
             - name: FOLLOW_DESCRIPTION
