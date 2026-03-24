@@ -8,7 +8,7 @@ MASTER1IP: ENC[AES256_GCM,data:0topoVQwwuAAr8Vo,iv:YMWnh0au6BYDPipdZi1DxjdMGI2PV
 GATEWAY: ENC[AES256_GCM,data:RVLFvxeKBBRSbQo=,iv:C8whf1rNv/3JHyKWhH9GfYnPgg4pvWoQ/9LHEfpEXFI=,tag:WIM/L6NeVW7IIz269lh+qw==,type:str]
 #ENC[AES256_GCM,data:hYvBBJp0h5Pw02XAl8lMhWR1UuNKTc6NtbtuLsKgwu2Xt+s2bUkShZ3fPRhZtd8=,iv:Bw1s4D1ebDR2ZvBLb2no1BZcWUOyU7lD9u4u9fYeU38=,tag:uJE9qhHsfS2raq88jALNVw==,type:comment]
 METALLB_RANGE: ENC[AES256_GCM,data:btSCpwUg6dGGypoUWJ1E1/r1XUKL6gR+xw==,iv:8idYZXG6hJo6kv3tMCsBPCNuP0lzfyog2sGz+5gBIc8=,tag:xG49oIcXvJg16ER9uo04WQ==,type:str]
-#ENC[AES256_GCM,data:q4ESoHrncitKXzWdqbp6mR/WmFCXC8B+dfZD/lnRMBQ5yZsEht1WOmS65pMmSJmGyjEgxIq/QgsdeMbwyTQ5GTy47MkUMx0dlHuLx+c4YQRh6yOL30QYLuDH7xgH5PDdzajHl1cA9y+jp3LOydL4q2zXKQpnu/52/w==,iv:dgk1+oN/ZCS1Nm4JzA9pyGpaFqr+4ROYVbojzMSD4YE=,tag:0iGhrc3NhZbHOhNhUGuJAA==,type:comment]
+#ENC[AES256_GCM,data:rDv4i20GaEIe4LauUReLTx8fyCaYsUZ/bpvmhfNYzUfkojUe1NiK/C6JWJtqjwKxtePuzi4nduM6xjLM89334S9kEhu1BH6kDOjlkCfzxBvK8+0ntSZ5VNA8dFuu4fgRVdT5merTQ0Ee4wTXv89J/lvYfSsqbkLiag==,iv:Grt2Dr4jsgrATWNNRC/JjLwzD+WfwC70CvFNgU17ugA=,tag:jLZ8otXY6OSfMtVyhCJ4ZQ==,type:comment]
 NGINX_INTERNAL_IP: ENC[AES256_GCM,data:chTfoYfktUrqOS2M,iv:ZaCFNHrUaO3tbCPuKQOKNgtUleUPds4CalHVsmudvLk=,tag:92ojsqS2LzxFbeF7Xn94VQ==,type:str]
 #ENC[AES256_GCM,data:rDv4i20GaEIe4LauUReLTx8fyCaYsUZ/bpvmhfNYzUfkojUe1NiK/C6JWJtqjwKxtePuzi4nduM6xjLM89334S9kEhu1BH6kDOjlkCfzxBvK8+0ntSZ5VNA8dFuu4fgRVdT5merTQ0Ee4wTXv89J/lvYfSsqbkLiag==,iv:Grt2Dr4jsgrATWNNRC/JjLwzD+WfwC70CvFNgU17ugA=,tag:jLZ8otXY6OSfMtVyhCJ4ZQ==,type:comment]
 NGINX_EXTERNAL_IP: ENC[AES256_GCM,data:i/m4Xw5s8isVq4dL,iv:6WMfjfk2jV6J0rT4SxStuPd5dJ7BSHCorxf14fSeC1w=,tag:0QpnfwmQEGcMxhGcNxyUTQ==,type:str]
@@ -67,6 +67,8 @@ RSSHUB_PATREON_COOKIE: ENC[AES256_GCM,data:mkxj4V9p0vKUnV+cCG8C2wLVgTCQXLHpndP9g
 RSSHUB_TWITTER_USERNAME: ENC[AES256_GCM,data:8tB8456OgaesZw==,iv:RhD6pZDJro/6/YRnayfBP9GPf92L+vIx3xmoYKcrXu4=,tag:iSuAfCgNkQ0VgB7O/16m/g==,type:str]
 RSSHUB_TWITTER_PASSWORD: ENC[AES256_GCM,data:cSMvBiUNf6H3OuJERuXqU3YQNTVxkU+bs6luhYbTBNo=,iv:qn4GetNKdocn8OOQT4z3kweU4648sPVa7aI7TzRwTPg=,tag:1B5nFkFWpMDDxjPx3bUglg==,type:str]
 RSSHUB_TWITTER_AUTH_TOKEN: ENC[AES256_GCM,data:3ZDpR4Ze10c8Mm7TSpk=,iv:bbdX3X40wZFQRE9FA3q5GkR0+pc74yO1yDY4skrve8U=,tag:+ubLkgMtFralY9Aok7TeSg==,type:str]
+RSSHUB_SPOTIFY_CLIENT_ID: ENC[AES256_GCM,data:oAl/slMxi2GTwdVhlJ/c0/rd94eB4ZW7enR6DR3zRSA=,iv:wSZd06TmE0TCj9vVnFhCwv6r0DIkWbLtoE0MzTNoaSo=,tag:eblp/LcCX4bjWpp4HdgAZQ==,type:str]
+RSSHUB_SPOTIFY_CLIENT_SECRET: ENC[AES256_GCM,data:AVfMUbmtmxS3EMXHRs4TZyiLD52jROQKyaZOBijSoqk=,iv:1zUR0Ef6qDuIMvfbvDqgPtAR8BUTYc46wS7JRGPdsig=,tag:8NXWb5AKJuHBfI4OHwKtXQ==,type:str]
 #ENC[AES256_GCM,data:yrcP31Ko,iv:zYzJxWDuo6fc6qce/9s0+H38H7bUzvcSIwfxByN3U9w=,tag:i/p7KsksEO5No1sM+PZufQ==,type:comment]
 LLDAP_LDAP_BASE_DN: ENC[AES256_GCM,data:DR4pRLp6DmNmw4Pv,iv:jic9DvnLLTMfEtO+CsE9o76eSqxuDwuuIt/w4rdHD5E=,tag:uby8/wl7ootnGmjlD40h+w==,type:str]
 LLDAP_LDAP_USER_PASS: ENC[AES256_GCM,data:j2/HkSbE+OFv/guBWOPdQvwx+gxlQfewVyH3vm8Ok90ZPoGsHJNsG+tKdJJ7UFlnY7DUkv6SQqlLsQRal/JxqRdnl9FiXVOsvi7bCNA+6PN+evCus/w9LOncZlpNqy0UdJo2Jyzw5z8ApNI8MD+T0j9R4KjcSduvqumlk0RlBvE=,iv:4qEpbQOA8abkuGlWyzJonLTtSJNjpz2+lWKGEC+b/bc=,tag:L9OVajTy7YVht7jVbDRlcA==,type:str]
@@ -161,7 +163,7 @@ sops:
             MFdaQ2VDME1RRWlzV2tTVC80MEhDdlkKcMveMq3z2ZfZ2s+sYmPwdL6vdy1GMEmD
             2P+8hRkoG8HmlA5MEndvuwNuLA+nLd7/Yub+rU5rbxwGe2QLR8/J4w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-21T17:07:34Z"
-    mac: ENC[AES256_GCM,data:oNScIwXR9piZJVRNhDrJkI4vUf/RU0Ng2t6MLi8pd1apbKD9M9jxal/rmVZzplTneWqEeXoHr4veHTcvDuLipaRuAugWYWCN94tDn9HszsmmxSuCfWllFmWt3Klb++rUhljHJDQjI6fRImhUBA2Wkalb7dasNFpl4t8fhp4giFU=,iv:9pBh6DA/JlUUuncz+sA4PDQa+IXkf5ywHZGMSfIJkWk=,tag:7fDQlBeGCET8qPs/9a+qqg==,type:str]
+    lastmodified: "2026-03-24T16:21:48Z"
+    mac: ENC[AES256_GCM,data:C0KewTOc71gLy+ARJrvm/Sp1vAFgAZjgHaSwbAipbcnlSLmiPDej1pmS7rG3VwRITK2v5dbOiUu47sx0Bcy8nPNU7CQldnCqOK52lXleEkoriC9k19nHh4+FzZX83ngng5rhj048ZKMgfWRva7FrrWlXDqX7jSF8B3lA84Yuqp0=,iv:wuTKtTNEqOK4qkfsI0TIgaxJrwz+oryOETYsbjEv2ao=,tag:8Pal1D9N/NbwXNkdWIRM1g==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
