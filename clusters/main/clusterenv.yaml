@@ -152,6 +152,8 @@ VOLSYNC_BACKUP_RETENTION_DAILY: ENC[AES256_GCM,data:Ag==,iv:d82N/RwjcJ8KFi9TWshl
 VOLSYNC_BACKUP_RETENTION_WEEKLY: ENC[AES256_GCM,data:5w==,iv:4Ef2tCGR6pUc+NmJFhuObHf5MGGDTqLSDDxDlNUw4Ys=,tag:M2PM8X81LBId1RrDPw7bRg==,type:str]
 VOLSYNC_BACKUP_RETENTION_MONTHLY: ENC[AES256_GCM,data:1w==,iv:d5Xhfl5udIHJnOApmBVuVefsFZJ6zhgJEuDl7wCMdlU=,tag:TiYQYrOsFxLgmbUdmvevRg==,type:str]
 VOLSYNC_BACKUP_RETENTION_WITHIN: ENC[AES256_GCM,data:ECJA,iv:fxa5MggL9S5tsuzSn1IgmKUo5h4aOp5Dae44EZJZT0I=,tag:yTD2+zOcmj4hB6G55qVkAg==,type:str]
+JELLYFIN_SSO_CLIENT_ID: ENC[AES256_GCM,data:N/lXKTTI91w=,iv:/In5ROr+Q4t/liMgyz8Ocp6ZCJFfnLDh9zm4QRQweq0=,tag:ik8IBZNAqrHIGykmx7sK1Q==,type:str]
+JELLYFIN_SSO_CLIENT_SECRET: ENC[AES256_GCM,data:6yA2eOSktpUhLKq3PbpAxmAvSQM7cbbiEeTUBlA4jwnOuTFhHHAy+w/06A==,iv:OTjLnYXjPbQaDhn4+bL9AqlL1Van1INndnmgrL50rpQ=,tag:j+8vz2KL2fCY/g5pjStfzg==,type:str]
 sops:
     age:
         - recipient: age198qlalug6g4kvmp3xypzzsr5lvw36wexemc2jn220t29l7nak33qft2q7y
@@ -163,7 +165,7 @@ sops:
             MFdaQ2VDME1RRWlzV2tTVC80MEhDdlkKcMveMq3z2ZfZ2s+sYmPwdL6vdy1GMEmD
             2P+8hRkoG8HmlA5MEndvuwNuLA+nLd7/Yub+rU5rbxwGe2QLR8/J4w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-24T16:21:48Z"
-    mac: ENC[AES256_GCM,data:C0KewTOc71gLy+ARJrvm/Sp1vAFgAZjgHaSwbAipbcnlSLmiPDej1pmS7rG3VwRITK2v5dbOiUu47sx0Bcy8nPNU7CQldnCqOK52lXleEkoriC9k19nHh4+FzZX83ngng5rhj048ZKMgfWRva7FrrWlXDqX7jSF8B3lA84Yuqp0=,iv:wuTKtTNEqOK4qkfsI0TIgaxJrwz+oryOETYsbjEv2ao=,tag:8Pal1D9N/NbwXNkdWIRM1g==,type:str]
+    lastmodified: "2026-03-24T17:31:33Z"
+    mac: ENC[AES256_GCM,data:iwmNRXAMCuhYQi3MiK6EbBs4HohFr7WYzDo1+91igBdEcmReYWfalcc6LL8fmIwJPgnVqiR587vIclo857u/Ete7vq/g092MaPYaqZBUMlzywGeZ6oKIrxYUAWGbw2ge2mGFYxW7SjThzgEcjQG5Dk3kcyk8I5uZYdkAErb/xFQ=,iv:X3jrR7dpbe2EXgs8+NptQKmuZb7bDBsXO0JSDH88bTo=,tag:RLMp1UFpswPCiCZkTZ6wvQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
