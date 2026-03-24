@@ -362,6 +362,7 @@ data:
             client_secret: '${JELLYFIN_SSO_CLIENT_SECRET}'
             public: false
             authorization_policy: one_factor
+            consent_mode: implicit
             redirect_uris:
               - 'http://jf.${DOMAIN_0}/sso/OID/redirect/Authelia'
               - 'https://jf.${DOMAIN_0}/sso/OID/redirect/Authelia'
@@ -381,4 +382,4 @@ data:
             grant_types:
               - 'authorization_code'
             claims_policy: 'with_email'
-            token_endpoint_auth_method: 'client_secret_basic'
+            token_endpoint_auth_method: 'client_secret_post'
