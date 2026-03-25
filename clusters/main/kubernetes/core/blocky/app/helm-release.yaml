@@ -55,10 +55,11 @@ spec:
           enabled: false
           domain: dns01.clouddns.com
     defaultUpstreams:
-    - "${GATEWAY}"
+    - "1.1.1.1"
+    - "9.9.9.9"
     bootstrapDns:
       ips: []
-      upstream: "${GATEWAY}"
+      upstream: "1.1.1.1"
     queryLog:
       type: ""
     configmap:
