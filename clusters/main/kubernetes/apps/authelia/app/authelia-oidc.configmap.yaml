@@ -175,6 +175,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_matrix_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -192,6 +193,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_generic_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -211,6 +213,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_gitlab_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             token_endpoint_auth_method: 'client_secret_post'
             redirect_uris:
               - 'https://git.${DOMAIN_0}/users/auth/openid_connect/callback'
@@ -227,6 +230,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_audiobookshelf_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -246,6 +250,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_immich_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             require_pkce: true
             pkce_challenge_method: 'S256'
             redirect_uris:
@@ -271,6 +276,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_romm_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             grant_types:
               - authorization_code
             redirect_uris:
@@ -288,6 +294,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_mealie_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             redirect_uris:
               - 'https://m.${DOMAIN_0}/login'
             scopes:
@@ -307,6 +314,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_hoarder_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             grant_types:
               - 'authorization_code'
             response_types:
@@ -326,6 +334,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_alist_client_secret" }}
             public: false
             authorization_policy: '2fa'
+            consent_mode: implicit
             grant_types:
               - 'authorization_code'
             response_types:
@@ -346,6 +355,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_cloudflare_access_client_secret" }}
             public: false
             authorization_policy: two_factor
+            consent_mode: implicit
             redirect_uris:
               - 'https://${CLOUDFLARE_AUTH_DOMAIN}/cdn-cgi/access/callback'
             scopes:
@@ -359,6 +369,7 @@ data:
             client_secret: {{ secret "/config/secrets/clients_nextcloud_client_secret" }}
             public: false
             authorization_policy: two_factor
+            consent_mode: implicit
             redirect_uris:
               - 'https://cloud.${DOMAIN_0}/apps/user_oidc/code'
 
