@@ -112,6 +112,7 @@ spec:
                         VPN_ENDPOINT_PORT: ""
                         PORT_FORWARD_ONLY: "on"
                         VPN_PORT_FORWARDING: "on"
+                        HEALTH_RESTART_VPN: "off"
                         FIREWALL_INPUT_PORTS: "10095,8000"
 
                     resources:
@@ -136,6 +137,9 @@ spec:
                     - host: t.${DOMAIN_0}
                       paths:
                           - path: /
+        workload:
+            qbitportforward:
+                schedule: "* * * * *"
         persistence:
             config:
                 enabled: true
