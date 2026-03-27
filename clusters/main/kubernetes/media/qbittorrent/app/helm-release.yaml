@@ -112,7 +112,7 @@ spec:
                         VPN_ENDPOINT_PORT: ""
                         PORT_FORWARD_ONLY: "on"
                         VPN_PORT_FORWARDING: "on"
-                        HEALTH_RESTART_VPN: "off"
+                        HEALTH_RESTART_VPN: "false"
                         FIREWALL_INPUT_PORTS: "10095,8000"
 
                     resources:
