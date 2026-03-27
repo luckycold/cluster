@@ -79,6 +79,9 @@ spec:
                                                   curl --fail --silent --show-error --cookie-jar /tmp/cookies.txt --cookie /tmp/cookies.txt --data-urlencode "json={\"listen_port\": $port_number}" "$QBT_ADDR/api/v2/app/setPreferences"
                                                   echo "Successfully updated port"
     values:
+        gluetunImage:
+            repository: ghcr.io/qdm12/gluetun
+            tag: v3.41.0
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
