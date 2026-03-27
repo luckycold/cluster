@@ -42,6 +42,12 @@ spec:
                                 containers:
                                     - name: qbittorrent
                                       image: ghcr.io/home-operations/qbittorrent:5.1.1
+                                    - name: qbittorrent-gluetun
+                                      env:
+                                        - name: VPN_PORT_FORWARDING_UP_COMMAND
+                                          value: '/bin/sh -c "wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:10095/api/v2/app/setPreferences"'
+                                        - name: VPN_PORT_FORWARDING_DOWN_COMMAND
+                                          value: '/bin/sh -c "wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":0}\" http://127.0.0.1:10095/api/v2/app/setPreferences"'
     values:
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
@@ -77,8 +83,7 @@ spec:
                         PORT_FORWARD_ONLY: "on"
                         VPN_PORT_FORWARDING: "on"
                         FIREWALL_INPUT_PORTS: "10095,8000"
-                        VPN_PORT_FORWARDING_UP_COMMAND: '/bin/sh -c "wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":{${"{{"}}PORT{{"}}"}},\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:10095/api/v2/app/setPreferences"'
-                        VPN_PORT_FORWARDING_DOWN_COMMAND: '/bin/sh -c "wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":0}\" http://127.0.0.1:10095/api/v2/app/setPreferences"'
+
                     resources:
                         limits:
                             truecharts.org/tun: 1
