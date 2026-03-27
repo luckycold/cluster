@@ -63,7 +63,7 @@ spec:
                                                 - |
                                                   set -eu
                                                   echo "Attempting to retrieve port from Gluetun via compatibility endpoint..."
-                                                  port_number=$(curl --fail --silent --show-error "$GTN_ADDR/v1/openvpn/portforwarded" | jq -r '.port')
+                                                  port_number=$(curl -L --fail --silent --show-error "$GTN_ADDR/v1/openvpn/portforwarded" | jq -r '.port')
                                                   if [ -z "$port_number" ] || [ "$port_number" = "0" ]; then
                                                     echo "Could not get current forwarded port from gluetun, exiting..."
                                                     exit 1
