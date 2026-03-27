@@ -45,9 +45,9 @@ spec:
                                     - name: qbittorrent-gluetun
                                       env:
                                         - name: VPN_PORT_FORWARDING_UP_COMMAND
-                                          value: '/bin/sh -c "wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:10095/api/v2/app/setPreferences"'
+                                          value: '/bin/sh -c "for i in 1 2 3 4 5 6 7 8 9 10 11 12; do sleep 5; wget -O- -nv --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:10095/api/v2/app/setPreferences 2>&1 && break; done"'
                                         - name: VPN_PORT_FORWARDING_DOWN_COMMAND
-                                          value: '/bin/sh -c "wget -O- -nv --retry-connrefused --post-data \"json={\\\"listen_port\\\":0}\" http://127.0.0.1:10095/api/v2/app/setPreferences"'
+                                          value: '/bin/sh -c "wget -O- -nv --post-data \"json={\\\"listen_port\\\":0}\" http://127.0.0.1:10095/api/v2/app/setPreferences 2>&1 || true"'
     values:
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
