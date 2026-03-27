@@ -87,6 +87,8 @@ spec:
                         PORT_FORWARD_ONLY: "on"
                         VPN_PORT_FORWARDING: "on"
                         FIREWALL_INPUT_PORTS: "10095,8000"
+                        HEALTH_TARGET_ADDRESSES: "1.1.1.1:443,1.0.0.1:443,9.9.9.9:443"
+                        HEALTH_ICMP_TARGET_IPS: "1.1.1.1,1.0.0.1,9.9.9.9"
 
                     resources:
                         limits:
