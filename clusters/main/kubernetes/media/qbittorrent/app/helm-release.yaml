@@ -44,10 +44,14 @@ spec:
                                       image: ghcr.io/home-operations/qbittorrent:5.1.1
                                     - name: qbittorrent-gluetun
                                       env:
+                                        - name: QBT_USER
+                                          value: "${GENERIC_USER}"
+                                        - name: QBT_PASS
+                                          value: "${GENERIC_PASSWORD}"
                                         - name: VPN_PORT_FORWARDING_UP_COMMAND
-                                          value: '/bin/sh -c "for i in 1 2 3 4 5 6 7 8 9 10 11 12; do sleep 5; wget -O- -nv --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:10095/api/v2/app/setPreferences 2>&1 && break; done"'
+                                          value: '/bin/sh -c "for i in 1 2 3 4 5 6 7 8 9 10 11 12; do sleep 5; SID=$(wget -qO- --post-data \"username=$QBT_USER&password=$QBT_PASS\" http://127.0.0.1:10095/api/v2/auth/login --save-cookies /tmp/qbt.cookies --keep-session-cookies 2>/dev/null) && wget -qO- --load-cookies /tmp/qbt.cookies --post-data \"json={\\\"listen_port\\\":{{PORT}},\\\"random_port\\\":false,\\\"upnp\\\":false}\" http://127.0.0.1:10095/api/v2/app/setPreferences 2>&1 && break; done"'
                                         - name: VPN_PORT_FORWARDING_DOWN_COMMAND
-                                          value: '/bin/sh -c "wget -O- -nv --post-data \"json={\\\"listen_port\\\":0}\" http://127.0.0.1:10095/api/v2/app/setPreferences 2>&1 || true"'
+                                          value: '/bin/sh -c "wget -qO- --post-data \"username=$QBT_USER&password=$QBT_PASS\" http://127.0.0.1:10095/api/v2/auth/login --save-cookies /tmp/qbt.cookies --keep-session-cookies 2>/dev/null; wget -qO- --load-cookies /tmp/qbt.cookies --post-data \"json={\\\"listen_port\\\":0}\" http://127.0.0.1:10095/api/v2/app/setPreferences 2>&1 || true"'
     values:
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
