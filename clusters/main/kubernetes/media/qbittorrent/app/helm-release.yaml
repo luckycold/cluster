@@ -77,6 +77,7 @@ spec:
                         PORT_FORWARD_ONLY: "on"
                         VPN_PORT_FORWARDING: "on"
                         FIREWALL_INPUT_PORTS: "10095,8000"
+                        HTTP_CONTROL_SERVER_AUTH_DEFAULT_ROLE: '{"auth":"none"}'
 
                     resources:
                         limits:
