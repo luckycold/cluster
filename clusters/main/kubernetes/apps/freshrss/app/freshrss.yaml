@@ -77,6 +77,16 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: devshm
+              mountPath: /dev/shm
+            - name: shared
+              mountPath: /shared
+            - name: tmp
+              mountPath: /tmp
+            - name: varlogs
+              mountPath: /var/logs
+            - name: varrun
+              mountPath: /var/run
         - name: freshrss
           # renovate: datasource=docker depName=ghcr.io/linuxserver/freshrss
           image: ghcr.io/linuxserver/freshrss:1.28.1@sha256:b75efdc71fb365aab41764bfdb00dd097cef52594a0481d2bc91103af6e98588
@@ -137,7 +147,28 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: devshm
+              mountPath: /dev/shm
+            - name: shared
+              mountPath: /shared
+            - name: tmp
+              mountPath: /tmp
+            - name: varlogs
+              mountPath: /var/logs
+            - name: varrun
+              mountPath: /var/run
       volumes:
+        - name: devshm
+          emptyDir:
+            medium: Memory
+        - name: shared
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: varlogs
+          emptyDir: {}
+        - name: varrun
+          emptyDir: {}
         - name: config
           persistentVolumeClaim:
             claimName: freshrss-config
