@@ -72,7 +72,7 @@ spec:
                   key: PATREON_COOKIE
                   optional: true
             - name: LOCALS_SESSION
-              value: ${LOCALS_SESSION}
+              value: ${RSSHUB_LOCALS_SESSION}
             - name: SPOTIFY_CLIENT_ID
               value: ${RSSHUB_SPOTIFY_CLIENT_ID}
             - name: SPOTIFY_CLIENT_SECRET
