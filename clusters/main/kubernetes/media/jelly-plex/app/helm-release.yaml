@@ -40,7 +40,7 @@ spec:
                         main:
                             env:
                                 DRYRUN: "False"
-                                JELLYFIN_BASEURL: http://jellyfin.media.svc.cluster.local:8096
+                                JELLYFIN_BASEURL: http://${NAS_DOMAIN}:30013
                                 JELLYFIN_TOKEN: ${JELLYFIN_TOKEN}
                                 PLEX_BASEURL: http://tr.lan.1al.cc:32400
                                 PLEX_TOKEN: ${PLEX_TOKEN}

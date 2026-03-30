@@ -5,7 +5,6 @@ resources:
   - ks.yaml
   - generic-device-plugin/ks.yaml
   - jelly-plex/ks.yaml
-  - jellyfin/ks.yaml
   - lidarr/ks.yaml
   - maintainerr/ks.yaml
   - notifiarr/ks.yaml
