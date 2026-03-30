@@ -23,7 +23,7 @@ spec:
       containers:
         - name: rsshub
           # renovate: datasource=docker depName=diygod/rsshub
-          image: diygod/rsshub:latest@sha256:9eb79bbb1e6ed1575bb39c11c07e6f2a4d33c7231396ef370909de278c4e5dbf
+          image: diygod/rsshub:latest@sha256:1645902cc1091bf3f2c0c00a773bb8c967da8ce9de4bcac6c3934243216667ae
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
@@ -71,6 +71,8 @@ spec:
                   name: rsshub-secrets
                   key: PATREON_COOKIE
                   optional: true
+            - name: LOCALS_SESSION
+              value: ${LOCALS_SESSION}
             - name: SPOTIFY_CLIENT_ID
               value: ${RSSHUB_SPOTIFY_CLIENT_ID}
             - name: SPOTIFY_CLIENT_SECRET

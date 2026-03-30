@@ -157,6 +157,7 @@ JELLYFIN_SSO_CLIENT_SECRET: ENC[AES256_GCM,data:6yA2eOSktpUhLKq3PbpAxmAvSQM7cbbi
 PROXMOX_SSO_CLIENT_SECRET: ENC[AES256_GCM,data:Vv48Ii/VkEhwvSKNhI7Q9J09TCRIQ64JjUN8gVKyMRi0gRJKfWgoXJnitQ==,iv:NNnMy+QvTKJnzALXY+7MHOduU7lK8L4ZHwx84w3p69o=,tag:oBHqX28h0lxvLO/KtZ4nKg==,type:str]
 DOMAIN_2: ENC[AES256_GCM,data:f2NUCuQUeAYIzg==,iv:bHGW7M74V+WiJm/Z7nnT38Q7/zePiLIyNNUUTzeGSgY=,tag:9gzfCu+tc9IfdxKkz5UJxg==,type:str]
 DOMAIN_3: ENC[AES256_GCM,data:4QgeDnS6M+T7,iv:wPa9q5Q1pFs0DmCuWDVW9MDUWh2Aktv4nidVC8EI6+8=,tag:ALiwQ29PT8MltEViAu67YA==,type:str]
+LOCALS_SESSION: ENC[AES256_GCM,data:w6VJYYKcDavY1Co=,iv:DrGMXQpEdbgPZj3CRhW8pTEuP5EEkJ0KPYGqirSeY1M=,tag:6N6bUdnWyb2YnkHkYOkqGg==,type:str]
 sops:
     age:
         - recipient: age198qlalug6g4kvmp3xypzzsr5lvw36wexemc2jn220t29l7nak33qft2q7y
@@ -168,7 +169,7 @@ sops:
             MFdaQ2VDME1RRWlzV2tTVC80MEhDdlkKcMveMq3z2ZfZ2s+sYmPwdL6vdy1GMEmD
             2P+8hRkoG8HmlA5MEndvuwNuLA+nLd7/Yub+rU5rbxwGe2QLR8/J4w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-03-26T21:20:54Z"
-    mac: ENC[AES256_GCM,data:7ECBvqpjgikLgx6CP715NIr858LlZfthIS53xGn01qmLRdbmDfhhD93GN1AW5qgIsPnF9jcrtbuaP9WZgzAJI0ZaLe21X9K3vsskQCGpf85f1AlGrtFDZ5wUGHk7LYlDZgTtK2sEZ/dF7fJM2juGM0GoOfmWX5weX0DXAWnUpKU=,iv:1FwS/VqycKsEOWCYWPTdP8nYclpeTbOCwTS7qRzslHs=,tag:IKbMMiANjCr26y5ddyrYYA==,type:str]
+    lastmodified: "2026-03-30T02:13:18Z"
+    mac: ENC[AES256_GCM,data:ndwqOUyCGV21A9oXSBMUKXThJSds7gGzdQ1W9yUZNWAFMLkpWIENGLxCP88cWxEQQUKEnY0UoEoFvHaID4KLiRRBNusy7vYvPEMYqNnql23QLI01fVcL4pHIShgWrUXixyposbZ/3YBH19N27nLk1e0r68YUG10QDGnYDov6l78=,iv:F3nyTTCLZ/aF64vm/rOZrY2dnbYnIZMUwTtVvgCrhBA=,tag:LVSop2KA2wm56NvRKjgPKg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
