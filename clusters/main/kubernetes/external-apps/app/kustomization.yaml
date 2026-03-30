@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - audiobookshelf.yaml
   - music.yaml
+  - openclaw.yaml
