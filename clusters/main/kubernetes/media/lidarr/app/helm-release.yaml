@@ -26,6 +26,10 @@ spec:
                 secretKey: ${VOLSYNC_BACKUP_MAIN_SECRETKEY}
                 type: s3
                 url: ${VOLSYNC_BACKUP_MAIN_URL}
+        image:
+            repository: ghcr.io/home-operations/lidarr
+            pullPolicy: IfNotPresent
+            tag: 3.1.2.4938@sha256:9df1e14c8e09745f23a36c0cc6adcf69665b379aae60e5a7cb9bda27961ef4e7
         ingress:
             main:
                 enabled: true
