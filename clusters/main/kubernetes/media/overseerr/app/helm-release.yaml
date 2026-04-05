@@ -21,6 +21,11 @@ spec:
         remediation:
             retries: 3
     values:
+        service:
+            main:
+                ports:
+                    main:
+                        port: 5055
         credentials:
             ${VOLSYNC_BACKUP_MAIN_NAME}:
                 accessKey: ${VOLSYNC_BACKUP_MAIN_ACCESSKEY}
